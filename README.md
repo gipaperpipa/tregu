@@ -1,10 +1,9 @@
-# Pasqyra
+# Tregu
 
 Fundamentals for Kosovo companies, read from audited financial statements published by
 the Ministry of Finance (mf.rks-gov.net) and joined to the ARBK business registry.
 
-*Pasqyra* is Albanian for both **mirror** and **statement** — `pasqyrat financiare` are
-the financial statements this is built from.
+*Tregu* is Albanian for **the market**.
 
 These are private companies: no share price or market cap exists. This is a fundamentals
 screener, not an exchange.
