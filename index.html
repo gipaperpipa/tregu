@@ -14,7 +14,13 @@
      themed. Nothing is left to the host theme, including the body ground. */
   :root {
     --ground:#f0f0f0; --surface:#ffffff; --rail:#ebebeb;
-    --ink:#0a0a0a; --second:#4a4a4a; --muted:#767676; --faint:#b0b0b0;
+    /* muted and faint are darker than the design file states: at #767676 and
+       #b0b0b0 they measured 3.8:1 on the grey grounds and 2.2:1 on white, against
+       WCAG AA's 4.5:1 — 248 failures on the screener alone. These pass on every
+       ground they sit on (white, rail, header, cursor row). Faint keeps its
+       quieter role through glyph weight instead: a blank is an en dash, not an
+       em dash. */
+    --ink:#0a0a0a; --second:#4a4a4a; --muted:#666666; --faint:#6b6b6b;
     --rule:#e2e2e2; --rule-soft:#ededed; --rule-mid:#c8c8c8; --rule-rail:#d4d4d4;
     --hover:#e2e2e2; --tint:#e8e8e8; --cursor:#efefef; --sub:#f7f7f7;
     --pos:#0f7a43; --neg:#c22a1d; --series:#555555; --bar:#8c8c8c;
@@ -43,6 +49,23 @@
                               border-radius:6px; }
   ::-webkit-scrollbar-track { background:transparent; }
   .mono { font-family:var(--mono); font-variant-numeric:tabular-nums; }
+
+  /* ---------- accessibility ---------- */
+  /* Present to a screen reader, absent to the eye. */
+  .sr { position:absolute !important; width:1px; height:1px; padding:0; margin:-1px;
+        overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap; border:0; }
+  /* The first Tab stop on the page: past the search, the five views, the filters
+     and the criteria, straight to the companies. Hidden until it has focus. */
+  .skip { position:fixed; left:12px; top:-48px; z-index:100; background:var(--ink); color:#fff;
+          border:0; border-radius:3px; padding:9px 14px; font-size:13px; font-weight:500;
+          cursor:pointer; }
+  .skip:focus { top:10px; }
+  /* Headings receive focus when the view changes so a screen reader announces
+     the new page; they are not controls, so they get no ring. */
+  h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus { outline:none; }
+  h2.cap, h3.cap { margin:0; }
+  /* A blank figure: an en dash for the eye, "not proven" for the ear. */
+  .nil { color:var(--faint); }
   .cap { font-size:9px; letter-spacing:.2em; text-transform:uppercase;
          color:var(--muted); font-weight:600; }
 
@@ -62,7 +85,7 @@
   .find input { flex:0 1 420px; min-width:0; font-size:13px; color:var(--dark-ink);
                 background:var(--dark-field); border:1px solid var(--dark-rule);
                 border-radius:3px; padding:6px 10px; }
-  .find input::placeholder { color:var(--dark-dim); }
+  .find input::placeholder { color:#8c8c8c; }   /* 4.9:1 on the dark field; dark-dim was 3.8 */
   .find kbd { font-family:var(--mono); font-size:10px; color:var(--dark-dim);
               border:1px solid var(--dark-rule); border-radius:3px; padding:2px 5px; }
   .topstats { display:flex; gap:22px; align-items:baseline; }
@@ -146,7 +169,12 @@
   .yearsel { border:1px solid var(--rule-mid); background:#fff; color:var(--ink);
              border-radius:3px; padding:5px 8px; font-family:var(--mono);
              font-size:12px; font-weight:500; cursor:pointer; }
-  #scroll { overflow:auto; min-height:0; }
+  /* position:relative makes the sheet the containing block for the
+     screen-reader-only spans inside its tables. Left static, those absolutely
+     positioned spans were placed against <body>, escaped the sheet's clipping,
+     and widened the page to the table's full 1,193px — so a phone zoomed the
+     whole site out to fit. Measured 2026-11-13; 121 spans on the screener. */
+  #scroll { overflow:auto; min-height:0; position:relative; }
   .lede { margin:0; padding:16px 18px; max-width:84ch; font-size:12.5px; color:var(--second);
           line-height:1.6; border-bottom:1px solid var(--rule); }
   .foot { margin:0; padding:18px 18px 28px; max-width:84ch; font-size:11.5px;
@@ -181,24 +209,39 @@
   .colrow th.l button { text-align:left; }
   .colrow th.r button { text-align:right; }
   table.grid tbody tr { cursor:pointer; }
-  table.grid tbody td { background:var(--surface); border-bottom:1px solid var(--rule-soft);
+  /* The company cell is a <th scope="row">, so a screen reader names the company
+     as it reads each figure across the row. Styled exactly as a body cell. */
+  table.grid tbody td, table.grid tbody th {
+                        background:var(--surface); border-bottom:1px solid var(--rule-soft);
                         border-left:1px solid var(--rule); padding:7px 12px;
                         vertical-align:middle; text-align:right; font-family:var(--mono);
-                        font-size:12.5px; font-variant-numeric:tabular-nums;
+                        font-size:12.5px; font-weight:400; font-variant-numeric:tabular-nums;
                         white-space:nowrap; max-width:190px; overflow:hidden;
                         text-overflow:ellipsis; }
-  table.grid tbody tr.cur > td { background:var(--cursor); }
-  td.pin-rank { z-index:1; padding:7px 8px 7px 4px; font-size:11px; color:var(--faint); }
-  td.pin-name { z-index:1; border-right:1px solid var(--rule); padding:6px 14px 6px 4px;
-                vertical-align:baseline; max-width:258px; text-align:left;
-                font-family:inherit; }
+  table.grid tbody tr.cur > td, table.grid tbody tr.cur > th { background:var(--cursor); }
+  /* Body-cell rules are written against `table.grid tbody`, never as a bare
+     `td.x`. A bare rule has specificity (0,1,1) and loses every property it
+     shares with `table.grid tbody td` (0,1,3) — which is how, from v2's first
+     build until 2026-11-13, company names rendered right-aligned in the figure
+     font, the sector and city columns likewise, and rank at 12.5px. */
+  table.grid tbody .pin { border-left:0; }
+  table.grid tbody td.pin-rank { z-index:1; padding:7px 8px 7px 4px; font-size:11px;
+                                 color:var(--faint); max-width:44px; }
+  table.grid tbody .pin-name { z-index:1; border-right:1px solid var(--rule);
+                padding:6px 14px 6px 4px; vertical-align:baseline; max-width:258px;
+                text-align:left; font-family:inherit; }
+  /* The company name is a real link to its page: Tab reaches it, Enter opens it,
+     and middle-click or Ctrl-click opens it in a new tab like any other link. */
+  a.rowlink { display:block; color:inherit; text-decoration:none; }
+  a.rowlink:hover { text-decoration:none; }
+  a.rowlink:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
   /* One line each for the name and its subtitle: a dense table loses its shape
      the moment a three-line company name sets the row height for everything. */
   .coname, .cosub { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .coname { font-size:12.5px; font-weight:500; color:var(--ink); }
   .cosub { font-size:10.5px; color:var(--muted); margin-top:1px; }
   .cosub.unreg { font-style:italic; }
-  td.txt { text-align:left; font-family:inherit; }
+  table.grid tbody td.txt { text-align:left; font-family:inherit; }
   .databar { display:block; height:3px; background:var(--rule); margin-top:3px; }
   .databar > span { display:block; height:3px; background:var(--bar); }
   .spark { display:block; width:60px; height:16px; overflow:visible; }
@@ -261,22 +304,27 @@
 
   /* ---------- sectors ---------- */
   table.sectors { border-collapse:separate; border-spacing:0; width:100%; min-width:1080px; }
-  table.sectors th { position:sticky; top:0; z-index:3; background:var(--ground);
+  /* Header styles are scoped to thead: the sector name in each body row is a
+     <th scope="row"> too, and must not inherit the sticky uppercase header. */
+  table.sectors thead th { position:sticky; top:0; z-index:3; background:var(--ground);
                      border-bottom:1px solid var(--rule-mid); padding:7px 14px;
                      text-align:right; font-size:10px; letter-spacing:.07em;
                      text-transform:uppercase; color:var(--muted); font-weight:600;
                      white-space:nowrap; }
-  table.sectors th.first { left:0; z-index:4; text-align:left;
+  table.sectors thead th.first { left:0; z-index:4; text-align:left;
                            border-right:1px solid var(--rule); }
   table.sectors tbody tr { cursor:pointer; }
-  table.sectors td { background:var(--surface); border-bottom:1px solid var(--rule-soft);
+  table.sectors tbody td, table.sectors tbody th {
+                     background:var(--surface); border-bottom:1px solid var(--rule-soft);
                      padding:9px 14px; text-align:right; font-family:var(--mono);
-                     font-size:12.5px; font-variant-numeric:tabular-nums; white-space:nowrap; }
-  table.sectors td.first { position:sticky; left:0; z-index:1; text-align:left;
+                     font-size:12.5px; font-weight:400; font-variant-numeric:tabular-nums;
+                     white-space:nowrap; }
+  table.sectors tbody .first { position:sticky; left:0; z-index:1; text-align:left;
                            font-family:inherit; font-weight:500; color:var(--ink);
                            border-right:1px solid var(--rule); min-width:300px;
                            max-width:340px; overflow:hidden; text-overflow:ellipsis; }
-  table.sectors tbody tr:hover td { background:var(--sub); }
+  table.sectors tbody tr:hover td, table.sectors tbody tr:hover th { background:var(--sub); }
+  table.sectors a.rowlink { overflow:hidden; text-overflow:ellipsis; }
 
   /* ---------- movers ---------- */
   .moverlists { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); }
@@ -288,7 +336,7 @@
                align-items:baseline; padding:7px 16px; border:0;
                border-bottom:1px solid var(--rule-soft); cursor:pointer; width:100%;
                background:transparent; text-align:left; font:inherit; }
-  .moveritem:hover { background:var(--sub); }
+  .moveritem:hover { background:var(--sub); text-decoration:none; }
   .moveritem .rank { font-family:var(--mono); font-size:10.5px; color:var(--faint);
                      font-variant-numeric:tabular-nums; }
   .moveritem .nm { font-size:12.5px; color:var(--ink); overflow:hidden;
@@ -353,6 +401,11 @@
 </head>
 <body>
 
+<button type="button" class="skip" id="skip">Skip to results</button>
+<!-- Announces what changed after each action — a result count after a filter,
+     the company name after opening one — since none of that moves focus. -->
+<div class="sr" id="announce" aria-live="polite" aria-atomic="true"></div>
+
 <div class="shell">
 
   <header>
@@ -369,23 +422,23 @@
   </header>
 
   <div class="split">
-    <aside>
+    <aside aria-label="Filters and saved screens">
       <nav id="nav" aria-label="Views"></nav>
 
       <section>
-        <div class="cap">Universe</div>
+        <h2 class="cap">Universe</h2>
         <select id="sector" aria-label="Filter by sector"></select>
         <label class="chk"><input type="checkbox" id="unmatched">
           Include unmatched filers</label>
       </section>
 
       <section>
-        <div class="cap">Saved screens</div>
+        <h2 class="cap">Saved screens</h2>
         <div class="presets" id="presets"></div>
       </section>
 
       <section>
-        <div class="cap">Criteria</div>
+        <h2 class="cap">Criteria</h2>
         <select id="critMetric" aria-label="Metric to screen on"></select>
         <div class="critgrid">
           <select id="critOp" aria-label="Comparison">
@@ -403,7 +456,7 @@
 
     <main>
       <div class="pagebar">
-        <h1 id="pageTitle"></h1>
+        <h1 id="pageTitle" tabindex="-1"></h1>
         <span class="count" id="resultLine"></span>
         <span class="warn" id="warnLine"></span>
         <div class="right" id="pageActions"></div>
@@ -454,7 +507,8 @@ const YEARS = (() => {
   return [...seen].sort((a, b) => b - a);
 })();
 
-const INK = "#0a0a0a", MUTED = "#767676", FAINT = "#b0b0b0", SECOND = "#4a4a4a",
+/* MUTED and FAINT match the CSS tokens, which were darkened for WCAG AA. */
+const INK = "#0a0a0a", MUTED = "#666666", FAINT = "#6b6b6b", SECOND = "#4a4a4a",
       POS = "#0f7a43", NEG = "#c22a1d",
       SERIES = "#555555", SERIES_NEG = "#c22a1d";
 
@@ -787,6 +841,77 @@ const svgEl = (tag, attrs) => {
 };
 const byId = id => document.getElementById(id);
 
+/* --- accessibility helpers --- */
+
+/* A figure that could not be proven. The eye gets an en dash, a screen reader
+   gets "not proven" — which is what a blank means here, and which "dash"
+   does not say. */
+const blank = () => [el("span", { class:"nil", "aria-hidden":"true", text:"–" }),
+                      el("span", { class:"sr", text:"not proven" })];
+
+/* Polite announcements, debounced: typing "viva" should be heard once as
+   "3 companies", not four times on the way there. */
+let announceTimer = null, lastAnnounced = "";
+function announce(text) {
+  clearTimeout(announceTimer);
+  announceTimer = setTimeout(() => {
+    if (!text || text === lastAnnounced) return;
+    lastAnnounced = text;
+    byId("announce").textContent = text;
+  }, 400);
+}
+
+/* Focus that survives a re-render.
+   render() rebuilds the rail, the page bar and the table on every change, so a
+   control activated from the keyboard is destroyed under the user's focus —
+   measured: sorting or picking a preset dropped focus to <body>, and the next
+   Tab started again from the top of the page. Controls that are rebuilt carry
+   `data-fk`, a stable key; after render, focus returns to the element with the
+   same key. */
+let pendingFocus = null;     // a selector that wins over everything else, once
+function focusKeyOf(node) {
+  return node && node.dataset ? node.dataset.fk || null : null;
+}
+function placeFocus(prevKey, pageChanged, returning) {
+  const active = document.activeElement;
+  const lost = !active || active === document.body || !document.contains(active);
+  let target = null;
+  if (pendingFocus) {
+    target = document.querySelector(pendingFocus);
+    pendingFocus = null;
+  } else if (returning) {
+    /* Back from a company: to the row it was opened from. */
+    target = document.querySelector("#gridBody tr.cur a.rowlink");
+  } else if (lost && prevKey) {
+    target = document.querySelector('[data-fk="' + CSS.escape(prevKey) + '"]');
+  }
+  if (!target && lost && pageChanged) {
+    /* A new page whose trigger is gone: to its heading, so a screen reader
+       announces where the reader has landed. */
+    target = byId(state.route === "company" ? "coHeading" : "pageTitle");
+  }
+  if (target) target.focus({ preventScroll:true });
+  return target;
+}
+
+/* A row's own link, opening its company through set() so the history entry,
+   back-route and focus are handled — unless a modifier or middle button asks
+   for a new tab, which the real href then provides. */
+function openOnClick(open) {
+  return e => {
+    if (e.defaultPrevented || e.button || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    open();
+  };
+}
+
+/* The href a view would have, for links that should open in a new tab. */
+function hrefFor(patch) {
+  const saved = Object.assign({}, state);
+  Object.assign(state, patch);
+  try { return stateToUrl(); } finally { Object.assign(state, saved); }
+}
+
 /* --- selection --- */
 function universe() {
   const needle = state.q.trim().toLowerCase();
@@ -893,9 +1018,17 @@ function onKey(e) {
     return;
   }
   if (state.route !== "screener" && state.route !== "latest") return;
-  if (e.key === "j" || e.key === "ArrowDown") { e.preventDefault(); moveCursor(1); }
-  if (e.key === "k" || e.key === "ArrowUp") { e.preventDefault(); moveCursor(-1); }
-  if (e.key === "Enter" && lastRows[state.cursor]) {
+  /* j/k and Tab are one cursor: moving with j/k moves real focus too, so the
+     ring, the highlight and what Enter opens are always the same row. */
+  const focusCursor = () => {
+    const link = document.querySelector("#gridBody tr.cur a.rowlink");
+    if (link) link.focus({ preventScroll:true });
+  };
+  if (e.key === "j" || e.key === "ArrowDown") { e.preventDefault(); moveCursor(1); focusCursor(); }
+  if (e.key === "k" || e.key === "ArrowUp") { e.preventDefault(); moveCursor(-1); focusCursor(); }
+  /* Enter on a link or button is that control's own business; handling it
+     here as well opened the cursor row on top of whatever was activated. */
+  if (e.key === "Enter" && !e.target.closest("a, button") && lastRows[state.cursor]) {
     set({ route:"company", selected:lastRows[state.cursor].id });
   }
 }
@@ -1022,7 +1155,7 @@ function barChart(points, diverging, linkFor) {
 }
 
 function chartBlock(title, points, diverging, linkFor) {
-  const head = el("div", { class:"charthead" }, el("span", { class:"cap", text:title }));
+  const head = el("div", { class:"charthead" }, el("h3", { class:"cap", text:title }));
   const box = el("div", { class:"chart" }, head);
   if (!points.length) {
     head.append(el("span", { class:"last", style:"color:" + MUTED, text:"not proven" }));
@@ -1031,8 +1164,16 @@ function chartBlock(title, points, diverging, linkFor) {
   const last = points[points.length - 1];
   head.append(el("span", { class:"last",
     text:"€" + compact(last[1]) + " · " + last[0] }));
-  box.append(barChart(points, diverging, linkFor));
-  box.append(el("div", { class:"chartyrs" },
+  const svg = barChart(points, diverging, linkFor);
+  /* A chart is one image to a screen reader, so its name carries every bar.
+     The bars are links for the mouse; the year-by-year table carries the same
+     links for the keyboard, so the bars are kept out of the Tab order rather
+     than adding up to eleven unlabelled stops per chart. */
+  svg.setAttribute("aria-label", title + " by year: "
+    + points.map(p => p[0] + " €" + compact(p[1])).join(", "));
+  svg.querySelectorAll("a").forEach(a => a.setAttribute("tabindex", "-1"));
+  box.append(svg);
+  box.append(el("div", { class:"chartyrs", "aria-hidden":"true" },
     el("span", { text:String(points[0][0]) }),
     el("span", { text: points.length > 1 ? String(last[0]) : "" })));
   return box;
@@ -1083,12 +1224,14 @@ function renderChrome(pool) {
     const id = item[0];
     const on = state.route === id
       || (state.route === "company" && id === (state.backRoute || "screener"));
-    nav.append(el("button", { class:"navbtn", type:"button",
+    nav.append(el("button", { class:"navbtn", type:"button", "data-fk":"nav:" + id,
       "aria-current": on ? "page" : null,
       onClick: () => set({ route:id, selected:null }) },
-      el("span", { class:"navmark" }),
+      el("span", { class:"navmark", "aria-hidden":"true" }),
       el("span", { text:item[1] }),
-      el("span", { class:"navbadge", text:item[2] })));
+      /* "Screener660" read as one word otherwise. */
+      item[2] ? el("span", { class:"navbadge" }, el("span", { class:"sr", text:", " }),
+                   el("span", { text:item[2] })) : null));
   }
 
   const q = byId("q");
@@ -1107,7 +1250,7 @@ function renderChrome(pool) {
   const presets = byId("presets");
   presets.replaceChildren();
   for (const p of PRESETS) {
-    presets.append(el("button", { class:"preset", type:"button",
+    presets.append(el("button", { class:"preset", type:"button", "data-fk":"preset:" + p.id,
       "aria-pressed": String(state.preset === p.id),
       onClick: () => set({ preset:p.id, active:p.crit.slice(), view:p.view,
                            sortKey:DEFAULT_SORT[p.view], sortAsc:false,
@@ -1142,9 +1285,16 @@ function renderChrome(pool) {
     chips.append(el("span", { class:"chip" },
       el("span", { text: spec.label + " " + (c.op === "ge" ? "≥ " : "≤ ") + shownV }),
       el("button", { type:"button", text:"×",
-        "aria-label":"Remove criterion " + spec.label,
-        onClick: () => { const next = state.active.slice(); next.splice(i, 1);
-                         set({ active:next, preset:null, cursor:0 }); } })));
+        "aria-label":"Remove criterion " + spec.label + " " + (c.op === "ge" ? "at least " : "at most ")
+                      + shownV,
+        onClick: () => {
+          const next = state.active.slice(); next.splice(i, 1);
+          /* The removed chip's button is gone; focus goes to the next chip's
+             remove button, or to the criterion builder when none are left. */
+          pendingFocus = next.length ? "#chips .chip:nth-child(" + Math.min(i + 1, next.length)
+                                       + ") button" : "#critMetric";
+          set({ active:next, preset:null, cursor:0 });
+        } })));
   });
 }
 
@@ -1171,7 +1321,7 @@ function renderPagebar(rows, sc, shown, cols) {
        blind is choosing how much of the list to throw away, and the most
        recent year is not the fullest one. */
     const uni = universe();
-    const pick = el("select", { class:"yearsel", "aria-label":"Fiscal year",
+    const pick = el("select", { class:"yearsel", "aria-label":"Fiscal year", "data-fk":"year",
       onChange: e => set({ year:Number(e.target.value), cursor:0, rowLimit:100 }) });
     for (const y of YEARS) {
       const n = uni.filter(r => r.fy[String(y)]).length;
@@ -1183,14 +1333,15 @@ function renderPagebar(rows, sc, shown, cols) {
   }
   const tabs = el("div", { class:"tabs", role:"group", "aria-label":"Choose columns" });
   for (const v of [["figures","Figures"], ["ratios","Ratios"], ["cash","Cash flow"]]) {
-    tabs.append(el("button", { type:"button", text:v[1],
+    tabs.append(el("button", { type:"button", text:v[1], "data-fk":"view:" + v[0],
       "aria-pressed": String(state.view === v[0]),
       onClick: () => set({ view:v[0], sortKey:DEFAULT_SORT[v[0]], sortAsc:false,
                            route: state.route === "latest" ? "latest" : "screener",
                            cursor:0 }) }));
   }
   acts.append(tabs);
-  acts.append(el("button", { class:"btn", type:"button", text:"Copy",
+  acts.append(el("button", { class:"btn", type:"button", text:"Copy", "data-fk":"copy",
+    "aria-label":"Copy the rows on screen",
     title:"Copy the rows on screen as tab-separated text",
     onClick: () => copyResults(shown, cols) }));
 }
@@ -1215,25 +1366,29 @@ function cellFor(r, col, barMax) {
   if (col.kind === "spark") {
     const pts = (r.h || []).filter(p => p[1] != null);
     if (pts.length < 2) {
-      return el("td", { class:"txt", style:"color:" + FAINT, text:"—" });
+      return el("td", { class:"txt" }, el("span", { class:"nil", "aria-hidden":"true", text:"–" }),
+                el("span", { class:"sr", text:"fewer than two years of revenue" }));
     }
-    const td = el("td", { class:"txt",
-      title: pts.map(p => p[0] + ": €" + compact(p[1])).join("   ") });
-    td.append(sparkline(pts));
+    const trend = "Revenue " + pts.map(p => p[0] + " €" + compact(p[1])).join(", ");
+    const td = el("td", { class:"txt", title: trend });
+    const svg = sparkline(pts);
+    svg.setAttribute("aria-label", trend);
+    td.append(svg);
     return td;
   }
   if (col.kind === "text") {
     /* Sector names run to 60 characters; left to wrap they turn a dense table
        into five-line rows. Truncated, with the full text on hover. */
     const v = r[col.k];
-    return el("td", { class:"txt", title: v || null,
-                      style:"color:" + (v ? SECOND : FAINT), text: v || "—" });
+    return v ? el("td", { class:"txt", title:v, style:"color:" + SECOND, text:v })
+             : el("td", { class:"txt" }, el("span", { class:"nil", "aria-hidden":"true", text:"–" }),
+                  el("span", { class:"sr", text:"not recorded" }));
   }
   if (col.kind === "year") {
     return el("td", { style:"color:" + SECOND, text:String(r.y) });
   }
   const v = r[col.k];
-  if (v == null) return el("td", { style:"color:" + FAINT, text:"—" });
+  if (v == null) return el("td", {}, blank());
   /* Levels stay black; only a change carries a direction worth colouring. */
   const color = col.delta ? (v > 0 ? POS : v < 0 ? NEG : MUTED)
               : (col.sign && v < 0 ? NEG : INK);
@@ -1242,10 +1397,15 @@ function cellFor(r, col, barMax) {
   /* A data bar in the revenue column turns the list into a shape: which rows
      carry the scale is legible without reading a single figure. */
   if (col.bar && OPTS.dataBars && v > 0) {
-    td.append(el("span", { class:"databar" },
+    td.append(el("span", { class:"databar", "aria-hidden":"true" },
       el("span", { style:"width:" + Math.max(1, v / barMax * 100).toFixed(1) + "%" })));
   }
   return td;
+}
+
+function allColumnLabel(cols, key) {
+  const c = [{ k:"n", label:"Company" }].concat(cols).find(c => c.k === key);
+  return c ? (c.kind === "spark" ? "revenue trend" : c.label) : key;
 }
 
 function renderScreener(sc, shown, cols, rows) {
@@ -1284,8 +1444,16 @@ function renderScreener(sc, shown, cols, rows) {
   }
 
   const table = el("table", { class:"grid" });
+  /* The caption says what the table is and how it is ordered — the first thing a
+     screen reader reads on entering it, and invisible otherwise. */
+  const sortCol = allColumnLabel(cols, key);
+  table.append(el("caption", { class:"sr",
+    text:(state.route === "latest" ? "Companies that filed for FY " + state.year : "Companies")
+       + ", sorted by " + sortCol + (asc ? ", ascending" : ", descending") + ". "
+       + fmt.format(shown.length) + " shown of " + fmt.format(sc.rows.length)
+       + ". Each company name opens its page." }));
   const groupRow = el("tr", { class:"grouprow" });
-  groups.forEach(g => groupRow.append(el("th", {
+  groups.forEach(g => groupRow.append(el("th", { scope:"colgroup",
     colspan:String(g.span), class: g.pinned ? "pin pin-group" : null, text:g.label })));
 
   /* The rank column is a real column in the body, so it needs a real header
@@ -1297,9 +1465,14 @@ function renderScreener(sc, shown, cols, rows) {
     const right = col.rank || col.f || col.kind === "year";
     const cls = [i === 0 ? "pin pin-rank" : i === 1 ? "pin pin-name" : null,
                  right ? "r" : "l"].filter(Boolean).join(" ");
-    const th = el("th", { class:cls });
+    const th = el("th", { class:cls, scope:"col" });
     if (col.k === key) th.setAttribute("aria-sort", asc ? "ascending" : "descending");
-    th.append(el("button", { type:"button", text:col.label,
+    th.append(el("button", { type:"button", text:col.label, "data-fk":"sort:" + col.k,
+      /* Kept as the plain column name: a header button's name is what a screen
+         reader repeats before every cell in the column, so "Sort by Revenue"
+         would be read a hundred times. aria-sort on the th says it sorts. Only
+         the two whose visible label misleads are renamed. */
+      "aria-label": col.rank ? "Rank" : col.kind === "spark" ? "Revenue trend" : null,
       title: col.rank ? "Position in the current sort" : (COL_TITLES[col.k] || null),
       onClick: () => {
         if (col.rank) set({ sortKey:DEFAULT_SORT[state.view], sortAsc:false, cursor:0 });
@@ -1312,8 +1485,11 @@ function renderScreener(sc, shown, cols, rows) {
 
   const tbody = el("tbody", { id:"gridBody" });
   shown.forEach((r, i) => {
+    const open = () => set({ route:"company", selected:r.id, cursor:i });
     const tr = el("tr", { class: i === state.cursor ? "cur" : null,
-      onClick: () => set({ route:"company", selected:r.id, cursor:i }),
+      /* Anywhere on the row opens the company for a mouse; the name's own link
+         handles itself, so a click on it is not handled twice. */
+      onClick: e => { if (!e.target.closest("a")) open(); },
       onMouseenter: () => { if (state.cursor !== i) { state.cursor = i; paintCursor(i); } } });
     tr.append(el("td", { class:"pin pin-rank", text:String(i + 1) }));
     /* A filer whose folded name matches a registry-matched company says so
@@ -1323,12 +1499,16 @@ function renderScreener(sc, shown, cols, rows) {
               : (r.ln && r.ln !== r.n ? r.ln
               : (r.u ? "not matched to the business registry" : (r.c || "")));
     const unregOnly = r.u && !r.tw && !(r.ln && r.ln !== r.n);
-    tr.append(el("td", { class:"pin pin-name",
+    tr.append(el("th", { class:"pin pin-name", scope:"row",
       title: r.tw ? r.n + "  —  a registry-matched filer also files as “" + r.tw
                     + "”" + (r.twy ? ", including FY " + r.twy.join(", FY ") : "")
                   : r.n },
-      el("span", { class:"coname", text:r.n }),
-      sub ? el("span", { class:"cosub" + (unregOnly ? " unreg" : ""), text:sub }) : null));
+      el("a", { class:"rowlink", href:"#/company/" + enc(r.id), "data-fk":"row:" + r.id,
+                onClick: openOnClick(open),
+                /* Tab and j/k are one cursor: reaching a row by Tab moves it. */
+                onFocus: () => { if (state.cursor !== i) { state.cursor = i; paintCursor(i); } } },
+        el("span", { class:"coname", text:r.n }),
+        sub ? el("span", { class:"cosub" + (unregOnly ? " unreg" : ""), text:sub }) : null)));
     for (const col of cols) tr.append(cellFor(r, col, barMax));
     tbody.append(tr);
   });
@@ -1339,7 +1519,13 @@ function renderScreener(sc, shown, cols, rows) {
     wrap.append(el("button", { class:"more", type:"button",
       text:"Show " + fmt.format(Math.min(100, sc.rows.length - shown.length)) + " more  ·  "
          + fmt.format(shown.length) + " of " + fmt.format(sc.rows.length),
-      onClick: () => set({ rowLimit: state.rowLimit + 100 }) }));
+      onClick: () => {
+        /* Continue from the first new row, not from the button that has now
+           moved a hundred rows down the page. */
+        const first = shown.length;
+        pendingFocus = "#gridBody tr:nth-child(" + (first + 1) + ") a.rowlink";
+        set({ rowLimit: state.rowLimit + 100, cursor:first });
+      } }));
   }
   if (!shown.length) {
     wrap.append(el("div", { class:"empty",
@@ -1379,16 +1565,19 @@ function renderCompany() {
     : null;
   wrap.append(el("div", { class:"cohead" },
     el("div", { style:"min-width:0;" },
-      el("h2", { text:r.n }),
+      el("h2", { id:"coHeading", tabindex:"-1", text:r.n }),
       el("div", { class:"cometa", text:meta }),
       twinNote ? el("div", { class:"twinnote", text:twinNote }) : null),
     el("div", { class:"coacts" },
       el("span", { class:"yrbadge", text:"FY " + r.y }),
-      el("button", { class:"btn", type:"button", text:"←",
+      el("button", { class:"btn", type:"button", text:"←", "data-fk":"co:prev",
+        "aria-label":"Previous company", "aria-keyshortcuts":"[",
         title:"Previous company  ·  [", onClick: () => stepCompany(-1) }),
-      el("button", { class:"btn", type:"button", text:"→",
+      el("button", { class:"btn", type:"button", text:"→", "data-fk":"co:next",
+        "aria-label":"Next company", "aria-keyshortcuts":"]",
         title:"Next company  ·  ]", onClick: () => stepCompany(1) }),
-      el("button", { class:"btn", type:"button", text:"Close",
+      el("button", { class:"btn", type:"button", text:"Close", "data-fk":"co:close",
+        "aria-keyshortcuts":"Escape",
         title:"Back to the screener  ·  Esc", onClick: back }))));
 
   const kpis = el("div", { class:"kpis" });
@@ -1407,6 +1596,7 @@ function renderCompany() {
   for (const k of kpiRows) kpis.append(el("div", {},
     el("div", { class:"cap", text:k[0] }),
     el("b", {}, k[3] && r[k[3]] != null ? figLink(r, r.y, k[3], k[1], k[2])
+                                        : k[1] === "—" ? blank()
                                         : el("span", { style:"color:" + k[2], text:k[1] }))));
   wrap.append(kpis);
 
@@ -1419,8 +1609,9 @@ function renderCompany() {
 
   const bench = SECTORS[r.s];
   const ratioPanel = el("div", { class:"panel" },
-    el("div", { class:"cap", text: bench ? "Ratios against sector median" : "Ratios" }));
-  const rtable = el("table", { class:"flat" });
+    el("h3", { class:"cap", id:"ratioHead",
+               text: bench ? "Ratios against sector median" : "Ratios" }));
+  const rtable = el("table", { class:"flat", "aria-labelledby":"ratioHead" });
   rtable.append(el("thead", {}, el("tr", {},
     el("th", { class:"l", text:"" }), el("th", { text:"Company" }),
     el("th", { text:"Sector median" }))));
@@ -1434,7 +1625,9 @@ function renderCompany() {
       el("td", { style:"color:" + MUTED,
         title: bench && bench.n && bench.n[k] != null
           ? "median of " + bench.n[k] + " companies" : null,
-        text: bench && bench.med[k] != null ? f(bench.med[k]) : "—" })));
+      }, bench && bench.med[k] != null ? f(bench.med[k])
+          : [el("span", { class:"nil", "aria-hidden":"true", text:"–" }),
+             el("span", { class:"sr", text:"no sector median" })])));
   }
   rtable.append(rbody);
   ratioPanel.append(rtable);
@@ -1444,8 +1637,8 @@ function renderCompany() {
     : "No sector benchmark: this filer is not matched to a registry sector." }));
 
   const histPanel = el("div", { class:"panel" },
-    el("div", { class:"cap", text:"Year by year" }));
-  const htable = el("table", { class:"flat" });
+    el("h3", { class:"cap", id:"histHead", text:"Year by year" }));
+  const htable = el("table", { class:"flat", "aria-labelledby":"histHead" });
   htable.append(el("thead", {}, el("tr", {},
     el("th", { class:"l", text:"Year" }), el("th", { text:"Revenue" }),
     el("th", { text:"Net profit" }), el("th", { text:"Total assets" }))));
@@ -1457,7 +1650,7 @@ function renderCompany() {
       if (i === 0) { tr.append(el("td", { class:"l", style:"color:" + INK, text:String(v) })); return; }
       const color = v == null ? FAINT : (i === 2 && v < 0 ? NEG : INK);
       tr.append(el("td", {}, v == null
-        ? el("span", { style:"color:" + color, text:"—" })
+        ? blank()
         : figLink(r, p[0], HIST_KEYS[i], "€" + fmt.format(v), color)));
     });
     hbody.append(tr);
@@ -1472,7 +1665,7 @@ function renderCompany() {
   wrap.append(el("div", { class:"panelrow wide" }, ratioPanel, histPanel));
 
   const src = el("div", { style:"padding:16px 18px 0;" },
-    el("div", { class:"cap", text:"Filings these figures came from" }));
+    el("h3", { class:"cap", text:"Filings these figures came from" }));
   const links = el("div", { class:"srclinks" });
   const perYear = {}, seen = {};
   for (const s of (r.src || [])) perYear[s[0]] = (perYear[s[0]] || 0) + 1;
@@ -1486,7 +1679,8 @@ function renderCompany() {
       title = "Filing " + seen[yr] + " of " + perYear[yr] + " for " + yr + " (PDF)";
     }
     links.append(el("a", { class:"srclink", href:PDF_BASE + guid + ".pdf",
-      target:"_blank", rel:"noopener noreferrer", title:title, text:label }));
+      target:"_blank", rel:"noopener noreferrer", title:title, text:label,
+      "aria-label":"Audited filing for FY " + label + ", PDF, opens in a new tab" }));
   }
   src.append(links);
   src.append(el("p", { class:"foot", style:"padding:12px 0 0;",
@@ -1511,29 +1705,39 @@ function renderSectors(pool) {
   wrap.append(el("p", { class:"lede",
     text: rows.length + " of " + allSectors.size + " sectors have at least five companies and "
        + "can carry a median — a median of two is not a benchmark. Medians are taken "
-       + "across the companies in each sector with the ratio proven. Click a row to screen "
-       + "that sector." }));
+       + "across the companies in each sector with the ratio proven. Select a sector to "
+       + "screen it." }));
 
   const table = el("table", { class:"sectors" });
+  table.append(el("caption", { class:"sr",
+    text:"Sectors by revenue in view, with sector medians. Each sector name opens the "
+       + "screener filtered to it." }));
   const head = el("tr");
   const heads = ["Sector", "Companies", "Revenue in view", "Net margin", "ROA", "ROE",
                  "Liab / assets", "Asset turnover", "Cash conv."];
-  heads.forEach((h, i) => head.append(el("th", { class: i === 0 ? "first" : null, text:h })));
+  heads.forEach((h, i) => head.append(el("th", { class: i === 0 ? "first" : null,
+                                                 scope:"col", text:h })));
   table.append(el("thead", {}, head));
   const tbody = el("tbody");
+  const nil = text => [el("span", { class:"nil", "aria-hidden":"true", text:"–" }),
+                       el("span", { class:"sr", text })];
   for (const row of rows) {
-    const tr = el("tr", { onClick: () => set({ route:"screener", sector:row.name,
-                                               selected:null, cursor:0, rowLimit:100 }) });
-    tr.append(el("td", { class:"first", title:row.name, text:row.name }));
+    const open = () => set({ route:"screener", sector:row.name, selected:null,
+                             cursor:0, rowLimit:100 });
+    const tr = el("tr", { onClick: e => { if (!e.target.closest("a")) open(); } });
+    tr.append(el("th", { class:"first", scope:"row", title:row.name },
+      el("a", { class:"rowlink", "data-fk":"sector:" + row.name,
+                href: hrefFor({ route:"screener", sector:row.name, selected:null }),
+                onClick: openOnClick(open), text:row.name })));
     tr.append(el("td", { text:fmt.format(row.b.companies) }));
-    tr.append(el("td", { style:"color:" + (row.revCount ? INK : FAINT),
-      text: row.revCount ? "€" + compact(row.rev) : "—" }));
+    tr.append(el("td", { style:"color:" + INK },
+      row.revCount ? "€" + compact(row.rev) : nil("no revenue in view")));
     for (const c of cols) {
       const v = row.b.med[c[0]];
       tr.append(el("td", { style:"color:" + (v == null ? FAINT : v < 0 ? NEG : INK),
         title: row.b.n && row.b.n[c[0]] != null
-          ? "median of " + row.b.n[c[0]] + " companies" : null,
-        text: v == null ? "—" : c[1](v) }));
+          ? "median of " + row.b.n[c[0]] + " companies" : null },
+        v == null ? nil("too few companies for a median") : c[1](v)));
     }
     tbody.append(tr);
   }
@@ -1564,21 +1768,27 @@ function renderMovers(pool) {
   ];
   for (const spec of specs) {
     const key = spec[2], dir = spec[3], f = spec[4];
-    const list = el("div", { class:"moverlist" },
+    const headId = "mv-" + spec[0].toLowerCase().replace(/[^a-z]+/g, "-");
+    const list = el("section", { class:"moverlist", "aria-labelledby":headId },
       el("div", { class:"moverhead" },
-        el("div", { class:"cap", text:spec[0] }),
+        el("h3", { class:"cap", id:headId, text:spec[0] }),
         el("div", { text:spec[1] })));
     const items = base.filter(r => r[key] != null)
       .sort((a, b) => dir * (b[key] - a[key])).slice(0, 12);
     if (!items.length) list.append(el("div", { class:"empty", text:"No company qualifies." }));
+    /* An ordered list: the rank is the order, so it is read as one rather than
+       repeated as a number in every item. Each company is a real link. */
+    const ol = el("ol", { style:"list-style:none;margin:0;padding:0;" });
     items.forEach((r, i) => {
-      list.append(el("button", { class:"moveritem", type:"button",
-        onClick: () => set({ route:"company", selected:r.id }) },
-        el("span", { class:"rank", text:String(i + 1) }),
+      ol.append(el("li", {}, el("a", { class:"moveritem", href:"#/company/" + enc(r.id),
+        "data-fk":"mover:" + spec[0] + ":" + r.id,
+        onClick: openOnClick(() => set({ route:"company", selected:r.id })) },
+        el("span", { class:"rank", "aria-hidden":"true", text:String(i + 1) }),
         el("span", { class:"nm", title:r.n, text:r.n }),
         el("span", { class:"val", style:"color:" + (r[key] < 0 ? NEG : POS),
-                     text:f(r[key]) })));
+                     text:f(r[key]) }))));
     });
+    list.append(ol);
     lists.append(list);
   }
   wrap.append(lists);
@@ -1635,14 +1845,14 @@ function renderQuality(pool) {
         el("span", { class:"qlabel", text:label }),
         el("span", { class:"qnum",
           text: fmt.format(count) + " · " + share.toFixed(0) + "%" })),
-      el("div", { class:"qtrack" },
+      el("div", { class:"qtrack", "aria-hidden":"true" },
         el("div", { style:"width:" + Math.max(share, 0.4).toFixed(2) + "%;background:"
                           + (fill || (share >= 66 ? POS : share >= 33 ? "#999999" : NEG)) })));
   };
 
   const panels = el("div", { class:"panelrow" });
   for (const g of groups) {
-    const panel = el("div", { class:"panel" }, el("div", { class:"cap", text:g[0] }));
+    const panel = el("div", { class:"panel" }, el("h3", { class:"cap", text:g[0] }));
     const bars = el("div", { class:"qbars" });
     for (const f of g[2]) {
       bars.append(bar(f[1], pool.filter(r => r[f[0]] != null && r[f[0]] !== "").length));
@@ -1658,7 +1868,7 @@ function renderQuality(pool) {
     filings[b] = (filings[b] || 0) + 1;
   }
   const fpanel = el("div", { class:"panel" },
-    el("div", { class:"cap", text:"Filings read per company" }));
+    el("h3", { class:"cap", text:"Filings read per company" }));
   const fbars = el("div", { class:"qbars" });
   for (const k of Object.keys(filings).sort()) {
     fbars.append(bar(k === "1" ? "1 filing" : k + " filings", filings[k], SERIES));
@@ -1673,7 +1883,7 @@ function renderQuality(pool) {
      the most recent year, so the newest column is not the fullest one — the
      by-year view is only as good as the year it is pointed at. */
   const ypanel = el("div", { class:"panel" },
-    el("div", { class:"cap", text:"Companies filing, by fiscal year" }));
+    el("h3", { class:"cap", text:"Companies filing, by fiscal year" }));
   const ybars = el("div", { class:"qbars" });
   const counts = YEARS.map(y => [y, pool.filter(r => r.fy && r.fy[String(y)]).length]);
   const fullest = counts.reduce((a, c) => c[1] > a[1] ? c : a, [null, 0]);
@@ -1719,7 +1929,26 @@ function pinRankColumn() {
     rank.getBoundingClientRect().width.toFixed(2) + "px");
 }
 
-let renderedRoute = null;
+let renderedRoute = null, renderedPageKey = null;
+const BASE_TITLE = document.title;
+
+/* What a screen reader should hear after this render — the thing that changed
+   and did not move focus: a result count, a copied-rows confirmation, the name
+   of the company stepped to. */
+function describe(sc) {
+  if (state.copyStatus) return state.copyStatus;
+  if (state.route === "company") {
+    const r = DATA.find(x => x.id === state.selected);
+    return r ? r.n + ", FY " + r.y : "Company not found";
+  }
+  if (state.route === "screener" || state.route === "latest") {
+    const warn = byId("warnLine").textContent;
+    return byId("pageTitle").textContent + ": " + byId("resultLine").textContent
+      + (warn ? ". " + warn : "")
+      + (sc.rows.length ? "" : ". No company meets all of these criteria.");
+  }
+  return TITLES[state.route];
+}
 
 function render() {
   /* Coming back from a company, the row it was opened from is put back in view
@@ -1727,7 +1956,11 @@ function render() {
      the reader has lost their place. */
   const returning = renderedRoute === "company"
     && (state.route === "screener" || state.route === "latest");
+  const firstRender = renderedPageKey === null;
+  const pageChanged = !firstRender && renderedPageKey !== pageKey();
+  const focusKey = focusKeyOf(document.activeElement);
   renderedRoute = state.route;
+  renderedPageKey = pageKey();
   const rows = pool();
   const sc = screened(rows);
   lastRows = sc.rows;
@@ -1749,6 +1982,20 @@ function render() {
   if (document.fonts) document.fonts.ready.then(pinRankColumn);
   if (returning) moveCursor(0);
   renderFooter(sc);
+
+  /* The tab and history entry name the view, so a bookmark, a browser history
+     list or a screen reader's window title says which company or year this is. */
+  const co = state.route === "company" ? DATA.find(x => x.id === state.selected) : null;
+  document.title = state.route === "company" ? (co ? co.n : "Company") + " · Tregu"
+                 : state.route === "latest" ? "FY " + state.year + " · Tregu"
+                 : state.route === "screener" ? BASE_TITLE
+                 : TITLES[state.route] + " · Tregu";
+
+  if (firstRender) return;   // nothing has changed yet; leave focus where the browser put it
+  const landed = placeFocus(focusKey, pageChanged, returning);
+  /* Arriving on a company's heading, the reader hears its name from the heading
+     itself; announcing it too would say it twice. */
+  if (!(landed && landed.id === "coHeading")) announce(describe(sc));
 }
 
 byId("q").addEventListener("input",
@@ -1764,6 +2011,12 @@ byId("critValue").addEventListener("keydown", e => { if (e.key === "Enter") addC
 byId("critAdd").addEventListener("click", addCriterion);
 window.addEventListener("keydown", onKey);
 window.addEventListener("resize", pinRankColumn);
+byId("skip").addEventListener("click", () => {
+  const target = document.querySelector("#gridBody tr.cur a.rowlink")
+              || document.querySelector("#gridBody a.rowlink, table.sectors a.rowlink, .moveritem")
+              || byId("coHeading") || byId("pageTitle");
+  if (target) target.focus();
+});
 /* Back, Forward, and a hash edited by hand all land here. popstate and
    hashchange can both fire for one navigation; applyUrl ignores a hash it has
    already applied, so the page renders once. */
