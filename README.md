@@ -31,6 +31,8 @@ Only figures an arithmetic identity could prove are shown. A blank cell means th
 could not be proven, not that it is zero. Screening excludes companies with no proven
 value for the metric being screened, and says how many it excluded.
 
+Published figures are audited against their pages: the latest audit found **48 of 50** randomly drawn figures exactly as printed, and both causes of the misses are fixed. See [AUDIT.md](AUDIT.md) for every figure checked, each linked to its page.
+
 Every company page links the audited PDFs its figures were read from, so any number can
 be checked against the page it came from.
 
