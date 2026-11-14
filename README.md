@@ -1,7 +1,9 @@
 # Tregu
 
-Fundamentals for Kosovo companies, read from audited financial statements published by
-the Ministry of Finance (mf.rks-gov.net) and joined to the ARBK business registry.
+Kosovo's private economy, as it moves: business formation and closure for every
+registered business, monthly since 2001, from the ARBK business registry — and
+fundamentals for the larger companies, read from audited financial statements published
+by the Ministry of Finance (mf.rks-gov.net).
 
 *Tregu* is Albanian for **the market**.
 
@@ -10,6 +12,10 @@ screener, not an exchange.
 
 ## What it shows
 
+- **Pulse** (the home page) — new businesses and closures by month, sector and
+  municipality; who is starting them; and the Tregu Index, revenue growth of the same
+  audited companies year on year, chained, so a change in *who filed* is never read as a
+  change in the economy
 - **893 companies**, 660 matched to the business registry, spanning fiscal years 2013–2025
 - **Screener** — each company at its own best-covered recent year
 - **By fiscal year** — every company on one chosen year, so no two rows are years apart
@@ -33,5 +39,6 @@ cd scraper
 python revalidate.py              # re-score every document
 python build_dataset.py           # company-year rows, ratios, derivations
 python build_screener_payload.py  # one row per company + per-year records
+python build_pulse.py             # registry series for the Pulse (needs the warehouse)
 python build_screener_page.py     # inject into screener_template.html
 ```
