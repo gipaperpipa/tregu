@@ -16,6 +16,10 @@ screener, not an exchange.
   municipality; who is starting them; and the Tregu Index, revenue growth of the same
   audited companies year on year, chained, so a change in *who filed* is never read as a
   change in the economy
+- **Sector and municipality pages** — formation, what is being started and where, who
+  is starting it, and the audited companies there with their own like-for-like index
+- **Watchlist** — follow a company, sector or municipality; Tregu marks what is new when
+  you come back (kept in your browser only)
 - **893 companies**, 660 matched to the business registry, spanning fiscal years 2013–2025
 - **Screener** — each company at its own best-covered recent year
 - **By fiscal year** — every company on one chosen year, so no two rows are years apart
