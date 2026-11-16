@@ -7,42 +7,42 @@
 <meta name="description" content="Fundamentals for 893 Kosovo companies, read from audited financial statements published by the Ministry of Finance and joined to the ARBK business registry. Every figure shown was proven against the statement’s own arithmetic.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;450;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   /* The design commits to one visual world - a lit sheet between a dark header
      and a dark status bar - so every colour is stated outright rather than
      themed. Nothing is left to the host theme, including the body ground. */
   :root {
-    --ground:#f0f0f0; --surface:#ffffff; --rail:#ebebeb;
-    /* muted and faint are darker than the design file states: at #767676 and
-       #b0b0b0 they measured 3.8:1 on the grey grounds and 2.2:1 on white, against
-       WCAG AA's 4.5:1 — 248 failures on the screener alone. These pass on every
-       ground they sit on (white, rail, header, cursor row). Faint keeps its
-       quieter role through glyph weight instead: a blank is an en dash, not an
-       em dash. */
-    --ink:#0a0a0a; --second:#4a4a4a; --muted:#666666; --faint:#6b6b6b;
-    --rule:#e2e2e2; --rule-soft:#ededed; --rule-mid:#c8c8c8; --rule-rail:#d4d4d4;
-    --hover:#e2e2e2; --tint:#e8e8e8; --cursor:#efefef; --sub:#f7f7f7;
-    --pos:#0f7a43; --neg:#c22a1d; --series:#555555; --bar:#8c8c8c;
-    --dark:#0a0a0a; --dark-rule:#333333; --dark-field:#1f1f1f;
-    --dark-ink:#f5f5f5; --dark-mid:#a0a0a0; --dark-dim:#7a7a7a;
-    --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
-    --serif:Newsreader, Georgia, "Times New Roman", serif;
-    --rail-w:246px;
+    /* Dark trading-terminal palette from the Tregu canvas (2026-11-16). Every
+       muted text colour was checked at 4.5:1 or better on the ground, the card
+       surface and the field: #7F8A9E is 5.2:1 on #10141D. */
+    --ground:#0A0D14; --surface:#10141D; --rail:#0C1018; --field:#0C1018;
+    --ink:#E8ECF3; --second:#A4AEC0; --muted:#7F8A9E; --faint:#7F8A9E;
+    --rule:#1C2330; --rule-soft:#171D29; --rule-mid:#2A3344; --rule-rail:#222A38;
+    --hover:#161C28; --tint:#1A2130; --cursor:#182234; --sub:#131925;
+    --pos:#2FD3A0; --neg:#FF6B57; --series:#8FB8FF; --bar:#5C7FB8;
+    --gold:#E3B341; --gold-hi:#F0C45A; --on-accent:#0A0D14; --link:#8FB8FF;
+    --dark:#0C1018; --dark-rule:#222A38; --dark-field:#10141D;
+    --dark-ink:#E8ECF3; --dark-mid:#A4AEC0; --dark-dim:#7F8A9E; --tape:#06080D;
+    --sans:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --display:"Space Grotesk", Inter, ui-sans-serif, system-ui, sans-serif;
+    --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    --serif:var(--display);
+    --rail-w:270px;
   }
   * { box-sizing:border-box; }
   html, body { margin:0; padding:0; height:100%; overflow:hidden; }
   body {
     background:var(--ground); color:var(--ink); font-size:13px; line-height:1.45;
-    font-family:Archivo, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-family:var(--sans);
     -webkit-font-smoothing:antialiased;
   }
-  a { color:var(--ink); text-decoration:none; }
-  a:hover { color:#000; text-decoration:underline; }
+  a { color:var(--link); text-decoration:none; }
+  a:hover { color:var(--ink); text-decoration:underline; }
   ::selection { background:var(--tint); }
   input, select, button { font-family:inherit; }
   input:focus-visible, select:focus-visible, button:focus-visible, a:focus-visible {
-    outline:2px solid var(--ink); outline-offset:1px;
+    outline:2px solid var(--gold); outline-offset:1px;
   }
   ::-webkit-scrollbar { width:11px; height:11px; }
   ::-webkit-scrollbar-thumb { background:var(--rule-mid); border:3px solid var(--ground);
@@ -56,7 +56,7 @@
         overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap; border:0; }
   /* The first Tab stop on the page: past the search, the five views, the filters
      and the criteria, straight to the companies. Hidden until it has focus. */
-  .skip { position:fixed; left:12px; top:-48px; z-index:100; background:var(--ink); color:#fff;
+  .skip { position:fixed; left:12px; top:-48px; z-index:100; background:var(--gold); color:var(--on-accent);
           border:0; border-radius:3px; padding:9px 14px; font-size:13px; font-weight:500;
           cursor:pointer; }
   .skip:focus { top:10px; }
@@ -74,7 +74,7 @@
 
   /* ---------- header ---------- */
   header { display:grid; grid-template-columns:var(--rail-w) minmax(0,1fr) auto;
-           align-items:center; background:var(--dark); border-bottom:1px solid #000;
+           align-items:center; background:var(--dark); border-bottom:1px solid var(--rule-rail);
            padding-right:16px; }
   .brand { padding:0 18px; border-right:1px solid var(--dark-rule); }
   .brand .word { font-family:var(--serif); font-size:17px; font-weight:500;
@@ -85,7 +85,7 @@
   .find input { flex:0 1 420px; min-width:0; font-size:13px; color:var(--dark-ink);
                 background:var(--dark-field); border:1px solid var(--dark-rule);
                 border-radius:3px; padding:6px 10px; }
-  .find input::placeholder { color:#8c8c8c; }   /* 4.9:1 on the dark field; dark-dim was 3.8 */
+  .find input::placeholder { color:var(--muted); }   /* 4.9:1 on the dark field; dark-dim was 3.8 */
   .find kbd { font-family:var(--mono); font-size:10px; color:var(--dark-dim);
               border:1px solid var(--dark-rule); border-radius:3px; padding:2px 5px; }
   .topstats { display:flex; gap:22px; align-items:baseline; }
@@ -102,7 +102,7 @@
   aside section { padding:14px 16px; border-bottom:1px solid var(--rule-rail); }
   aside section:last-child { border-bottom:0; }
   aside select, aside input[type="number"] {
-    width:100%; font-size:12.5px; color:var(--ink); background:#fff;
+    width:100%; font-size:12.5px; color:var(--ink); background:var(--field);
     border:1px solid var(--rule-mid); border-radius:3px; padding:6px 7px;
   }
   aside select { margin-top:9px; }
@@ -113,9 +113,9 @@
             border:0; background:transparent; color:var(--second); cursor:pointer;
             padding:7px 16px 7px 0; text-align:left; font-size:13px; width:100%; }
   .navbtn:hover { background:var(--hover); }
-  .navbtn[aria-current="page"] { background:#fff; color:var(--ink); font-weight:600; }
+  .navbtn[aria-current="page"] { background:var(--field); color:var(--ink); font-weight:600; }
   .navmark { display:block; height:16px; background:transparent; }
-  .navbtn[aria-current="page"] .navmark { background:var(--ink); }
+  .navbtn[aria-current="page"] .navmark { background:var(--gold); }
   .navbadge { font-family:var(--mono); font-size:10.5px; color:var(--muted);
               font-variant-numeric:tabular-nums; }
 
@@ -127,7 +127,7 @@
   .preset { border:0; border-left:2px solid transparent; background:transparent;
             cursor:pointer; text-align:left; padding:6px 8px; width:100%; }
   .preset:hover { background:var(--hover); }
-  .preset[aria-pressed="true"] { background:#fff; border-left-color:var(--ink); }
+  .preset[aria-pressed="true"] { background:var(--field); border-left-color:var(--ink); }
   .preset b { display:block; font-size:12.5px; font-weight:400; color:var(--ink); }
   .preset[aria-pressed="true"] b { font-weight:600; }
   .preset span { display:block; font-size:11px; color:var(--muted); margin-top:1px;
@@ -135,14 +135,14 @@
 
   .critgrid { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:6px; }
   .critgrid input[type="number"] { font-family:var(--mono); min-width:0; }
-  .addcrit { width:100%; margin-top:6px; border:1px solid var(--ink); background:var(--ink);
-             color:#fff; border-radius:3px; padding:6px; font-size:12.5px; font-weight:500;
+  .addcrit { width:100%; margin-top:6px; border:1px solid var(--gold); background:var(--gold);
+             color:var(--on-accent); border-radius:3px; padding:6px; font-size:12.5px; font-weight:500;
              cursor:pointer; }
-  .addcrit:hover { background:#000; }
+  .addcrit:hover { background:var(--gold-hi); }
   .chips { display:flex; flex-direction:column; gap:4px; margin-top:9px; }
   .chip { display:flex; align-items:center; justify-content:space-between; gap:8px;
           padding:4px 4px 4px 8px; background:var(--tint); border-left:2px solid var(--ink); }
-  .chip span { font-family:var(--mono); font-size:11.5px; font-weight:500; color:#000; }
+  .chip span { font-family:var(--mono); font-size:11.5px; font-weight:500; color:var(--ink); }
   .chip button { border:0; background:transparent; color:var(--ink); cursor:pointer;
                  line-height:1; padding:0 3px; font-size:14px; }
   .note { margin:12px 0 0; font-size:11px; line-height:1.5; color:var(--muted); }
@@ -161,13 +161,13 @@
   .pagebar .right { display:flex; gap:8px; align-items:center; margin-left:auto; }
   .tabs { display:flex; border:1px solid var(--rule-mid); border-radius:3px; overflow:hidden; }
   .tabs button { border:0; border-left:1px solid var(--rule); cursor:pointer; padding:5px 12px;
-                 font-size:12px; background:#fff; color:var(--second); }
+                 font-size:12px; background:var(--field); color:var(--second); }
   .tabs button:first-child { border-left:0; }
-  .tabs button[aria-pressed="true"] { background:var(--tint); color:#000; font-weight:600; }
-  .btn { border:1px solid var(--rule-mid); background:#fff; color:var(--ink);
+  .tabs button[aria-pressed="true"] { background:var(--tint); color:var(--ink); font-weight:600; }
+  .btn { border:1px solid var(--rule-mid); background:var(--field); color:var(--ink);
          border-radius:3px; padding:5px 11px; font-size:12px; cursor:pointer; }
   .btn:hover { background:var(--ground); }
-  .yearsel { border:1px solid var(--rule-mid); background:#fff; color:var(--ink);
+  .yearsel { border:1px solid var(--rule-mid); background:var(--field); color:var(--ink);
              border-radius:3px; padding:5px 8px; font-family:var(--mono);
              font-size:12px; font-weight:500; cursor:pointer; }
   /* position:relative makes the sheet the containing block for the
@@ -235,7 +235,7 @@
      and middle-click or Ctrl-click opens it in a new tab like any other link. */
   a.rowlink { display:block; color:inherit; text-decoration:none; }
   a.rowlink:hover { text-decoration:none; }
-  a.rowlink:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
+  a.rowlink:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
   /* One line each for the name and its subtitle: a dense table loses its shape
      the moment a three-line company name sets the row height for everything. */
   .coname, .cosub { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -260,7 +260,7 @@
   .twinnote { margin-top:8px; max-width:78ch; font-size:11.5px; line-height:1.55;
               color:var(--ink); border-left:2px solid var(--neg); padding-left:9px; }
   .coacts { display:flex; gap:6px; align-items:center; margin-left:auto; }
-  .yrbadge { font-family:var(--mono); font-size:11.5px; font-weight:600; color:#000;
+  .yrbadge { font-family:var(--mono); font-size:11.5px; font-weight:600; color:var(--ink);
              background:var(--tint); padding:3px 8px; }
   .kpis { display:flex; flex-wrap:wrap; border-bottom:1px solid var(--rule); }
   .kpis > div { flex:1 1 150px; padding:12px 18px; border-left:1px solid var(--rule); }
@@ -279,8 +279,8 @@
   .amuted { font-family:var(--mono); font-size:11px; color:var(--muted); }
   .chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
   .chip { min-height:32px; padding:4px 12px; border-radius:16px; border:1px solid var(--rule-mid);
-          background:#fff; font:inherit; font-size:12px; color:var(--second); cursor:pointer; }
-  .chip[aria-pressed="true"] { background:var(--ink); border-color:var(--ink); color:#fff; }
+          background:var(--field); font:inherit; font-size:12px; color:var(--second); cursor:pointer; }
+  .chip[aria-pressed="true"] { background:var(--gold); border-color:var(--gold); color:var(--on-accent); }
   .strips { display:flex; flex-direction:column; gap:12px; margin-top:12px; }
   .strip { display:grid; grid-template-columns:minmax(0,150px) minmax(80px,1fr) minmax(0,150px);
            gap:12px; align-items:center; }
@@ -291,10 +291,10 @@
   .strip .track::before { content:""; position:absolute; left:0; right:0; top:9px; height:4px;
                           background:var(--rail); }
   .strip .track .med { position:absolute; left:50%; top:3px; width:2px; height:16px;
-                       background:#8c8c8c; }
+                       background:#4A5A78; }
   .strip .track .dot { position:absolute; top:4px; width:14px; height:14px; margin-left:-7px;
-                       border-radius:50%; border:2px solid #fff; box-sizing:border-box;
-                       box-shadow:0 0 0 1px rgba(0,0,0,.25); }
+                       border-radius:50%; border:2px solid var(--surface); box-sizing:border-box;
+                       box-shadow:0 0 0 1px rgba(255,255,255,.25); }
   .strip .sval { display:flex; flex-direction:column; align-items:flex-end; text-align:right;
                  font-family:var(--mono); font-size:12px; font-variant-numeric:tabular-nums; }
   .strip .sval b { font-weight:600; }
@@ -308,10 +308,10 @@
   ol.signals .fig { font-size:12px; margin-top:2px; }
   .lvl { align-self:start; text-align:center; font-family:var(--mono); font-size:9.5px;
          letter-spacing:.08em; padding:3px 0; border:1px solid transparent; }
-  .lvl-high { background:#f6dccf; color:#8a2c09; }
+  .lvl-high { background:rgba(255,107,87,.16); color:#FF8F7F; }
   .lvl-watch { background:var(--rail); color:var(--ink); }
   .lvl-note { border-color:var(--rule-mid); color:var(--second); }
-  .lvl-good { background:var(--ink); color:#fff; }
+  .lvl-good { background:var(--gold); color:var(--on-accent); }
   table.flat.dupont td, table.flat.dupont th, table.flat.cmp td, table.flat.cmp th {
     white-space:nowrap; }
   table.flat.cmp tr.self td { background:var(--ground); }
@@ -349,7 +349,7 @@
   table.flat td.l { text-align:left; padding-left:0; font-family:inherit; color:var(--ink); }
   .srclinks { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
   .srclink { display:inline-block; padding:4px 11px; border:1px solid var(--rule-mid);
-             background:#fff; color:var(--ink); font-family:var(--mono); font-size:12px;
+             background:var(--field); color:var(--ink); font-family:var(--mono); font-size:12px;
              font-weight:500; }
   .srclink:hover { background:var(--tint); text-decoration:none; }
   /* A figure that opens its source page. Dotted, so the table still reads as
@@ -432,7 +432,7 @@
                 background:var(--surface); border:1px solid var(--rule); padding:12px 16px;
                 font-size:12.5px; color:var(--second); }
   .esrc .tag { font-family:var(--mono); font-size:9.5px; letter-spacing:.16em; padding:3px 6px;
-               background:var(--ink); color:#fff; white-space:nowrap; }
+               background:var(--gold); color:var(--on-accent); white-space:nowrap; }
   .esrc .tag.alt { background:var(--second); }
   .egrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));
            gap:16px; }
@@ -473,7 +473,7 @@
            flex-wrap:wrap; gap:10px 40px; }
   .eread h2 { margin:0; flex:1 1 200px; font-family:var(--serif); font-weight:400; font-size:20px; }
   .eread ul { margin:0; padding-left:18px; flex:3 1 480px; display:flex; flex-direction:column;
-              gap:6px; color:#d6d6d6; font-size:12.5px; line-height:1.55; }
+              gap:6px; color:var(--second); font-size:12.5px; line-height:1.55; }
   .pulse { background:var(--ground); min-height:100%; padding:18px; display:flex;
            flex-direction:column; gap:16px; }
   .pkpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:1px;
@@ -504,7 +504,7 @@
                      text-transform:uppercase; color:var(--dark-mid); }
   .pstory h2 { margin:0; font-family:var(--serif); font-weight:400; font-size:27px;
                line-height:1.18; letter-spacing:-.01em; text-wrap:balance; }
-  .pstory p { margin:0; font-size:13.5px; line-height:1.6; color:#d6d6d6; max-width:64ch; }
+  .pstory p { margin:0; font-size:13.5px; line-height:1.6; color:var(--second); max-width:64ch; }
   .pstory .pbars { flex:2 1 240px; min-width:0; display:flex; flex-direction:column; gap:11px; }
   .pstory .pbars .cap { color:var(--dark-mid); }
   .sbar .stop { display:flex; justify-content:space-between; gap:10px; font-size:12.5px; }
@@ -514,11 +514,11 @@
   .pstory .key { font-size:11px; color:var(--dark-mid); }
 
   .ranges { display:flex; border:1px solid var(--rule-mid); border-radius:3px; overflow:hidden; }
-  .ranges button { border:0; border-left:1px solid var(--rule); background:#fff; cursor:pointer;
+  .ranges button { border:0; border-left:1px solid var(--rule); background:var(--field); cursor:pointer;
                    min-width:44px; padding:6px 10px; font-family:var(--mono); font-size:11.5px;
                    color:var(--second); }
   .ranges button:first-child { border-left:0; }
-  .ranges button[aria-pressed="true"] { background:var(--ink); color:#fff; font-weight:600; }
+  .ranges button[aria-pressed="true"] { background:var(--gold); color:var(--on-accent); font-weight:600; }
   .fchart { margin:0; position:relative; }
   .fchart svg { display:block; width:100%; }
   .fchart .callout { text-align:right; font-family:var(--mono); font-size:11px;
@@ -615,14 +615,14 @@
            color:var(--muted); }
   .pfoot a { font-weight:600; }
   .pbtn { align-self:flex-start; display:inline-block; padding:7px 12px; border:1px solid var(--ink);
-          background:var(--ink); color:#fff; font-size:12.5px; font-weight:500; }
-  .pbtn:hover { background:#000; color:#fff; text-decoration:none; }
+          background:var(--gold); color:var(--on-accent); font-size:12.5px; font-weight:500; }
+  .pbtn:hover { background:var(--gold-hi); color:var(--on-accent); text-decoration:none; }
   .pcard ol.feed li:first-child a { border-top:0; }
 
   /* ---------- watchlist ---------- */
   .follow { white-space:nowrap; }
-  .follow[aria-pressed="true"] { background:var(--ink); border-color:var(--ink); color:#fff; }
-  .follow[aria-pressed="true"]:hover { background:#000; }
+  .follow[aria-pressed="true"] { background:var(--gold); border-color:var(--gold); color:var(--on-accent); }
+  .follow[aria-pressed="true"]:hover { background:var(--gold-hi); }
   .wrow { display:flex; align-items:center; gap:12px; padding:9px 0;
           border-top:1px solid var(--rule-soft); }
   .wrow .wn { flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:1px; }
@@ -642,10 +642,10 @@
 
   /* ---------- footer ---------- */
   footer { display:flex; align-items:center; gap:18px; background:var(--dark);
-           border-top:1px solid #000; padding:0 16px; font-family:var(--mono);
+           border-top:1px solid var(--rule); padding:0 16px; font-family:var(--mono);
            font-size:10.5px; color:var(--dark-mid); font-variant-numeric:tabular-nums;
            overflow:hidden; white-space:nowrap; }
-  footer .now { color:#fff; }
+  footer .now { color:var(--ink); }
   footer .keys { margin-left:auto; color:var(--dark-dim); }
   footer .vintage { color:var(--dark-dim); }
 
@@ -679,6 +679,512 @@
   @media (prefers-reduced-motion:no-preference) {
     table.grid tbody tr, .moveritem, table.sectors tbody tr { transition:background 90ms ease; }
   }
+
+  /* ================= Tregu canvas, 2026-11-16 =================
+     A dark terminal: tape, top nav, a scrolling page of cards capped at 1440px.
+     Written after the rules above and overriding them, so the older rules can
+     be read for what each view needs and this block for how it now looks. */
+  body { font-family:var(--sans); }
+  /* One column that may not grow past the viewport: without minmax(0,1fr) the
+     tape, nav and search widened the whole frame to 664px on a 390px phone. */
+  .shell { grid-template-rows:auto auto minmax(0,1fr) 28px; grid-template-columns:minmax(0,1fr); }
+  .shell > * { min-width:0; }
+  .tape { display:flex; gap:30px; padding:8px 24px; background:var(--tape);
+          border-bottom:1px solid #1A2130; overflow-x:auto; white-space:nowrap;
+          font-family:var(--mono); font-size:11.5px; scrollbar-width:none; }
+  .tape::-webkit-scrollbar { display:none; }
+  .tick { display:flex; gap:8px; align-items:baseline; flex-shrink:0; }
+  .tick .tk { color:var(--muted); letter-spacing:.06em; }
+  .tick .tv { color:var(--ink); }
+
+  header { display:flex; flex-wrap:wrap; align-items:center; gap:10px 28px; padding:10px 24px;
+           background:var(--dark); border-bottom:1px solid var(--rule-rail); }
+  .brand { display:flex; align-items:center; gap:10px; padding:0; border:0; color:var(--ink); }
+  .brand:hover { text-decoration:none; color:var(--ink); }
+  .brand svg { width:26px; height:26px; display:block; flex-shrink:0; }
+  .brand .word { font-family:var(--display); font-weight:700; font-size:21px; letter-spacing:-.01em;
+                 color:var(--ink); }
+  .brand .sub { font-family:var(--sans); font-size:11px; color:var(--muted); letter-spacing:.08em;
+                text-transform:uppercase; padding-left:10px; border-left:1px solid var(--rule-rail);
+                margin:0; }
+  nav { flex-direction:row; flex-wrap:wrap; gap:2px; padding:0; border:0; }
+  .navbtn { display:inline-flex; width:auto; gap:6px; padding:10px 12px; color:var(--second);
+            font-weight:500; font-size:13px; }
+  .navbtn:hover { background:transparent; color:var(--ink); text-decoration:none; }
+  .navbtn[aria-current="page"] { background:transparent; color:var(--ink); font-weight:600;
+                                 box-shadow:inset 0 -2px 0 var(--gold); }
+  .navbadge { color:var(--gold); }
+  .find { margin-left:auto; display:flex; align-items:center; gap:8px; flex:0 1 340px; min-width:220px;
+          padding:0 10px; height:38px; background:var(--surface); border:1px solid var(--rule-rail);
+          border-radius:6px; }
+  .find svg { width:14px; height:14px; flex-shrink:0; }
+  .find input { flex:1; min-width:0; background:transparent; border:0; padding:0; color:var(--ink);
+                font-size:13px; }
+  .find input:focus-visible { outline:none; }
+  .find:focus-within { outline:2px solid var(--gold); outline-offset:1px; }
+  .find input::placeholder { color:var(--muted); }
+  .find kbd { font-size:11px; color:var(--muted); border-color:var(--rule-rail); border-radius:4px;
+              padding:1px 6px; }
+
+  #scroll { overflow:auto; min-height:0; position:relative; background:var(--ground); }
+  .page { max-width:1440px; margin:0 auto; padding:24px; display:flex; flex-direction:column; gap:16px; }
+  .pagebar { display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between;
+             gap:8px 24px; padding:0; border:0; }
+  .pagebar h1 { font-family:var(--display); font-size:28px; font-weight:600; letter-spacing:-.02em;
+                line-height:1.15; }
+  .pagesub { margin:4px 0 0; color:var(--second); }
+  .pagebar .count { color:var(--second); font-size:12px; }
+  .pagebar .warn { margin-left:10px; font-size:12px; }
+  .pagebar .right { margin-left:0; flex-wrap:wrap; }
+
+  .split { display:flex; flex-wrap:wrap; align-items:flex-start; gap:16px; min-height:0;
+           grid-template-columns:none; }
+  .split[data-rail="off"] aside { display:none; }
+  aside { flex:1 1 var(--rail-w); max-width:320px; min-width:0; background:transparent; border:0;
+          overflow:visible; display:flex; flex-direction:column; gap:16px; max-height:none; }
+  aside section, aside section:last-child { background:var(--surface); border:1px solid var(--rule);
+          border-radius:6px; padding:16px 18px; }
+  aside .cap { font-size:11px; letter-spacing:.1em; color:var(--muted); }
+  aside select, aside input[type="number"] { height:38px; background:var(--field); color:var(--ink);
+          border:1px solid var(--rule-rail); border-radius:6px; padding:0 10px; font-size:13px; }
+  .chk { color:var(--second); font-size:13px; }
+  .chk input { width:16px; height:16px; accent-color:var(--gold); }
+  .presets { gap:6px; margin-top:12px; }
+  .preset { border:1px solid var(--rule-rail); border-radius:6px; padding:10px 12px; }
+  .preset:hover { background:var(--hover); }
+  .preset[aria-pressed="true"] { background:rgba(227,179,65,0.1); border-color:var(--gold);
+                                 border-left-color:var(--gold); }
+  .preset b { font-weight:600; font-size:13px; }
+  .preset span { font-size:12px; color:var(--second); }
+  .critgrid { gap:8px; margin-top:8px; }
+  .addcrit { height:38px; margin-top:8px; background:transparent; color:var(--ink);
+             border:1px solid #3A4558; border-radius:6px; font-weight:600; }
+  .addcrit:hover { background:var(--hover); }
+  #chips { flex-direction:column; flex-wrap:nowrap; gap:6px; margin-top:12px; }
+  #chips .chip { display:flex; align-items:center; justify-content:space-between; gap:8px;
+                 min-height:0; padding:6px 6px 6px 12px; background:var(--field);
+                 border:1px solid var(--rule-rail); border-radius:6px; cursor:default; }
+  #chips .chip span { font-family:var(--sans); color:var(--ink); font-size:13px; font-weight:400; }
+  #chips .chip button { width:28px; height:28px; color:var(--second); font-size:16px; border-radius:4px; }
+  #chips .chip button:hover { background:var(--hover); }
+  .note { color:var(--second); font-size:12px; }
+
+  main#view { display:block; flex:999 1 640px; min-width:0; background:transparent; }
+  /* Views laid out flat inside one sheet keep that sheet, now a card. */
+  .split[data-route="company"] #view, .split[data-route="movers"] #view,
+  .split[data-route="quality"] #view { background:var(--surface); border:1px solid var(--rule);
+                                       border-radius:6px; overflow:hidden; }
+  .card, .tablebox.card { background:var(--surface); border:1px solid var(--rule); border-radius:6px; }
+  /* The grid keeps its sticky header rows by scrolling inside its card. */
+  .tablebox { overflow:auto; max-height:calc(100vh - 210px); position:relative; }
+  .lede { padding:0 0 14px; border:0; color:var(--second); font-size:13px; }
+  .foot { padding:14px 0 4px; color:var(--muted); font-size:12px; }
+  .empty { color:var(--second); }
+
+  .tabs { padding:3px; gap:2px; background:var(--ground); border:1px solid var(--rule-rail);
+          border-radius:7px; }
+  .tabs button, .tabs button:first-child { height:32px; padding:0 16px; border:0; border-radius:5px;
+          background:transparent; color:var(--second); font-size:12.5px; font-weight:600; }
+  .tabs button[aria-pressed="true"] { background:var(--gold); color:var(--on-accent); }
+  .btn, .yearsel { height:36px; padding:0 14px; background:transparent; color:var(--second);
+                   border:1px solid var(--rule-rail); border-radius:6px; font-size:12.5px; }
+  .btn:hover { background:var(--hover); color:var(--ink); }
+  .yearsel { color:var(--ink); }
+
+  table.grid th, table.sectors thead th { background:var(--rail); }
+  .grouprow th { font-size:11px; letter-spacing:.12em; height:30px; border-color:var(--rule); }
+  .colrow th { top:30px; border-bottom-color:var(--rule-mid); }
+  .colrow th button { font-size:11px; letter-spacing:.06em; color:var(--second); padding:9px 12px; }
+  .colrow th[aria-sort] button { color:var(--gold); }
+  table.grid tbody td, table.grid tbody th { border-bottom-color:var(--rule-soft); border-left-color:transparent;
+          padding:8px 12px; font-size:13px; }
+  table.grid tbody td.pin-rank { color:var(--muted); font-size:12px; }
+  table.grid tbody .pin-name { border-right-color:var(--rule); }
+  .coname { font-weight:600; font-size:13px; }
+  .cosub { font-family:var(--mono); font-size:11px; }
+  table.grid tbody tr:hover > td, table.grid tbody tr:hover > th { background:var(--hover); }
+  .more { border-radius:6px; color:var(--ink); background:var(--surface);
+          border:1px solid var(--rule); margin-top:8px; }
+  table.sectors tbody td, table.sectors tbody th { padding:10px 14px; font-size:13px; }
+
+  /* cards everywhere else */
+  .pcard, .esrc > div { border-radius:6px; border-color:var(--rule); }
+  .pcard h2, .eh, .cohead h2 { font-family:var(--display); }
+  .pcard h2 { font-size:16px; }
+  .pulse, .econ { background:transparent; padding:0; }
+  .pstory, .eread { border-radius:6px; background:var(--surface); border:1px solid var(--rule); }
+  .eread h2, .pstory h2 { font-family:var(--display); font-weight:600; }
+  .cap { font-size:11px; letter-spacing:.1em; }
+  .kpis b, .ptile b, .qhead b { font-family:var(--mono); }
+  .cohead h2 { font-weight:600; font-size:30px; letter-spacing:-.02em; }
+  .yrbadge { color:var(--gold); background:transparent; border:1px solid rgba(227,179,65,.4);
+             border-radius:3px; }
+  .srclink { border-radius:4px; background:transparent; border-color:var(--rule-rail); }
+  .srclink:hover { background:var(--hover); }
+  a.fig { border-bottom-color:#3A4558; }
+  .follow[aria-pressed="true"] { color:var(--on-accent); }
+  .chip[aria-pressed="true"] { color:var(--on-accent); }
+  .ranges { border-color:var(--rule-rail); border-radius:6px; }
+  .ranges button { background:transparent; border-left-color:var(--rule-rail); }
+  .ranges button[aria-pressed="true"] { color:var(--on-accent); }
+  .fchart .gridlbl { background:var(--surface); }
+  .heat .tile { color:var(--ink); }
+
+  /* site footer */
+  .sitefoot { border-top:1px solid var(--rule); background:var(--tape); padding:20px 24px;
+              display:flex; flex-wrap:wrap; justify-content:space-between; gap:16px 40px;
+              font-size:12px; color:var(--second); }
+  .sitefoot > div { flex:1 1 320px; min-width:0; max-width:700px; }
+  .sitefoot b { color:var(--ink); font-weight:600; }
+  .sitefoot p { margin:4px 0 0; max-width:78ch; }
+  footer { background:var(--tape); border-top:1px solid var(--rule); color:var(--second); }
+
+  /* ---------- markets ---------- */
+  .markets { display:flex; flex-direction:column; gap:16px; }
+  .mcard { background:var(--surface); border:1px solid var(--rule); border-radius:6px;
+           padding:18px 20px; min-width:0; }
+  .mhead { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline;
+           gap:4px 12px; }
+  .mhead h2 { margin:0; font-family:var(--display); font-size:16px; font-weight:600; }
+  .msub { margin:2px 0 0; font-size:12px; color:var(--muted); }
+  .mcap { margin:0; font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.1em;
+          text-transform:uppercase; color:var(--muted); }
+  .mcapline { display:flex; justify-content:space-between; gap:12px; align-items:baseline; }
+  .mcapline > span { font-size:12px; color:var(--second); }
+  .mnote { font-size:12px; color:var(--muted); }
+  .mrow1 { display:flex; flex-wrap:wrap; gap:16px; }
+  .mindex { flex:2 1 640px; padding:20px 22px; }
+  .msession { flex:1 1 340px; padding:20px 22px; display:flex; flex-direction:column; }
+  .mtop { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:12px; }
+  .mbig { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px; margin-top:6px; }
+  .mbig b { font-family:var(--display); font-size:52px; font-weight:600; letter-spacing:-.03em; line-height:1; }
+  .mreg .mbig b { font-size:40px; }
+  .mdelta { font-family:var(--mono); font-size:15px; }
+  .mvs { color:var(--second); }
+  .mhow { max-width:420px; }
+  .mhow summary { cursor:pointer; list-style:none; font-size:12px; color:var(--second); padding:8px 12px;
+                  border:1px solid var(--rule-rail); border-radius:6px; }
+  .mhow summary::-webkit-details-marker { display:none; }
+  .mhow summary:hover { color:var(--ink); background:var(--hover); }
+  .mhowbody { margin-top:10px; font-size:12px; color:var(--second); }
+  .mhowbody p { margin:0 0 6px; }
+  .mline { position:relative; height:240px; margin-top:18px; }
+  .mline svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+  .glbl { position:absolute; left:0; font-family:var(--mono); font-size:11px; color:var(--muted); }
+  .gflag { position:absolute; transform:translateX(-50%); font-family:var(--mono); font-size:11px;
+           white-space:nowrap; }
+  .gdot { position:absolute; right:-4px; width:9px; height:9px; border-radius:50%; background:var(--gold);
+          box-shadow:0 0 0 4px rgba(227,179,65,.2); }
+  .mxaxis { display:flex; justify-content:space-between; margin-top:6px; font-family:var(--mono);
+            font-size:11px; color:var(--muted); }
+  .mgrowwrap { margin-top:20px; padding-top:16px; border-top:1px solid var(--rule); }
+  .mgrowth { display:grid; gap:6px; margin-top:10px; }
+  .mgrowth > div { display:flex; flex-direction:column; align-items:center; min-width:0; }
+  .gup { height:78px; width:100%; display:flex; flex-direction:column; justify-content:flex-end;
+         align-items:center; gap:3px; }
+  .gup span { font-family:var(--mono); font-size:11px; }
+  .gup i, .gdown i { display:block; width:100%; max-width:44px; }
+  .gup i { background:var(--pos); border-radius:2px 2px 0 0; }
+  .gaxis { width:100%; height:1px; background:var(--rule-mid); }
+  .gdown { height:10px; width:100%; display:flex; justify-content:center; }
+  .gdown i { background:var(--neg); border-radius:0 0 2px 2px; }
+  .gy, .gn { font-family:var(--mono); font-size:11px; color:var(--second); }
+  .gn { color:var(--muted); }
+  .mrows { display:flex; flex-direction:column; margin-top:8px; }
+  .mrowi { display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:12px 0;
+           border-bottom:1px solid var(--rule); }
+  .mfig { text-align:right; flex-shrink:0; display:flex; flex-direction:column; }
+  .mfig b { font-family:var(--mono); font-size:17px; font-weight:500; }
+  .mfig span { font-family:var(--mono); font-size:11.5px; }
+  .mbreadth { margin-top:auto; padding-top:18px; }
+  .mbar { display:flex; height:10px; margin-top:10px; border-radius:2px; overflow:hidden; gap:2px; }
+  .mbarkey { display:flex; justify-content:space-between; margin-top:8px; font-family:var(--mono); font-size:12px; }
+  .mmap { padding:20px 22px; }
+  .mkey { display:flex; align-items:center; gap:2px; font-family:var(--mono); font-size:11px; color:var(--second); }
+  .mkey i { display:inline-block; width:22px; height:10px; }
+  .mkey span { margin:0 6px; }
+  .tmap { position:relative; height:360px; margin-top:16px; }
+  .tmap .tile { position:absolute; display:flex; flex-direction:column; justify-content:space-between;
+                gap:8px; padding:12px 14px; color:var(--ink); text-decoration:none; overflow:hidden;
+                border:1.5px solid var(--surface); }
+  .tmap .tile:hover { filter:brightness(1.18); text-decoration:none; }
+  .tmap .tn { display:flex; flex-direction:column; min-width:0; }
+  .tmap .tn b { font-family:var(--display); font-weight:600; font-size:15px; line-height:1.2; }
+  .tmap .tn span { font-size:12px; color:#E4EAF2; }
+  .tmap .tf { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:8px 12px; }
+  .tmap .tf b { font-family:var(--mono); font-weight:500; font-size:18px; line-height:1; }
+  .tmap .tf span { font-family:var(--mono); font-size:12px; color:#E4EAF2; text-align:right; }
+  .tmap .txl .tn b { font-size:22px; }
+  .tmap .txl .tf b { font-size:34px; }
+  .tmap .tm { padding:8px 9px; }
+  .tmap .tm .tn b { font-size:13px; }
+  .tmap .tm .tf b { font-size:13px; }
+  .tmap .ts { align-items:center; justify-content:center; padding:2px; }
+  .tcode { font-family:var(--mono); font-size:11px; }
+  .mmap .pfine, .mcard .pfine { margin:12px 0 0; font-size:12px; color:var(--muted); }
+  .mrow3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr)); gap:16px; }
+  .mlist { display:flex; flex-direction:column; margin-top:6px; }
+  .mitem, .mfile { display:flex; justify-content:space-between; align-items:center; gap:12px;
+                   padding:10px 0; border-bottom:1px solid var(--rule); color:var(--ink); }
+  .mitem:hover, .mfile:hover { text-decoration:none; color:var(--ink); background:var(--sub); }
+  .mi { display:flex; flex-direction:column; min-width:0; }
+  .mi b { font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .mi span { font-size:12px; color:var(--muted); }
+  .mv { display:flex; flex-direction:column; align-items:flex-end; flex-shrink:0; }
+  .mv b { font-family:var(--mono); font-size:13px; font-weight:400; padding:2px 8px; border-radius:3px; }
+  .chip-up { color:var(--pos); background:rgba(47,211,160,.12); }
+  .chip-down { color:var(--neg); background:rgba(255,107,87,.12); }
+  .mv span { font-family:var(--mono); font-size:11.5px; color:var(--second); margin-top:3px; }
+  .fdate { font-family:var(--mono); font-size:11.5px; color:var(--second); flex-shrink:0; width:86px; }
+  .fname { flex:1; min-width:0; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .fbadge { font-family:var(--mono); font-size:11px; color:var(--gold); border:1px solid rgba(227,179,65,.4);
+            border-radius:3px; padding:1px 6px; flex-shrink:0; }
+  div.mfile .fbadge { color:var(--muted); border-color:var(--rule-rail); }
+  .mleaders { padding:18px 0 6px; }
+  .mhead.pad { padding:0 20px 12px; }
+  /* Positioned, so the screen-reader-only spans in the table are placed in
+     this box and not against #scroll, which they widened to 680px on a phone. */
+  .mcard, .mtablebox { position:relative; }
+  .mtablebox { overflow-x:auto; }
+  .mtable { width:100%; min-width:900px; border-collapse:collapse; font-size:13px; }
+  .mtable th, .mtable td { padding:9px 12px; border-bottom:1px solid var(--rule-soft); }
+  .mtable thead th { font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted);
+                     font-weight:600; border-bottom:1px solid var(--rule-rail); }
+  .mtable .l { text-align:left; } .mtable .r { text-align:right; }
+  .mtable td.r { font-family:var(--mono); }
+  .mtable tr > :first-child { padding-left:20px; } .mtable tr > :last-child { padding-right:20px; }
+  .mtable tbody th { font-weight:400; }
+  .mtable .rank, .mtable .muted { color:var(--muted); font-size:12px; }
+  .lname { color:var(--ink); font-weight:600; }
+  .lname:hover { color:var(--ink); }
+  .lmeta { display:block; font-family:var(--mono); font-size:11px; color:var(--muted); }
+  .mtable .sec { color:var(--second); }
+  .gspark { display:block; width:120px; height:26px; overflow:visible; }
+  .mreg { display:flex; flex-wrap:wrap; gap:24px 40px; padding:20px 22px; }
+  .mregtext { flex:1 1 320px; min-width:0; display:flex; flex-direction:column; gap:10px; }
+  .mregtext p { margin:0; color:var(--second); max-width:52ch; }
+  .mregtext > a { align-self:flex-start; font-size:12.5px; }
+  .mstats { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(130px,100%),1fr)); gap:14px; margin-top:8px; }
+  .mstats b { display:block; font-family:var(--mono); font-size:17px; font-weight:400; }
+  .mstats span { font-size:12px; color:var(--muted); }
+  .stack { display:flex; flex-direction:column; gap:16px; }
+  .stack > .lede { padding:0; }
+  .preset { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .preset .ptext { display:block; min-width:0; }
+  .preset .pcount { font-family:var(--mono); color:var(--second); flex-shrink:0; margin:0;
+            font-size:13px; }
+  .preset[aria-pressed="true"] .pcount { color:var(--gold); }
+  .covlist { display:flex; flex-direction:column; gap:9px; margin-top:12px; }
+  .covtop { display:flex; justify-content:space-between; gap:8px; font-size:12px; color:var(--ink); }
+  .covtop .mono { color:var(--second); }
+  .covtrack { height:4px; margin-top:4px; background:var(--rule); border-radius:2px; }
+  .covtrack i { display:block; height:4px; background:var(--series); border-radius:2px; }
+  .btn.primary { background:var(--gold); color:var(--on-accent); border-color:var(--gold); font-weight:600; }
+  .btn.primary:hover { background:var(--gold-hi); color:var(--on-accent); }
+  .pcard.membed { flex:2 1 480px; border:0; padding:0; background:transparent; }
+
+  @media (max-width:860px) {
+    header { padding:10px 16px; gap:8px 16px; }
+    .brand .sub { display:none; }
+    nav { order:3; flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;
+          margin:0 -16px; padding:0 8px; width:calc(100% + 32px); }
+    nav::-webkit-scrollbar { display:none; }
+    .navbtn { flex-shrink:0; }
+    .find { flex:1 1 200px; min-width:0; }
+    .find kbd { display:none; }
+    /* No wrap: a wrapping column sizes its line to the widest item, and the
+       screener's 1,080px table then widened the whole page. */
+    .split { flex-direction:column; flex-wrap:nowrap; align-items:stretch; }
+    .split > * { min-width:0; width:100%; }
+    aside { max-width:none; flex:none; }
+    main#view { flex:none; }
+    #view .panel, #view .pcard { overflow-x:auto; position:relative; }
+    .coacts { flex-wrap:wrap; margin-left:0; }
+  }
+  @media (max-width:640px) {
+    .tape { padding:8px 16px; gap:22px; }
+    .page { padding:16px; }
+    .pagebar h1 { font-size:24px; }
+    .mbig b { font-size:40px; }
+    .mindex, .msession, .mmap, .mreg { padding:16px; }
+    .mline { height:180px; }
+    .mxaxis span:nth-child(even) { visibility:hidden; }
+    .mgrowth { gap:2px; }
+    .gup span { font-size:9px; }
+    .gn { display:none; }
+    /* A treemap of 18 sectors cannot be read at 360px; it becomes a list of
+       the same tiles, largest first, each as wide as its share allows. */
+    .tmap { position:static; height:auto; display:flex; flex-wrap:wrap; gap:3px; }
+    .tmap .tile { position:static; width:auto !important; height:auto !important;
+                  flex:1 1 140px; min-height:76px; border:0; }
+    .tmap .ts { flex:1 1 44px; min-height:44px; }
+    .tablebox { max-height:calc(100vh - 160px); }
+    .mhow { max-width:none; width:100%; }
+  }
+
+  /* ---------- company, sectors, economy (canvas, 2026-11-16) ---------- */
+  .page[data-route="company"] > .pagebar { display:none; }
+  .split[data-route="company"] #view, .split[data-route="sectors"] #view { background:transparent; border:0;
+    overflow:visible; }
+  .crumbs { display:flex; flex-wrap:wrap; gap:8px; font-size:12px; color:var(--muted); }
+  .crumbs [aria-current] { color:var(--second); }
+  .company .cohead { display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between;
+    gap:16px 24px; padding:0; border:0; }
+  .coid { display:flex; gap:16px; align-items:flex-start; min-width:0; flex:1 1 480px; }
+  .comono { width:56px; height:56px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    background:#151A25; border:1px solid var(--rule-mid); border-radius:8px; font-family:var(--display);
+    font-size:22px; font-weight:700; color:var(--gold); }
+  .company h1 { margin:0; font-family:var(--display); font-size:30px; font-weight:600; letter-spacing:-.02em;
+    line-height:1.15; text-wrap:balance; }
+  .company h1:focus { outline:none; }
+  .company .cometa { margin-top:6px; font-family:var(--mono); font-size:12px; color:var(--second); }
+  .cotags { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+  .cotags > * { font-size:12px; padding:3px 9px; border:1px solid var(--rule-mid); border-radius:4px; color:var(--second); }
+  .cotags .gold { color:var(--gold); border-color:rgba(227,179,65,.45); }
+  .company .coacts { display:flex; flex-wrap:wrap; gap:8px; margin-left:0; }
+  .company .coacts .btn { height:40px; display:inline-flex; align-items:center; }
+  .btn.primary:hover { text-decoration:none; }
+  .conotice { display:flex; gap:12px; align-items:flex-start; padding:10px 14px; background:rgba(227,179,65,.07);
+    border:1px solid rgba(227,179,65,.3); border-radius:6px; }
+  .conotice > span:first-child { font-family:var(--mono); color:var(--gold); }
+  .coquotes { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr)); gap:1px;
+    background:var(--rule); border:1px solid var(--rule); border-radius:6px; overflow:hidden; }
+  .coquotes > div { background:var(--surface); padding:16px 18px; display:flex; flex-direction:column; gap:6px; min-width:0; }
+  .qv { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 10px; }
+  .qv b { font-family:var(--display); font-size:28px; font-weight:600; letter-spacing:-.02em; line-height:1.1; }
+  .qv span { font-family:var(--mono); font-size:13px; }
+  .coquotes a { font-size:12px; align-self:flex-start; }
+  .corow2 { display:flex; flex-wrap:wrap; gap:16px; }
+  .cochart { flex:2 1 640px; padding:20px 22px; }
+  .coratios { flex:1 1 360px; padding:20px 22px; }
+  .coratios h2, .cofilings h2 { margin:0; font-family:var(--display); font-size:16px; font-weight:600; }
+  .cochart .mhead { align-items:center; }
+  .coplotbox { overflow-x:auto; margin-top:18px; }
+  .cobars { display:grid; gap:8px; min-width:560px; }
+  .cobar { display:flex; flex-direction:column; align-items:center; min-width:0; }
+  .cobox { width:100%; height:240px; display:flex; flex-direction:column; justify-content:flex-end; align-items:center;
+    gap:5px; border-bottom:1px solid var(--rule-mid); }
+  .cobox span { font-family:var(--mono); font-size:11px; white-space:nowrap; }
+  .cobox i { display:block; width:100%; max-width:52px; border-radius:2px 2px 0 0; }
+  .conone { width:100%; max-width:52px; height:34px; display:flex; align-items:center; justify-content:center;
+    border:1px dashed #3A4558; border-bottom:0; border-radius:2px 2px 0 0; font-family:var(--mono); font-size:11px;
+    color:var(--muted); }
+  .coy { margin-top:6px; font-family:var(--mono); font-size:11px; color:var(--muted); }
+  .coy.on { color:var(--ink); }
+  .plegend { margin-top:14px; color:var(--second); }
+  .plegend .sw { border-radius:2px; }
+  .plegend .sw.line { width:14px; height:4px; }
+  .corlist { display:flex; flex-direction:column; margin-top:6px; }
+  .corrow { padding:10px 0; border-bottom:1px solid var(--rule); }
+  .cortop { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+  .cortop .mono b { font-size:14px; font-weight:400; color:var(--ink); }
+  .cortop .mono span { font-size:12px; color:var(--muted); }
+  .corbars { display:flex; flex-direction:column; gap:3px; margin-top:6px; }
+  .corbars i { display:block; height:4px; border-radius:2px; }
+  .cohist { padding:18px 0 14px; }
+  .cohist .mhead, .cohist > .pfine { padding:0 20px; }
+  .cohist .mhead { align-items:flex-start; }
+  .cotable { width:100%; border-collapse:collapse; font-size:13px; margin-top:12px; }
+  .cotable th, .cotable td { padding:7px 10px; text-align:right; white-space:nowrap; font-family:var(--mono);
+    border-bottom:1px solid var(--rule-soft); }
+  .cotable thead th { font-size:11px; color:var(--second); font-weight:600; border-bottom:1px solid var(--rule-rail); }
+  .cotable thead th.hl { color:var(--gold); }
+  .cotable .hl { background:rgba(227,179,65,.06); }
+  .cotable .l { text-align:left; font-family:var(--sans); position:sticky; left:0; background:var(--surface);
+    padding-left:20px; }
+  .cotable tbody th.l { font-weight:400; color:var(--second); }
+  .cotable tr.strong th.l { font-weight:600; color:var(--ink); }
+  .cotable tr.cosec th { text-align:left; font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--muted); padding:14px 20px 6px; position:static; }
+  .cotable sup { color:var(--muted); font-size:9px; }
+  .cotable tr > :last-child { padding-right:20px; }
+  .mlist .cofile { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--rule);
+    color:var(--ink); }
+  .cofile:hover { background:var(--sub); text-decoration:none; color:var(--ink); }
+  .cofile .mi { flex:1; }
+  .pdftag { font-family:var(--mono); font-size:11px; color:var(--link); }
+  .btn.wide { width:100%; margin-top:12px; justify-content:center; }
+  .cogrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(440px,100%),1fr)); gap:16px; align-items:start; }
+  .cogrid > .panel { background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:18px 20px;
+    min-width:0; overflow-x:auto; position:relative; }
+
+  .rheat { width:100%; min-width:860px; border-collapse:separate; border-spacing:3px; font-family:var(--mono); font-size:12px; }
+  .rheat th { font-size:11px; font-weight:600; color:var(--muted); padding:4px 6px; text-align:center; }
+  .rheat th.l { text-align:left; font-family:var(--sans); }
+  .rheat tbody th.l { font-size:13px; font-weight:500; color:var(--ink); white-space:nowrap; padding-right:12px; }
+  .rheat tbody th.l a { color:var(--ink); }
+  .rheat tr.all th.l { font-weight:600; }
+  .rheat td { text-align:center; padding:8px 4px; border-radius:2px; color:var(--ink); }
+  .rheat td.none { color:var(--muted); }
+  .rheat td.num { color:var(--second); text-align:right; padding:8px 8px; }
+  .mcard > .mtablebox { margin-top:14px; }
+  table.league { width:100%; min-width:1180px; border-collapse:collapse; font-size:13px; }
+  .league th, .league td { padding:9px 10px; text-align:right; white-space:nowrap; border-bottom:1px solid var(--rule-soft); }
+  .league td { font-family:var(--mono); }
+  .league .l { text-align:left; }
+  .league tr > :first-child { padding-left:20px; } .league tr > :last-child { padding-right:20px; }
+  .league thead th { font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:600;
+    border-bottom:1px solid var(--rule-rail); }
+  .league thead tr.grp th { text-align:left; border-bottom:1px solid var(--rule); border-left:1px solid var(--rule);
+    letter-spacing:.12em; }
+  .league thead tr.grp th:first-child { border-left:0; }
+  .league td.rule { border-left:1px solid var(--rule); }
+  .league tbody th { font-weight:500; }
+  .league a.rowlink { display:flex; align-items:center; gap:10px; color:var(--ink); }
+  .scode { display:inline-flex; width:22px; height:22px; align-items:center; justify-content:center; flex-shrink:0;
+    font-family:var(--mono); font-size:11px; color:var(--gold); border:1px solid rgba(227,179,65,.4); border-radius:3px; }
+  .hbars { display:flex; flex-direction:column; gap:8px; margin-top:14px; }
+  .hbar { display:grid; grid-template-columns:minmax(0,190px) minmax(60px,1fr) 64px 70px; gap:10px; align-items:center;
+    font-size:12.5px; color:var(--ink); }
+  .hbar:hover { text-decoration:none; color:var(--ink); background:var(--sub); }
+  .hn { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .htrack { display:flex; flex-direction:column; gap:3px; }
+  .htrack i { display:block; height:6px; border-radius:2px; }
+  .hv, .hd { font-family:var(--mono); text-align:right; font-size:12px; }
+  .hd { color:var(--second); }
+
+  .vbars { margin:14px 0 0; }
+  .vplot { display:grid; gap:4px; align-items:end; border-bottom:1px solid var(--rule-mid); }
+  .vplot > div { display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:3px; min-width:0; height:100%; }
+  .vplot span { font-family:var(--mono); font-size:10px; color:var(--second); white-space:nowrap; }
+  .vplot i { display:block; width:100%; max-width:34px; border-radius:2px 2px 0 0; }
+  .vticks { display:grid; gap:4px; margin-top:5px; font-family:var(--mono); font-size:10px; color:var(--muted); text-align:center; }
+  .vticks span { overflow:hidden; }
+  .lfig { margin:14px 0 0; }
+  .lplot { position:relative; height:200px; }
+  .lplot svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+  .lend { position:absolute; right:0; font-family:var(--mono); font-size:11px; background:var(--surface); padding-left:4px; }
+  .lstart { position:absolute; left:0; font-size:11.5px; }
+  .lticks { display:flex; justify-content:space-between; margin-top:6px; font-family:var(--mono); font-size:11px; color:var(--muted); }
+  .lens { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; font-size:12px; color:var(--second); }
+  .lenstag { font-family:var(--mono); font-size:11px; letter-spacing:.14em; color:var(--on-accent); background:var(--gold);
+    padding:3px 8px; border-radius:3px; }
+  .lenstag.alt { background:#8FB8FF; }
+  .egrid2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(520px,100%),1fr)); gap:16px; }
+  .egrid2 > .pcard, .stack > .pcard { border-radius:6px; }
+  .erow2 { display:flex; flex-wrap:wrap; gap:16px; align-items:flex-start; }
+  .erow2 > .mcard { flex:3 1 560px; }
+  .lenscol { flex:2 1 360px; min-width:0; display:flex; flex-direction:column; gap:12px; }
+  .mini .mhead { align-items:baseline; }
+  .mini .mono b { font-size:18px; font-weight:500; }
+  .minibars { display:flex; align-items:flex-end; gap:3px; height:62px; margin-top:10px; border-bottom:1px solid var(--rule-mid); }
+  .minibars a { flex:1 1 0; min-width:0; border-radius:2px 2px 0 0; }
+  .minibars a:hover { filter:brightness(1.25); }
+  .sharebar { display:block; height:6px; min-width:2px; background:#5C7FB8; border-radius:2px; }
+  .econ2 .erow { grid-template-columns:minmax(0,200px) minmax(0,1fr) 44px; }
+  .econ2 .erow a { color:var(--ink); }
+  .econ2 .erow .track { background:var(--rule); }
+  @media (max-width:640px) {
+    .coid { flex-basis:100%; }
+    .comono { display:none; }
+    .company h1 { font-size:24px; }
+    .qv b { font-size:22px; }
+    .cochart, .coratios { padding:16px; }
+    .cobox { height:180px; }
+    .hbar { grid-template-columns:minmax(0,1fr) 56px 60px; }
+    .hbar .htrack { grid-column:1 / -1; grid-row:2; }
+    .vplot span { display:none; }
+  }
 </style>
 </head>
 <body>
@@ -690,23 +1196,42 @@
 
 <div class="shell">
 
+  <!-- The tape: the market's headline figures, scrolling sideways on a phone. -->
+  <div class="tape" id="tape" role="region" aria-label="Headline figures"></div>
+
   <header>
-    <div class="brand">
-      <div class="word">Tregu</div>
-      <div class="sub">Kosovo economy &middot; audited filings</div>
-    </div>
+    <a class="brand" href="#/" id="brand" aria-label="Tregu, Kosovo private markets: home">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect width="24" height="24" rx="5" fill="#E3B341"></rect>
+        <path d="M5.5 16.5 L10 11.5 L13.5 14.5 L18.5 7.5" fill="none" stroke="#0A0D14"
+              stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span class="word">Tregu</span>
+      <span class="sub">Kosovo private markets</span>
+    </a>
+    <nav id="nav" aria-label="Views"></nav>
     <div class="find">
-      <input type="search" id="q" placeholder="Search company, city or sector"
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.5"
+        fill="none" stroke="#7F8A9E" stroke-width="1.5"></circle><path d="M10.5 10.5 L14 14"
+        stroke="#7F8A9E" stroke-width="1.5" stroke-linecap="round"></path></svg>
+      <input type="search" id="q" placeholder="Company, registry no., city or sector"
              aria-label="Search companies">
       <kbd>/</kbd>
     </div>
-    <div class="topstats" id="topstats"></div>
   </header>
 
+  <div id="scroll">
+  <div class="page">
+    <div class="pagebar">
+      <div class="phead1">
+        <h1 id="pageTitle" tabindex="-1"></h1>
+        <p class="pagesub"><span class="count" id="resultLine"></span>
+          <span class="warn" id="warnLine"></span></p>
+      </div>
+      <div class="right" id="pageActions"></div>
+    </div>
   <div class="split">
     <aside aria-label="Filters and saved screens">
-      <nav id="nav" aria-label="Views"></nav>
-
       <section>
         <h2 class="cap">Universe</h2>
         <select id="sector" aria-label="Filter by sector"></select>
@@ -734,17 +1259,30 @@
         <p class="note">The count beside each metric is how many companies in view have it
         proven. Screening never assesses the rest.</p>
       </section>
+
+      <section>
+        <h2 class="cap">What can be screened</h2>
+        <p class="note" style="margin-top:6px">Companies with each figure proven, of
+          <span id="covTotal"></span> in view. Screening never assesses the rest.</p>
+        <div class="covlist" id="coverage"></div>
+      </section>
     </aside>
 
-    <main>
-      <div class="pagebar">
-        <h1 id="pageTitle" tabindex="-1"></h1>
-        <span class="count" id="resultLine"></span>
-        <span class="warn" id="warnLine"></span>
-        <div class="right" id="pageActions"></div>
+    <main id="view"></main>
+  </div>
+  </div>
+    <div class="sitefoot">
+      <div>
+        <b>Every figure opens the page of the PDF it was read from.</b>
+        <p id="footAudit">Tregu covers large companies that file audited statements, not every
+        business in Kosovo.</p>
       </div>
-      <div id="scroll"></div>
-    </main>
+      <div>
+        <b>Sources</b>
+        <p>Ministry of Finance (audited statements) · ARBK business registry · ASK statistics ·
+        Central Bank of Kosovo · KRPP public procurement</p>
+      </div>
+    </div>
   </div>
 
   <footer>
@@ -830,9 +1368,10 @@ const YEARS = (() => {
 })();
 
 /* MUTED and FAINT match the CSS tokens, which were darkened for WCAG AA. */
-const INK = "#0a0a0a", MUTED = "#666666", FAINT = "#6b6b6b", SECOND = "#4a4a4a",
-      POS = "#0f7a43", NEG = "#c22a1d",
-      SERIES = "#555555", SERIES_NEG = "#c22a1d";
+const INK = "#E8ECF3", MUTED = "#7F8A9E", FAINT = "#7F8A9E", SECOND = "#A4AEC0",
+      GOLD = "#E3B341", GRID = "#1C2330", DIMBAR = "#34465F",
+      POS = "#2FD3A0", NEG = "#FF6B57",
+      SERIES = "#8FB8FF", SERIES_NEG = "#FF6B57";
 
 /* Behaviour the design exposes as props. */
 const OPTS = { defaultView:"figures", includeUnmatchedByDefault:false, dataBars:true };
@@ -952,8 +1491,8 @@ const RATIO_ROWS = [
   ["Revenue CAGR","cagr",signed],
 ];
 
-const TITLES = { pulse:"Pulse", economy:"Economy", screener:"Screener", company:"Company",
-                 sectors:"Sector league table", movers:"Movers", quality:"Data quality",
+const TITLES = { pulse:"Markets", economy:"Economy", screener:"Screener", company:"Company",
+                 sectors:"Sectors", movers:"Movers", quality:"Data quality",
                  latest:"By fiscal year", sector:"Sector", places:"Places",
                  place:"Municipality", watchlist:"Watchlist" };
 /* Views that are lists of audited companies, where the rail's filters apply.
@@ -978,7 +1517,7 @@ const state = {
   year: YEARS[0],
   /* Company analysis (§74): which peers a company is measured against, and the
      companies added by hand to its side-by-side table. */
-  peerMode:"size", cmpFor:null, cmpExtra:[],
+  peerMode:"size", cmpFor:null, cmpExtra:[], coMetric:"rev", coAllFilings:null,
 };
 const set = (patch, opts) => {
   /* A company opens over whichever list it was opened from, and closing goes
@@ -1321,6 +1860,12 @@ function pool() {
   return base.map(r => yearRow(r, state.year)).filter(Boolean);
 }
 
+/* How many companies in view a saved screen keeps, for the count beside it. */
+function presetMatches(pool, p) {
+  return pool.filter(r => p.crit.every(c => r[c.k] != null
+    && (c.op === "ge" ? r[c.k] >= c.v : r[c.k] <= c.v))).length;
+}
+
 function screened(pool) {
   /* Evaluable: has a proven value for every screened metric. A company with no
      value was never a candidate, so results are reported against this set and
@@ -1417,12 +1962,17 @@ function moveCursor(d) {
   const next = Math.max(0, Math.min(max, state.cursor + d));
   state.cursor = next;
   const row = paintCursor(next);
-  const box = byId("scroll");
+  /* The table scrolls inside its own card; the page scrolls around it. Both
+     are brought round to the row, measured on screen rather than by offsetTop,
+     whose reference box changed when the table moved into a card. */
+  const box = row && row.closest(".tablebox");
   if (!row || !box) return;
-  const top = row.offsetTop, bottom = top + row.offsetHeight;
-  const headroom = 56;  /* the two sticky header rows */
-  if (top - headroom < box.scrollTop) box.scrollTop = Math.max(0, top - headroom);
-  else if (bottom > box.scrollTop + box.clientHeight) box.scrollTop = bottom - box.clientHeight;
+  const headroom = 64;  /* the two sticky header rows */
+  const b = box.getBoundingClientRect(), r = row.getBoundingClientRect();
+  if (r.top - headroom < b.top) box.scrollTop -= b.top - (r.top - headroom);
+  else if (r.bottom > b.bottom) box.scrollTop += r.bottom - b.bottom;
+  const page = byId("scroll"), pr = page.getBoundingClientRect(), br = box.getBoundingClientRect();
+  if (br.bottom > pr.bottom && br.top > pr.top) page.scrollTop += Math.min(br.top - pr.top, br.bottom - pr.bottom);
 }
 
 function stepCompany(d) {
@@ -1493,7 +2043,7 @@ function barChart(points, diverging, linkFor) {
   const step = W / points.length;
   const bw = Math.max(3, step - 4);
   svg.append(svgEl("line", { x1:0, x2:W, y1:zero, y2:zero,
-                             stroke:"#c8c8c8", "stroke-width":1 }));
+                             stroke:"#2A3344", "stroke-width":1 }));
   points.forEach((p, i) => {
     const rect = svgEl("rect", {
       x: i * step + (step - bw) / 2,
@@ -1562,32 +2112,22 @@ function sparkline(points) {
 
 /* --- header, rail --- */
 function renderChrome(pool) {
-  const years = DATA.map(r => r.y).filter(Boolean);
-  const stats = byId("topstats");
-  stats.replaceChildren();
-  const rows = [
-    ["Companies", fmt.format(DATA.length)],
-    ["Company-years", fmt.format(DATA.reduce((n, r) => n + (r.h ? r.h.length : 0), 0))],
-    ["Years", years.length ? Math.min.apply(null, years) + "–"
-                             + Math.max.apply(null, years) : "—"],
-  ];
-  for (const s of rows) {
-    stats.append(el("div", {}, el("b", { text:s[1] }), el("span", { text:s[0] })));
-  }
+  renderTape();
+  renderSiteFoot();
 
   const nav = byId("nav");
   nav.replaceChildren();
-  const uni = universe();
-  const filed = uni.filter(r => r.fy[String(state.year)]).length;
   const news = WATCH.filter(w => watchNews(w)).length;
+  /* The canvas draws six; By fiscal year, Places and Movers have no board of
+     their own but stay one click away, since their links are in circulation. */
   const items = [
-    ["pulse", "Pulse", ""],
-    ["economy", "Economy", ""],
-    ["screener", "Screener", fmt.format(uni.length)],
-    ["latest", "By fiscal year", fmt.format(filed)],
-    ["sectors", "Sectors", String(Object.keys(SECTORS).length)],
-    ["places", "Places", PULSE ? String(PULSE.places.length) : ""],
+    ["pulse", "Markets", ""],
+    ["screener", "Screener", ""],
+    ["latest", "By year", ""],
+    ["sectors", "Sectors", ""],
+    ["places", "Places", ""],
     ["movers", "Movers", ""],
+    ["economy", "Economy", ""],
     ["watchlist", "Watchlist", WATCH.length ? (news ? news + " new · " : "") + WATCH.length : ""],
     ["quality", "Data quality", ""],
   ];
@@ -1597,12 +2137,11 @@ function renderChrome(pool) {
   for (const item of items) {
     const id = item[0];
     const on = state.route === id || parent === id;
-    nav.append(el("button", { class:"navbtn", type:"button", "data-fk":"nav:" + id,
+    const target = { route:id, selected:null };
+    nav.append(el("a", { class:"navbtn", href:hrefFor(target), "data-fk":"nav:" + id,
       "aria-current": on ? "page" : null,
-      onClick: () => set({ route:id, selected:null }) },
-      el("span", { class:"navmark", "aria-hidden":"true" }),
+      onClick: openOnClick(() => set(target)) },
       el("span", { text:item[1] }),
-      /* "Screener660" read as one word otherwise. */
       item[2] ? el("span", { class:"navbadge" }, el("span", { class:"sr", text:", " }),
                    el("span", { text:item[2] })) : null));
   }
@@ -1611,10 +2150,16 @@ function renderChrome(pool) {
   if (q.value !== state.q) q.value = state.q;
   const sel = byId("sector");
   if (!sel.options.length) {
-    sel.append(el("option", { value:"", text:"All sectors" }));
-    const names = Array.from(new Set(DATA.map(r => r.s).filter(Boolean))).sort();
+    const base = DATA.filter(r => !r.u);
+    const counts = {};
+    for (const r of base) if (r.s) counts[r.s] = (counts[r.s] || 0) + 1;
+    sel.append(el("option", { value:"", text:"All sectors · " + fmt.format(base.length) }));
+    /* Largest first, as the canvas lists them; the count is registered companies. */
+    const names = Object.keys(counts).sort((a, b) => counts[b] - counts[a] || a.localeCompare(b));
     for (const s of names) {
-      sel.append(el("option", { value:s, text: s.length > 40 ? s.slice(0, 40) + "…" : s }));
+      const label = sqName(s);
+      sel.append(el("option", { value:s, title:s,
+        text:(label.length > 36 ? label.slice(0, 36) + "…" : label) + " · " + fmt.format(counts[s]) }));
     }
   }
   sel.value = state.sector;
@@ -1628,7 +2173,9 @@ function renderChrome(pool) {
       onClick: () => set({ preset:p.id, active:p.crit.slice(), view:p.view,
                            sortKey:DEFAULT_SORT[p.view], sortAsc:false,
                            route:"screener", cursor:0, rowLimit:100 }) },
-      el("b", { text:p.label }), el("span", { text:p.hint })));
+      el("span", { class:"ptext" }, el("b", { text:p.label }), el("span", { text:p.hint })),
+      el("span", { class:"pcount", "aria-label":presetMatches(pool, p) + " match",
+                   text:fmt.format(presetMatches(pool, p)) })));
   }
 
   /* Coverage in the picker: return on equity applies to a quarter of the list,
@@ -1648,6 +2195,21 @@ function renderChrome(pool) {
   valField.value = state.critValue;
   valField.placeholder = critSpec.unit === "€" ? "€ value"
     : critSpec.unit === "%" ? "percent" : critSpec.unit ? critSpec.unit : "value";
+
+  /* What can be screened: how many companies in view carry each figure. */
+  const cov = byId("coverage");
+  cov.replaceChildren();
+  const shownKeys = ["rev", "gm", "nm", "roa", "lev", "roe", "conv"];
+  for (const k of shownKeys) {
+    const spec = CRITERIA.find(c => c.k === k), n = provenCount(pool, k);
+    const share = pool.length ? n / pool.length * 100 : 0;
+    cov.append(el("div", { class:"covrow" },
+      el("div", { class:"covtop" }, el("span", { text:spec.label }),
+        el("span", { class:"mono", text:fmt.format(n) })),
+      el("div", { class:"covtrack", "aria-hidden":"true" },
+        el("i", { style:"width:" + share.toFixed(1) + "%" }))));
+  }
+  byId("covTotal").textContent = fmt.format(pool.length);
 
   const chips = byId("chips");
   chips.replaceChildren();
@@ -1737,6 +2299,14 @@ function renderPagebar(rows, sc, shown, cols) {
     "aria-label":"Copy the rows on screen",
     title:"Copy the rows on screen as tab-separated text",
     onClick: () => copyResults(shown, cols) }));
+  acts.append(el("button", { class:"btn primary", type:"button", text:"Export CSV", "data-fk":"csv",
+    title:"Download every row of this screen as a spreadsheet file",
+    onClick: () => {
+      const keys = cols.filter(c => c.kind !== "spark");
+      downloadCsv("tregu-" + (state.route === "latest" ? "fy" + state.year : state.preset || "screen") + ".csv",
+        [["Company", "Registry no."].concat(keys.map(c => c.label))]
+          .concat(sc.rows.map(r => [r.n, r.id].concat(keys.map(c => r[c.k])))));
+    } }));
 }
 
 function renderFooter(sc) {
@@ -1907,7 +2477,7 @@ function renderScreener(sc, shown, cols, rows) {
     tbody.append(tr);
   });
   table.append(tbody);
-  wrap.append(table);
+  wrap.append(el("div", { class:"tablebox card" }, table));
 
   if (sc.rows.length > shown.length) {
     wrap.append(el("button", { class:"more", type:"button",
@@ -1973,7 +2543,7 @@ const PEER_METRICS = [
   ["Asset turnover", "revenue ÷ assets", "at", mult, true],
   ["Leverage", "liabilities ÷ assets", "lev", pct, false],
 ];
-const WORSE = "#c2410c";
+const WORSE = "#F0883E";
 
 function peerPanel(r, year, peers) {
   const panel = el("div", { class:"panel apanel" });
@@ -2194,7 +2764,7 @@ function trendPanel(r) {
         el("span", { style:"height:" + (p.v == null ? 0 : Math.max(1, Math.abs(p.v) / max * 78)).toFixed(1)
           + "px;background:" + (p.v != null && p.v < 0 ? NEG : INK) }),
         el("span", { style:"height:" + (p.m == null ? 0 : Math.max(1, Math.abs(p.m) / max * 78)).toFixed(1)
-          + "px;background:#bdbdbd" })));
+          + "px;background:#4A5A78" })));
       ticks.append(el("span", { text:"’" + String(p.y).slice(2) }));
     }
     blocks.push(el("div", { class:"tblock" },
@@ -2207,7 +2777,7 @@ function trendPanel(r) {
     el("div", { class:"ahead" }, el("h3", { class:"cap", text:"Over time, against the peer median" }),
       el("span", { class:"plegend" },
         el("span", {}, el("i", { class:"sw", style:"background:" + INK }), "Company"),
-        el("span", {}, el("i", { class:"sw", style:"background:#bdbdbd" }), "Peer median"))),
+        el("span", {}, el("i", { class:"sw", style:"background:#4A5A78" }), "Peer median"))),
     ...blocks,
     el("p", { class:"note", text:"Peers are drawn afresh each year by the same rule as above." }));
 }
@@ -2332,213 +2902,296 @@ function companyCsv(r) {
     })));
 }
 
+/* The company page as the Tregu canvas draws it (2026-11-16): breadcrumb,
+   identity, a note when the newest year is incomplete, a quote strip, the
+   performance chart beside its ratios against the sector, the full history,
+   then the analysis panels (§74) and the source filings. Every figure that
+   was read from a statement opens the page it was read from. */
+const CO_SERIES = [["rev", "Revenue"], ["np", "Net profit"], ["ta", "Total assets"], ["te", "Equity"]];
+const eurM = v => (v < 0 ? "−€" : "€") + (Math.abs(v) / 1e6 < 10 ? (Math.abs(v) / 1e6).toFixed(2)
+                                                                   : (Math.abs(v) / 1e6).toFixed(1)) + "m";
+const coCard = (cls, kids) => el("section", { class:"mcard " + (cls || "") }, kids);
+const coYears = r => Object.keys(r.fy).map(Number).sort((a, b) => a - b);
+/* The newest filed year with this figure proven, and the one before it. */
+function lastWith(r, k) {
+  const ys = coYears(r).filter(y => r.fy[String(y)][k] != null);
+  return ys.length ? ys[ys.length - 1] : null;
+}
+
+function coIdentity(r) {
+  const ys = coYears(r);
+  const consYears = ys.filter(y => r.fy[String(y)].cons);
+  const sec = SECTOR_BY_SQ[r.s];
+  const initials = (r.n || "?").replace(/\b(SH\.?P\.?K|SH\.?A|L\.?L\.?C|J\.?S\.?C)\b\.?/gi, "")
+    .split(/[\s\-.]+/).filter(w => /[A-Za-zÇçËë]/.test(w)).slice(0, 2).map(w => w[0].toUpperCase()).join("") || "·";
+  const twinNote = r.tw
+    ? "A registry-matched filer files under the same name once spelling and legal form are set aside: “"
+      + r.tw + "”." + (r.twy ? " Both publish FY " + r.twy.join(", FY ") + ", so those years appear twice on "
+        + "the screener when unmatched filers are included." : " Their filed years do not overlap, so one "
+        + "company's history may be split across the two rows.")
+      + " They are shown separately because a name is not proof of identity."
+    : null;
+  const meta = [r.id, r.c, sec ? sec.en + (r.nd ? " (NACE " + r.nd + ")" : "") : r.s,
+                r.e != null ? fmt.format(r.e) + " staff" : null].filter(Boolean).join(" · ");
+  const latest = (r.src || []).slice().sort((a, b) => b[0] - a[0])[0];
+  const target = sec ? { route:"sector", selected:sec.code } : null;
+  const back = state.backRoute && state.backRoute !== "pulse" ? state.backRoute : null;
+  const crumbs = el("nav", { class:"crumbs", "aria-label":"Breadcrumb" },
+    el("a", { href:"#/", onClick: openOnClick(() => set({ route:"pulse", selected:null })), text:"Markets" }),
+    el("span", { "aria-hidden":"true", text:"/" }),
+    target ? el("a", { href:hrefFor(target), onClick: openOnClick(() => set(target)), text:sec.en })
+           : el("span", { text:r.s || "Unclassified" }),
+    el("span", { "aria-hidden":"true", text:"/" }),
+    el("span", { "aria-current":"page", text:r.n }));
+  const tags = el("div", { class:"cotags" },
+    el("span", { text:fmt.format(r.ny || ys.length) + " filings · FY " + ys[0] + "–FY " + ys[ys.length - 1] }),
+    consYears.length ? el("span", { title:"Consolidated accounts: the company and its subsidiaries",
+      text: consYears.length === ys.filter(y => y >= consYears[0]).length
+        ? "Consolidated since FY " + consYears[0] : "Consolidated in FY " + consYears.join(", FY ") }) : null,
+    r.u ? el("span", { text:"Not matched to the business registry" }) : null,
+    state.preset && back === "screener" ? el("a", { class:"gold", href:hrefFor({ route:"screener", selected:null }),
+      onClick: e => { e.preventDefault(); closeCompany(); },
+      text:"In screen: " + PRESETS.find(p => p.id === state.preset).label }) : null);
+  const id = el("div", { class:"coid" },
+    el("div", { class:"comono", "aria-hidden":"true", text:initials }),
+    el("div", { style:"min-width:0" },
+      el("h1", { id:"coHeading", tabindex:"-1", text:r.n }),
+      el("div", { class:"cometa", text:meta }),
+      r.ln && r.ln !== r.n ? el("div", { class:"cometa", text:"Files as " + r.ln }) : null,
+      tags,
+      twinNote ? el("div", { class:"twinnote", text:twinNote }) : null));
+  const acts = el("div", { class:"coacts" },
+    followButton("company", r.id),
+    latest ? el("a", { class:"btn primary", href:PDF_BASE + latest[1] + ".pdf", target:"_blank",
+      rel:"noopener noreferrer", text:"Latest filing · FY " + latest[0] + " (PDF)" }) : null,
+    el("button", { class:"btn", type:"button", text:"←", "data-fk":"co:prev",
+      "aria-label":"Previous company", "aria-keyshortcuts":"[", title:"Previous company  ·  [",
+      onClick: () => stepCompany(-1) }),
+    el("button", { class:"btn", type:"button", text:"→", "data-fk":"co:next",
+      "aria-label":"Next company", "aria-keyshortcuts":"]", title:"Next company  ·  ]",
+      onClick: () => stepCompany(1) }),
+    el("button", { class:"btn", type:"button", text:"Close", "data-fk":"co:close",
+      "aria-keyshortcuts":"Escape", title:"Back to the list  ·  Esc", onClick: closeCompany }));
+  return [crumbs, el("div", { class:"cohead" }, id, acts)];
+}
+
+/* Said only when the newest filing proves some figures but not revenue. */
+function coWithheld(r) {
+  const ys = coYears(r), y = ys[ys.length - 1], e = r.fy[String(y)];
+  if (!e || e.rev != null) return null;
+  const have = [["np", "net profit"], ["ta", "total assets"], ["te", "equity"]].filter(k => e[k[0]] != null).map(k => k[1]);
+  if (!have.length) return null;
+  const lr = lastWith(r, "rev");
+  const list = have.length > 1 ? have.slice(0, -1).join(", ") + " and " + have[have.length - 1] : have[0];
+  return el("div", { class:"conotice", role:"note" },
+    el("span", { "aria-hidden":"true", text:"FY" + String(y).slice(2) }),
+    el("span", { text:list.charAt(0).toUpperCase() + list.slice(1) + " for FY " + y + (have.length > 1 ? " are" : " is")
+      + " proven. Revenue for FY " + y + " is withheld until it can be proven from the filed statement"
+      + (lr ? ", so revenue figures here end at FY " + lr : "") + "." }));
+}
+
+function coQuotes(r) {
+  const strip = el("div", { class:"coquotes" });
+  for (const [k, label] of CO_SERIES) {
+    const y = lastWith(r, k);
+    if (y == null) continue;
+    const v = r.fy[String(y)][k], prev = r.fy[String(y - 1)] && r.fy[String(y - 1)][k];
+    const d = prev != null && prev > 0 ? change(v, prev) : null;
+    const s = sourceOf(r, y, k);
+    strip.append(el("div", {},
+      el("div", { class:"mcap", text:label + " · FY " + y }),
+      el("div", { class:"qv" }, el("b", { style:v < 0 ? "color:" + NEG : null, text:eurM(v) }),
+        d != null ? el("span", { style:"color:" + toneOf(d), text:arrowPct(d) }) : null),
+      s ? el("a", { href:s.href, target:"_blank", rel:"noopener noreferrer", title:sourceTitle(s, y),
+                    text:(s.statement.charAt(0).toUpperCase() + s.statement.slice(1)) + (s.page ? ", p. " + s.page : "") })
+        : el("span", { class:"mnote", text:"Not linked to a page" })));
+  }
+  if (r.cagr != null) {
+    const revs = (r.h || []).filter(p => p[1] != null && p[1] > 0);
+    const a = revs[0], b = revs[revs.length - 1];
+    strip.append(el("div", {},
+      el("div", { class:"mcap", text:"Revenue CAGR · " + (b[0] - a[0]) + " years" }),
+      el("div", { class:"qv" }, el("b", { text:(r.cagr < 0 ? "−" : "+") + Math.abs(r.cagr).toFixed(1) + "%" }),
+        el("span", { style:"color:" + MUTED, text:"FY" + String(a[0]).slice(2) + "–FY" + String(b[0]).slice(2) })),
+      el("span", { class:"mnote", text:"Compounded from the first to the last proven revenue" })));
+  }
+  return strip.children.length ? strip : null;
+}
+
+function coChart(r) {
+  const avail = CO_SERIES.filter(([k]) => lastWith(r, k) != null);
+  if (!avail.length) return null;
+  const metric = avail.some(a => a[0] === state.coMetric) ? state.coMetric : avail[0][0];
+  const label = avail.find(a => a[0] === metric)[1];
+  const ys = coYears(r);
+  const all = [];
+  for (let y = ys[0]; y <= ys[ys.length - 1]; y++) all.push(y);
+  const vals = all.map(y => r.fy[String(y)] ? r.fy[String(y)][metric] : null);
+  const known = vals.filter(v => v != null);
+  const max = Math.max(1, ...known.map(Math.abs));
+  const lastIdx = vals.reduce((a, v, i) => v != null ? i : a, -1);
+  const missing = all.filter((y, i) => vals[i] == null);
+  const firstI = vals.findIndex(v => v != null);
+  const note = known.length < 2 ? label + " is proven in one year only."
+    : eurM(vals[firstI]) + " in FY " + all[firstI] + " to " + eurM(vals[lastIdx]) + " in FY " + all[lastIdx]
+      + (missing.length ? ". Not proven: FY " + missing.join(", FY ") + "." : ", proven in every year.");
+  const card = coCard("cochart");
+  const group = el("div", { class:"tabs", role:"group", "aria-label":"Series" });
+  for (const [k, l] of avail) group.append(el("button", { type:"button", text:l, "data-fk":"coser:" + k,
+    "aria-pressed":String(k === metric), onClick: () => set({ coMetric:k }) }));
+  card.append(el("div", { class:"mhead" },
+    el("div", {}, el("h2", { text:"Performance · FY " + all[0] + "–FY " + all[all.length - 1] }),
+      el("p", { class:"msub", text:note })), group));
+  const plot = el("div", { class:"cobars", role:"img", style:"grid-template-columns:repeat(" + all.length + ",minmax(0,1fr))",
+    "aria-label":label + " by fiscal year, FY " + all[0] + " to FY " + all[all.length - 1] + ". " + note });
+  all.forEach((y, i) => {
+    const v = vals[i];
+    const col = el("div", { class:"cobar" });
+    const box = el("div", { class:"cobox", title:"FY " + y + ": " + (v == null ? "not proven" : eurM(v)) });
+    if (v == null) box.append(el("div", { class:"conone", text:"—" }));
+    else box.append(el("span", { text:eurM(v) }),
+      el("i", { style:"height:" + Math.max(3, Math.abs(v) / max * 200).toFixed(0) + "px;background:"
+                       + (v < 0 ? NEG : i === lastIdx ? GOLD : "#5C7FB8") }));
+    col.append(box, el("span", { class:"coy" + (i === lastIdx ? " on" : ""), text:"FY" + String(y).slice(2) }));
+    plot.append(col);
+  });
+  card.append(el("div", { class:"coplotbox" }, plot));
+  card.append(el("div", { class:"plegend" },
+    el("span", {}, el("i", { class:"sw", style:"background:#5C7FB8", "aria-hidden":"true" }), "Proven from the filed statement"),
+    el("span", {}, el("i", { class:"sw", style:"background:" + GOLD, "aria-hidden":"true" }), "Latest proven year"),
+    el("span", {}, el("i", { class:"sw", style:"border:1px dashed " + MUTED, "aria-hidden":"true" }), "Not proven, not shown")));
+  return card;
+}
+
+function coRatios(r) {
+  const sec = SECTORS[r.s];
+  const name = SECTOR_BY_SQ[r.s] ? SECTOR_BY_SQ[r.s].en.toLowerCase() : "sector";
+  const card = coCard("coratios");
+  card.append(el("h2", { text:"Ratios against the sector" }),
+    el("p", { class:"msub", text:"FY " + r.y + (sec ? " · median of " + name + " filers" : " · no sector median: too few filers") }),
+    el("div", { class:"plegend" },
+      el("span", {}, el("i", { class:"sw line", style:"background:" + GOLD, "aria-hidden":"true" }), r.n),
+      el("span", {}, el("i", { class:"sw line", style:"background:#56637A", "aria-hidden":"true" }), "Sector median")));
+  const list = el("div", { class:"corlist" });
+  const rows = [["Gross margin", "gm", "%"], ["Net margin", "nm", "%"], ["Return on assets", "roa", "%"],
+    ["Return on equity", "roe", "%"], ["Liabilities / assets", "lev", "%"], ["Asset turnover", "at", "×"],
+    ["Op. cash margin", "ocfm", "%"], ["Cash conversion", "conv", "×"]];
+  const f = (x, u) => x == null ? "—" : u === "×" ? x.toFixed(2) + "×" : x.toFixed(1) + "%";
+  for (const [label, k, u] of rows) {
+    const v = r[k], m = sec ? sec.med[k] : null;
+    if (v == null && m == null) continue;
+    const top = Math.max(Math.abs(v || 0), Math.abs(m || 0)) || 1;
+    list.append(el("div", { class:"corrow" },
+      el("div", { class:"cortop" }, el("span", { text:label }),
+        el("span", { class:"mono" }, el("b", { style:v != null && v < 0 ? "color:" + NEG : null }, v == null ? blank() : f(v, u)),
+          el("span", { text:" vs " + f(m, u) }))),
+      el("div", { class:"corbars", "aria-hidden":"true" },
+        el("i", { style:"width:" + (Math.abs(v || 0) / top * 100).toFixed(0) + "%;background:" + (v != null && v < 0 ? NEG : GOLD) }),
+        el("i", { style:"width:" + (Math.abs(m || 0) / top * 100).toFixed(0) + "%;background:#56637A" }))));
+  }
+  card.append(list);
+  if (r.roe != null && r.ta && r.te > 0 && sec && sec.med.roe != null && r.roe > 2 * sec.med.roe && r.ta / r.te >= 4)
+    card.append(el("p", { class:"pfine", text:"Equity of " + eurM(r.te) + " carries " + eurM(r.ta)
+      + " of assets. That leverage, more than margin, is why return on equity reads " + r.roe.toFixed(1) + "%." }));
+  return card;
+}
+
+function coHistory(r) {
+  const ys = coYears(r);
+  const card = coCard("cohist");
+  card.append(el("div", { class:"mhead" },
+    el("div", {}, el("h2", { id:"histHead", text:"Financial history" }),
+      el("p", { class:"msub", text:"€ millions unless marked. Every figure linked opens the page of the statement it was "
+        + "read from; a dash was not proven and is not shown. Years marked G are group (consolidated) accounts." })),
+    el("button", { class:"btn", type:"button", text:"Download CSV", "data-fk":"co:csv",
+      title:"Every proven figure, year by year", onClick: () => companyCsv(r) })));
+  const table = el("table", { class:"cotable", "aria-labelledby":"histHead" });
+  const head = el("tr", {}, el("th", { scope:"col", class:"l", text:"Fiscal year" }));
+  for (const y of ys) head.append(el("th", { scope:"col", class:y === r.y ? "hl" : null },
+    "FY" + String(y).slice(2), r.fy[String(y)].cons ? el("sup", { title:"Group accounts", text:" G" }) : null));
+  table.append(el("thead", {}, head));
+  const tb = el("tbody");
+  const fmtv = (v, f) => f === "eur" ? (v < 0 ? "−" : "") + (Math.abs(v) / 1e6).toFixed(2)
+    : f === "pct" ? (v < 0 ? "−" : "") + Math.abs(v).toFixed(1) + "%"
+    : f === "delta" ? (v < 0 ? "▼ " : "▲ ") + Math.abs(v).toFixed(1) + "%"
+    : (v < 0 ? "−" : "") + Math.abs(v).toFixed(2) + "×";
+  const section = label => tb.append(el("tr", { class:"cosec" },
+    el("th", { scope:"colgroup", colspan:String(ys.length + 1), text:label })));
+  const row = (label, k, f, strong) => {
+    if (!ys.some(y => r.fy[String(y)][k] != null)) return;
+    const tr = el("tr", { class:strong ? "strong" : null }, el("th", { scope:"row", class:"l", text:label }));
+    for (const y of ys) {
+      const v = r.fy[String(y)][k];
+      const color = v == null ? FAINT : f === "delta" ? (v < 0 ? NEG : POS) : v < 0 ? NEG : strong ? INK : "#C9D1DE";
+      tr.append(el("td", { class:y === r.y ? "hl" : null },
+        v == null ? blank() : k in LINKED ? figLink(r, y, k, fmtv(v, f), color)
+                            : el("span", { style:"color:" + color, text:fmtv(v, f) })));
+    }
+    tb.append(tr);
+  };
+  section("Income statement");
+  row("Revenue", "rev", "eur", true); row("Revenue growth", "g", "delta"); row("Gross margin", "gm", "pct");
+  row("Net profit", "np", "eur", true); row("Net margin", "nm", "pct");
+  section("Balance sheet");
+  row("Total assets", "ta", "eur", true); row("Equity", "te", "eur", true);
+  row("Liabilities / assets", "lev", "pct"); row("Cash", "cash", "eur");
+  section("Cash flow");
+  row("Operating cash flow", "ocf", "eur", true); row("Op. cash margin", "ocfm", "pct"); row("Cash conversion", "conv", "mult");
+  section("Returns");
+  row("Return on assets", "roa", "pct"); row("Return on equity", "roe", "pct"); row("Asset turnover", "at", "mult");
+  table.append(tb);
+  card.append(el("div", { class:"mtablebox" }, table));
+  card.append(el("p", { class:"pfine", text:"PDF pages are counted from the cover, so they can run a page or two "
+    + "ahead of the number printed in the footer. Years a company did not file are absent rather than interpolated." }));
+  return card;
+}
+
+function coFilings(r) {
+  const src = (r.src || []).slice().sort((a, b) => b[0] - a[0]);
+  const card = coCard("cofilings");
+  card.append(el("h2", { text:"Source filings" }),
+    el("p", { class:"msub", text:"Audited statements in the Ministry of Finance archive" }));
+  const list = el("div", { class:"mlist" });
+  const shown = state.coAllFilings === r.id ? src : src.slice(0, 8);
+  const perYear = {};
+  for (const s of src) perYear[s[0]] = (perYear[s[0]] || 0) + 1;
+  for (const s of shown) {
+    const group = (r.fy[String(s[0])] || {}).cons && perYear[s[0]] === 1;
+    list.append(el("a", { class:"cofile", href:PDF_BASE + s[1] + ".pdf", target:"_blank", rel:"noopener noreferrer",
+        "aria-label":"Audited filing for FY " + s[0] + ", PDF, opens in a new tab" },
+      el("span", { class:"fbadge", text:"FY" + String(s[0]).slice(2) }),
+      el("span", { class:"mi" }, el("b", { text:group ? "Consolidated audited statements" : "Audited statements" }),
+        el("span", { text:[s[2] ? "income p. " + s[2] : null, s[3] ? "balance p. " + s[3] : null].filter(Boolean).join(" · ")
+                           || "pages not located" })),
+      el("span", { class:"pdftag", text:"PDF" })));
+  }
+  card.append(list);
+  if (src.length > 8) card.append(el("button", { class:"btn wide", type:"button", "data-fk":"co:allfilings",
+    text: state.coAllFilings === r.id ? "Show the latest 8" : "Show all " + src.length + " filings",
+    onClick: () => set({ coAllFilings: state.coAllFilings === r.id ? null : r.id }) }));
+  return card;
+}
+
 function renderCompany() {
   const r = DATA.find(x => x.id === state.selected);
-  const wrap = el("div", { style:"padding:0 0 32px;" });
-  const back = closeCompany;
+  const wrap = el("div", { class:"stack company" });
   if (!r) { wrap.append(el("div", { class:"empty", text:"Company not found." })); return wrap; }
-
-  const meta = [r.ln && r.ln !== r.n ? r.ln : null, r.s, r.c,
-                r.e != null ? fmt.format(r.e) + " staff (ARBK)" : null,
-                r.ny ? r.ny + " filings read" : null,
-                r.u ? "not matched to the business registry" : null]
-    .filter(Boolean).join("   ·   ");
-  const twinNote = r.tw
-    ? "A registry-matched filer files under the same name once spelling and legal form "
-      + "are set aside: “" + r.tw + "”."
-      + (r.twy
-          ? " Both publish FY " + r.twy.join(", FY ") + ", so those years appear twice on "
-            + "the screener when unmatched filers are included, read from two different "
-            + "filings."
-          : " Their filed years do not overlap, so one company's history may be split "
-            + "across the two rows.")
-      + " They are shown separately because a name is not proof of identity — a wrong "
-      + "merge loses a company, where a duplicate only repeats one."
-    : null;
-  wrap.append(el("div", { class:"cohead" },
-    el("div", { style:"min-width:0;" },
-      el("h2", { id:"coHeading", tabindex:"-1", text:r.n }),
-      el("div", { class:"cometa", text:meta }),
-      twinNote ? el("div", { class:"twinnote", text:twinNote }) : null),
-    el("div", { class:"coacts" },
-      el("span", { class:"yrbadge", text:"FY " + r.y }),
-      followButton("company", r.id),
-      el("button", { class:"btn", type:"button", text:"Download CSV", "data-fk":"co:csv",
-        title:"Every proven figure, year by year", onClick: () => companyCsv(r) }),
-      el("button", { class:"btn", type:"button", text:"←", "data-fk":"co:prev",
-        "aria-label":"Previous company", "aria-keyshortcuts":"[",
-        title:"Previous company  ·  [", onClick: () => stepCompany(-1) }),
-      el("button", { class:"btn", type:"button", text:"→", "data-fk":"co:next",
-        "aria-label":"Next company", "aria-keyshortcuts":"]",
-        title:"Next company  ·  ]", onClick: () => stepCompany(1) }),
-      el("button", { class:"btn", type:"button", text:"Close", "data-fk":"co:close",
-        "aria-keyshortcuts":"Escape",
-        title:"Back to the screener  ·  Esc", onClick: back }))));
-
-  const kpis = el("div", { class:"kpis" });
-  /* [label, text, colour, linked field] — the read figures open their page;
-     growth, margin and CAGR are computed from them, so they have no page. */
-  const kpiRows = [
-    ["Revenue", r.rev == null ? "—" : "€" + compact(r.rev), INK, "rev"],
-    ["Growth", signed(r.g) || "—", r.g == null ? FAINT : r.g < 0 ? NEG : POS],
-    ["Net profit", r.np == null ? "—" : "€" + compact(r.np),
-     r.np != null && r.np < 0 ? NEG : INK, "np"],
-    ["Net margin", pct(r.nm) || "—", r.nm != null && r.nm < 0 ? NEG : INK],
-    ["Total assets", r.ta == null ? "—" : "€" + compact(r.ta), INK, "ta"],
-    ["Revenue CAGR", signed(r.cagr) || "—",
-     r.cagr == null ? FAINT : r.cagr < 0 ? NEG : POS],
-  ];
-  for (const k of kpiRows) kpis.append(el("div", {},
-    el("div", { class:"cap", text:k[0] }),
-    el("b", {}, k[3] && r[k[3]] != null ? figLink(r, r.y, k[3], k[1], k[2])
-                                        : k[1] === "—" ? blank()
-                                        : el("span", { style:"color:" + k[2], text:k[1] }))));
-  wrap.append(kpis);
-
-  const hist = r.h || [];
-  const series = i => hist.filter(p => p[i] != null).map(p => [p[0], p[i]]);
-  wrap.append(el("div", { class:"panelrow" },
-    chartBlock("Revenue", series(1), false, y => sourceOf(r, y, "rev")),
-    chartBlock("Net profit", series(2), true, y => sourceOf(r, y, "np")),
-    chartBlock("Total assets", series(3), false, y => sourceOf(r, y, "ta"))));
-
+  wrap.append(...coIdentity(r));
+  const w = coWithheld(r);
+  if (w) wrap.append(w);
+  const q = coQuotes(r);
+  if (q) wrap.append(q);
+  wrap.append(el("div", { class:"corow2" }, coChart(r), coRatios(r)));
+  wrap.append(coHistory(r));
   /* The analysis (§74), measured in the company's headline year. */
   const peers = peersOf(r, r.y, state.peerMode);
-  wrap.append(el("div", { class:"panelrow wide analysis" }, peerPanel(r, r.y, peers),
-                 signalPanel(r, r.y, peers)));
-  const du = dupontPanel(r), tr = trendPanel(r);
-  if (du || tr) wrap.append(el("div", { class:"panelrow wide analysis" }, du, tr));
-  const cmp = comparePanel(r, r.y, peers);
-  if (cmp) wrap.append(el("div", { class:"panelrow analysis" }, cmp));
-  const proc = procurementPanel(r);
-  if (proc) wrap.append(el("div", { class:"panelrow analysis" }, proc));
-
-  const histPanel = el("div", { class:"panel" },
-    el("h3", { class:"cap", id:"histHead", text:"Year by year" }));
-  const htable = el("table", { class:"flat", "aria-labelledby":"histHead" });
-  htable.append(el("thead", {}, el("tr", {},
-    el("th", { class:"l", text:"Year" }), el("th", { text:"Revenue" }),
-    el("th", { text:"Net profit" }), el("th", { text:"Total assets" }))));
-  const hbody = el("tbody");
-  const HIST_KEYS = [null, "rev", "np", "ta"];
-  for (const p of hist) {
-    const tr = el("tr");
-    p.forEach((v, i) => {
-      if (i === 0) {
-        // Consolidated (group) accounts are shown where the company files them (§71).
-        const group = (r.fy[String(v)] || {}).cons;
-        tr.append(el("td", { class:"l", style:"color:" + INK }, String(v),
-          group ? el("span", { class:"basis", title:"Consolidated accounts: the company and its subsidiaries",
-                               text:" group" }) : ""));
-        return;
-      }
-      const color = v == null ? FAINT : (i === 2 && v < 0 ? NEG : INK);
-      tr.append(el("td", {}, v == null
-        ? blank()
-        : figLink(r, p[0], HIST_KEYS[i], "€" + fmt.format(v), color)));
-    });
-    hbody.append(tr);
-  }
-  htable.append(hbody);
-  histPanel.append(htable);
-  histPanel.append(el("p", { class:"note",
-    text:"Each figure opens the page of the audited filing it was read from. PDF pages are "
-       + "counted from the cover, so they can run a page or two ahead of the number printed "
-       + "in the footer. Years a company did not file are absent rather than interpolated, "
-       + "so a gap in the record stays a gap." }));
-  if (hist.some(p => (r.fy[String(p[0])] || {}).cons))
-    histPanel.append(el("p", { class:"note",
-      text:"Years marked group are consolidated accounts: the company together with its "
-         + "subsidiaries. Where a company files both, the group accounts are shown; other years "
-         + "are the company's own accounts, so a change of basis between years is not growth." }));
-  wrap.append(el("div", { class:"panelrow" }, histPanel));
-
-  const src = el("div", { style:"padding:16px 18px 0;" },
-    el("h3", { class:"cap", text:"Filings these figures came from" }));
-  const links = el("div", { class:"srclinks" });
-  const perYear = {}, seen = {};
-  for (const s of (r.src || [])) perYear[s[0]] = (perYear[s[0]] || 0) + 1;
-  for (const s of (r.src || [])) {
-    const yr = s[0], guid = s[1];
-    let label = String(yr);
-    let title = "Open the audited filing for " + yr + " (PDF, mf.rks-gov.net)";
-    if (perYear[yr] > 1) {
-      seen[yr] = (seen[yr] || 0) + 1;
-      label = yr + " · " + seen[yr];
-      title = "Filing " + seen[yr] + " of " + perYear[yr] + " for " + yr + " (PDF)";
-    }
-    links.append(el("a", { class:"srclink", href:PDF_BASE + guid + ".pdf",
-      target:"_blank", rel:"noopener noreferrer", title:title, text:label,
-      "aria-label":"Audited filing for FY " + label + ", PDF, opens in a new tab" }));
-  }
-  src.append(links);
-  src.append(el("p", { class:"foot", style:"padding:12px 0 0;",
-    text:"The filings whole, as published by the Ministry of Finance. Every figure above "
-       + "was read from one of these, links to the page it came from, and was checked "
-       + "against the statement's own arithmetic." }));
-  wrap.append(src);
+  const cards = [peerPanel(r, r.y, peers), coFilings(r), signalPanel(r, r.y, peers),
+                 dupontPanel(r), trendPanel(r), comparePanel(r, r.y, peers), procurementPanel(r)].filter(Boolean);
+  wrap.append(el("div", { class:"cogrid" }, cards));
   return wrap;
 }
 
 /* --- sectors --- */
-function renderSectors(pool) {
-  const wrap = el("div");
-  const cols = [["nm",pct], ["roa",pct], ["roe",pct], ["lev",pct], ["at",mult], ["conv",mult]];
-  const rows = Object.keys(SECTORS).map(name => {
-    const b = SECTORS[name];
-    const revs = pool.filter(r => r.s === name).map(r => r.rev).filter(v => v != null);
-    return { name, b, revCount:revs.length, rev: revs.reduce((a, v) => a + v, 0) };
-  }).sort((a, b) => b.rev - a.rev);
-  const allSectors = new Set(DATA.map(r => r.s).filter(Boolean));
-
-  wrap.append(el("p", { class:"lede",
-    text: rows.length + " of " + allSectors.size + " sectors have at least five companies and "
-       + "can carry a median — a median of two is not a benchmark. Medians are taken "
-       + "across the companies in each sector with the ratio proven. Select a sector to "
-       + "open its page: new businesses, where they form, and its audited companies." }));
-
-  const table = el("table", { class:"sectors" });
-  table.append(el("caption", { class:"sr",
-    text:"Sectors by revenue in view, with sector medians. Each sector name opens the "
-       + "screener filtered to it." }));
-  const head = el("tr");
-  const heads = ["Sector", "Companies", "Revenue in view", "Net margin", "ROA", "ROE",
-                 "Liab / assets", "Asset turnover", "Cash conv."];
-  heads.forEach((h, i) => head.append(el("th", { class: i === 0 ? "first" : null,
-                                                 scope:"col", text:h })));
-  table.append(el("thead", {}, head));
-  const tbody = el("tbody");
-  const nil = text => [el("span", { class:"nil", "aria-hidden":"true", text:"–" }),
-                       el("span", { class:"sr", text })];
-  for (const row of rows) {
-    /* A sector with a page opens it; the page links on to the screener. */
-    const known = SECTOR_BY_SQ[row.name];
-    const target = known ? { route:"sector", selected:known.code }
-                         : { route:"screener", sector:row.name, selected:null };
-    const open = () => set(Object.assign({ cursor:0, rowLimit:100 }, target));
-    const tr = el("tr", { onClick: e => { if (!e.target.closest("a")) open(); } });
-    tr.append(el("th", { class:"first", scope:"row", title:row.name },
-      el("a", { class:"rowlink", "data-fk":"sector:" + row.name,
-                href: hrefFor(target), onClick: openOnClick(open),
-                text: known ? known.en : row.name })));
-    tr.append(el("td", { text:fmt.format(row.b.companies) }));
-    tr.append(el("td", { style:"color:" + INK },
-      row.revCount ? "€" + compact(row.rev) : nil("no revenue in view")));
-    for (const c of cols) {
-      const v = row.b.med[c[0]];
-      tr.append(el("td", { style:"color:" + (v == null ? FAINT : v < 0 ? NEG : INK),
-        title: row.b.n && row.b.n[c[0]] != null
-          ? "median of " + row.b.n[c[0]] + " companies" : null },
-        v == null ? nil("too few companies for a median") : c[1](v)));
-    }
-    tbody.append(tr);
-  }
-  table.append(tbody);
-  wrap.append(table);
-  return wrap;
-}
-
-/* --- movers --- */
 function renderMovers(pool) {
   const wrap = el("div");
   wrap.append(el("p", { class:"lede",
@@ -2662,7 +3315,7 @@ function renderQuality(pool) {
           text: fmt.format(count) + " · " + share.toFixed(0) + "%" })),
       el("div", { class:"qtrack", "aria-hidden":"true" },
         el("div", { style:"width:" + Math.max(share, 0.4).toFixed(2) + "%;background:"
-                          + (fill || (share >= 66 ? POS : share >= 33 ? "#999999" : NEG)) })));
+                          + (fill || (share >= 66 ? POS : share >= 33 ? MUTED : NEG)) })));
   };
 
   const panels = el("div", { class:"panelrow" });
@@ -2858,8 +3511,8 @@ function pulseStory(P) {
       el("div", { class:"stop" }, el("span", { text:r[0] }),
          el("span", { text:fmt.format(r[1]) + " → " + fmt.format(r[2]) })),
       el("div", { class:"strack", "aria-hidden":"true" },
-         el("span", { style:"width:" + (r[2] / top * 100).toFixed(1) + "%;background:#f5f5f5" }),
-         el("span", { style:"width:" + (r[1] / top * 100).toFixed(1) + "%;background:#7a7a7a" }))));
+         el("span", { style:"width:" + (r[2] / top * 100).toFixed(1) + "%;background:#E8ECF3" }),
+         el("span", { style:"width:" + (r[1] / top * 100).toFixed(1) + "%;background:#4A5A78" }))));
   }
   bars.append(el("span", { class:"key",
     text:"Grey: " + MONTHS[st.m - 1] + " " + (st.y - 1) + ". White: " + MONTHS[st.m - 1] + " "
@@ -2911,7 +3564,7 @@ function formationChart(P, sub) {
   const labels = [];
   for (let v = step; v < maxR * 1.06; v += step) {
     svg.append(svgEl("line", { x1:0, x2:W, y1:H - v * scale, y2:H - v * scale,
-      stroke:"#d4d4d4", "stroke-dasharray":"3 3", "vector-effect":"non-scaling-stroke" }));
+      stroke:GRID, "stroke-dasharray":"3 3", "vector-effect":"non-scaling-stroke" }));
     labels.push(el("span", { class:"gridlbl", style:"top:" + (H - v * scale + 20).toFixed(1) + "px",
                              "aria-hidden":"true", text:fmt.format(v) }));
   }
@@ -2920,7 +3573,7 @@ function formationChart(P, sub) {
     const [y, m] = ym(i);
     const h = v * scale;
     const bar = svgEl("rect", { x:i * 10 + 1, width:8, y:H - h, height:h,
-      fill: i === n - 1 ? INK : y === ly ? SECOND : "#8c8c8c" });
+      fill: i === n - 1 ? GOLD : y === ly ? "#5C7FB8" : DIMBAR });
     const t = svgEl("title", {});
     t.textContent = monthShort(y, m) + ": " + fmt.format(v) + " new, " + fmt.format(clo[i]) + " closed";
     bar.append(t);
@@ -2968,7 +3621,7 @@ function sectorHeat(P) {
   const span = "Jan–" + MONTHS[P.last[1] - 1].slice(0, 3);
   const card = el("section", { class:"pcard", "aria-labelledby":"pHeat" });
   const key = el("div", { class:"heatkey", "aria-hidden":"true" }, el("span", { text:"−30%  " }));
-  for (const c of [NEG, "#f2c4bf", "#e8e8e8", "#b9dcc6", POS]) {
+  for (const c of ["rgba(255,107,87,0.5)", "rgba(255,107,87,0.25)", "#1A2130", "rgba(47,211,160,0.22)", "rgba(47,211,160,0.48)"]) {
     key.append(el("i", { style:"background:" + c }));
   }
   key.append(el("span", { text:"  +30%" }));
@@ -2978,14 +3631,14 @@ function sectorHeat(P) {
          + "Shade: new registrations " + span + " " + P.last[0] + " against the same months of "
          + (P.last[0] - 1) + "." })),
     key));
-  const shade = v => v >= 30 ? [POS, "#fff"] : v >= 10 ? ["#b9dcc6", INK]
-    : v > -10 ? ["#e8e8e8", INK] : v > -30 ? ["#f2c4bf", INK] : [NEG, "#fff"];
+  const shade = v => v >= 30 ? ["rgba(47,211,160,0.48)", "#F4F7FB"] : v >= 10 ? ["rgba(47,211,160,0.22)", INK]
+    : v > -10 ? ["#1A2130", INK] : v > -30 ? ["rgba(255,107,87,0.25)", INK] : ["rgba(255,107,87,0.5)", "#F4F7FB"];
   const top = Math.max(1, ...P.sectors.map(s => s.active));
   const list = el("ul", { class:"heat" });
   for (const s of P.sectors) {
     if (!s.was && !s.now) continue;
     const v = change(s.now, s.was);
-    const [bg, fg] = v == null ? ["#e8e8e8", INK] : shade(v);
+    const [bg, fg] = v == null ? ["#1A2130", INK] : shade(v);
     const share = s.active / top;
     const kids = [
       el("span", { class:"tname", text:s.en }),
@@ -3025,7 +3678,7 @@ function indexCard(idx) {
       el("span", { class:"g", style:"color:" + (p.g == null ? MUTED : p.g < 0 ? NEG : POS),
                    text: p.g == null ? "" : (p.g > 0 ? "+" : "") + p.g.toFixed(0) + "%" }),
       el("span", { class:"b", style:"height:" + (p.level / top * 140).toFixed(1) + "px;background:"
-                   + (last ? INK : p.g != null && p.g < 0 ? NEG : "#8c8c8c") })));
+                   + (last ? GOLD : p.g != null && p.g < 0 ? NEG : DIMBAR) })));
     years.append(el("span", { text:"’" + String(p.y).slice(2) }));
   });
   const L = pts[pts.length - 1];
@@ -3122,7 +3775,7 @@ function mixCard(P) {
     const bars = el("div", { class:"mbars", "aria-hidden":"true" });
     P.mix.forEach((m, i) => bars.append(el("span", { title:m.y + ": " + shares[i].toFixed(1) + "%",
       style:"height:" + (shares[i] / top * 46).toFixed(1) + "px;background:"
-            + (i === P.mix.length - 1 ? INK : "#8c8c8c") })));
+            + (i === P.mix.length - 1 ? GOLD : DIMBAR) })));
     row.append(el("div", { class:"mix" },
       el("h3", { class:"mtop", style:"margin:0;font-size:13px", text:label }),
       el("div", { class:"mnow" }, el("b", { text:shares[shares.length - 1].toFixed(1) + "%" }),
@@ -3237,8 +3890,8 @@ function eChart(cols, H, aria, opts) {
   return fig;
 }
 const eLegend = items => el("div", { class:"plegend" }, ...items.map(([c, label]) =>
-  el("span", {}, el("i", { class:"sw", style:"background:" + c + (c === "#e3e3e3"
-    ? ";outline:1px solid #bdbdbd" : ""), "aria-hidden":"true" }), label)));
+  el("span", {}, el("i", { class:"sw", style:"background:" + c + (c === "#222A38"
+    ? ";outline:1px solid #4A5A78" : ""), "aria-hidden":"true" }), label)));
 const eCard = (id, title, sub, ...kids) => el("section", { class:"pcard", "aria-labelledby":id },
   el("div", {}, el("h2", { id, text:title }), sub ? el("p", { class:"psub", text:sub }) : null),
   ...kids);
@@ -3248,276 +3901,894 @@ const econSector = code => el("a", { href:"#/sectors/" + code, title:sectorName(
 const yy = y => "’" + String(y).slice(2);
 const pctTxt = v => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(1) + "%";
 
+/* --- shared chart pieces for the canvas pages --- */
+/* Vertical bars with an optional label above each: items are
+   { label, v, top, color, title, year }. */
+function vbars(items, H, aria) {
+  const max = Math.max(1e-9, ...items.map(i => Math.abs(i.v || 0)));
+  const fig = el("figure", { class:"vbars", role:"img", "aria-label":aria });
+  const plot = el("div", { class:"vplot", style:"height:" + (H + 18) + "px;grid-template-columns:repeat(" + items.length + ",minmax(0,1fr))" });
+  const ticks = el("div", { class:"vticks", "aria-hidden":"true", style:"grid-template-columns:repeat(" + items.length + ",minmax(0,1fr))" });
+  for (const i of items) {
+    plot.append(el("div", { title:i.title },
+      i.top ? el("span", { style:i.topColor ? "color:" + i.topColor : null, text:i.top }) : null,
+      el("i", { style:"height:" + (i.v == null ? 0 : Math.max(2, Math.abs(i.v) / max * H)).toFixed(0) + "px;background:" + i.color })));
+    ticks.append(el("span", { text:i.label }));
+  }
+  fig.append(plot, ticks);
+  return fig;
+}
+/* Lines on one scale, SVG stretched to the card, end labels in HTML. */
+function lineFig(series, max, aria, ticks, gridAt) {
+  const W = 600, H = 200, n = series[0].pts.length;
+  const X = i => i / (n - 1) * W, Y = v => H - v / max * H;
+  const svg = svgEl("svg", { viewBox:"0 0 " + W + " " + H, preserveAspectRatio:"none", "aria-hidden":"true", focusable:"false" });
+  const over = [];
+  if (gridAt != null) {
+    svg.append(svgEl("line", { x1:0, x2:W, y1:Y(gridAt.v), y2:Y(gridAt.v), stroke:GRID, "vector-effect":"non-scaling-stroke" }));
+    over.push(el("span", { class:"glbl", style:"top:" + (Y(gridAt.v) / H * 100 - 9).toFixed(1) + "%", text:gridAt.label }));
+  }
+  for (const s of series) {
+    const d = s.pts.map((v, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1)).join(" ");
+    if (s.area) svg.append(svgEl("path", { d:d + " L" + W + " " + H + " L0 " + H + " Z", fill:s.area }));
+    svg.append(svgEl("path", { d, fill:"none", stroke:s.color, "stroke-width":s.width || 2, "stroke-linejoin":"round",
+                               "stroke-linecap":"round", "vector-effect":"non-scaling-stroke" }));
+    if (s.endLabel) over.push(el("span", { class:"lend", style:"top:" + (Y(s.pts[n - 1]) / H * 100 - 9).toFixed(1)
+      + "%;color:" + s.color, text:s.endLabel }));
+    if (s.startLabel) over.push(el("span", { class:"lstart", style:"top:" + (Y(s.pts[0]) / H * 100 + (s.startBelow ? 2 : -12)).toFixed(1)
+      + "%;color:" + s.color, text:s.startLabel }));
+  }
+  return el("figure", { class:"lfig", role:"img", "aria-label":aria },
+    el("div", { class:"lplot" }, svg, over),
+    el("div", { class:"lticks", "aria-hidden":"true" }, ticks.map(t => el("span", { text:t }))));
+}
+const sCard = (id, title, sub, ...kids) => el("section", { class:"mcard", "aria-labelledby":id },
+  el("div", { class:"mhead" }, el("div", {}, el("h2", { id, text:title }), sub ? el("p", { class:"msub", text:sub }) : null)),
+  ...kids);
+const heatTone = v => v < 0
+  ? "rgba(255,107,87," + (0.2 + Math.min(-v, 50) / 50 * 0.3).toFixed(2) + ")"
+  : "rgba(47,211,160," + (0.1 + Math.min(v, 50) / 50 * 0.36).toFixed(2) + ")";
+const ytdSpanText = () => PULSE ? "January to " + MONTHS[PULSE.last[1] - 1] + " " + PULSE.last[0] : "";
+
+/* --- sectors --- */
+function sectorRotationCard() {
+  const rot = ECONOMY && ECONOMY.audited && ECONOMY.audited.rotation;
+  const idx = marketIndex();
+  if (!rot || !idx) return null;
+  const L = idx.last;
+  const years = idx.chain.map(s => s.y).slice(-11);
+  const byCode = {};
+  for (const [r, p, c] of L.pairs) {
+    const s = SECTOR_BY_SQ[r.s];
+    if (!s) continue;
+    const b = byCode[s.code] || (byCode[s.code] = { n:0, rev:0 });
+    b.n++; b.rev += c;
+  }
+  const rows = [{ name:"All audited companies", all:true,
+    cells:years.map(y => { const s = idx.chain.find(c => c.y === y); return s ? [s.g, s.n] : null; }),
+    n:L.n, rev:L.pairs.reduce((a, p) => a + p[2], 0) }];
+  for (const [code, v] of Object.entries(rot)) {
+    const last = v[String(L.y)];
+    if (!last || last[1] < SECTOR_MIN_PAIRS) continue;
+    rows.push({ code, name:sectorName(code),
+      cells:years.map(y => v[String(y)] && v[String(y)][1] >= SECTOR_MIN_PAIRS ? v[String(y)] : null),
+      n:(byCode[code] || {}).n || last[1], rev:(byCode[code] || {}).rev || 0 });
+  }
+  const key = el("div", { class:"mkey", "aria-hidden":"true" }, el("span", { text:"falling" }));
+  for (const v of [-20, 5, 15, 30, 50]) key.append(el("i", { style:"background:" + heatTone(v) }));
+  key.append(el("span", { text:"+50% or more" }));
+  const table = el("table", { class:"rheat" },
+    el("caption", { class:"sr", text:"Like-for-like revenue growth by sector and year, percent" }),
+    el("thead", {}, el("tr", {}, el("th", { scope:"col", class:"l", text:"Sector" }),
+      ...years.map(y => el("th", { scope:"col", text:"FY" + String(y).slice(2) })),
+      el("th", { scope:"col", text:"Companies FY" + String(L.y).slice(2) }),
+      el("th", { scope:"col", text:"Revenue FY" + String(L.y).slice(2) }))));
+  const tb = el("tbody");
+  for (const r of rows) {
+    tb.append(el("tr", { class:r.all ? "all" : null },
+      el("th", { scope:"row", class:"l" }, r.code ? econSector(r.code) : r.name),
+      ...r.cells.map((c, i) => c
+        ? el("td", { style:"background:" + heatTone(c[0]), title:r.name + ", FY " + years[i] + ": " + pctTxt(c[0])
+            + " across " + c[1] + " companies", text:(c[0] < 0 ? "−" : "+") + Math.abs(c[0]).toFixed(1) })
+        : el("td", { class:"none" }, blank())),
+      el("td", { class:"num", text:fmt.format(r.n) }),
+      el("td", { class:"num", text:money(r.rev) })));
+  }
+  table.append(tb);
+  const card = el("section", { class:"mcard", "aria-labelledby":"sRot" },
+    el("div", { class:"mhead" },
+      el("div", {}, el("h2", { id:"sRot", text:"Sector rotation · revenue growth, same companies" }),
+        el("p", { class:"msub", text:"Percent on the year before. Only sectors, and years, where "
+          + SECTOR_MIN_PAIRS + " or more companies filed both years." })), key),
+    el("div", { class:"mtablebox" }, table));
+  return card;
+}
+
+function sectorLeagueCard() {
+  const rows = Object.keys(SECTORS).map(name => ({ name, b:SECTORS[name], s:SECTOR_BY_SQ[name] }))
+    .sort((a, b) => b.b.companies - a.b.companies);
+  const top = Math.max(1, ...rows.map(r => r.b.companies));
+  const ly = PULSE ? PULSE.last[0] : null;
+  const gyears = SECTORCTX ? Object.keys((Object.values(SECTORCTX.s)[0] || {}).gva || {}).map(Number).sort() : [];
+  const gy = gyears[gyears.length - 1];
+  const table = el("table", { class:"league" },
+    el("caption", { class:"sr", text:"Sectors with sector medians and whole-economy figures. Each sector opens its page." }),
+    el("thead", {},
+      el("tr", { class:"grp" }, el("th", { colspan:"2", text:"Audited filers" }), el("th", { colspan:"2", text:"Margins" }),
+        el("th", { colspan:"2", text:"Returns" }), el("th", { colspan:"2", text:"Balance sheet" }),
+        el("th", { colspan:"2", text:"Cash" }), el("th", { colspan:"4", text:"Whole economy" })),
+      el("tr", {}, ...["Sector", "Companies", "Gross", "Net", "ROA", "ROE", "Liab / assets", "Asset turn",
+        "Op. cash margin", "Conversion", "Active businesses", ly ? "New in " + ly : "New", ly ? "On " + (ly - 1) : "Change",
+        gy ? "GVA " + gy : "GVA"].map((h, i) => el("th", { scope:"col", class:i === 0 ? "l" : null, text:h })))));
+  const tb = el("tbody");
+  const f = (v, u) => v == null ? blank() : u === "×" ? v.toFixed(1) + "×" : v.toFixed(1) + "%";
+  for (const r of rows) {
+    const target = r.s ? { route:"sector", selected:r.s.code } : { route:"screener", sector:r.name, selected:null, cursor:0, rowLimit:100 };
+    const ps = r.s && PULSE ? PULSE.sectors.find(x => x.code === r.s.code) : null;
+    const d = ps ? change(ps.now, ps.was) : null;
+    const gva = r.s && SECTORCTX && SECTORCTX.s[r.s.code] && SECTORCTX.s[r.s.code].gva ? SECTORCTX.s[r.s.code].gva[String(gy)] : null;
+    const share = (r.b.companies / top * 100).toFixed(0);
+    tb.append(el("tr", {},
+      el("th", { scope:"row", class:"l" }, el("a", { class:"rowlink", href:hrefFor(target), "data-fk":"sector:" + r.name,
+          title:r.name, onClick: openOnClick(() => set(target)) },
+        el("span", { class:"scode", text:r.s ? r.s.code : "·" }), el("span", { text:r.s ? r.s.en : r.name }))),
+      el("td", { style:"background:linear-gradient(270deg, rgba(143,184,255,0.14) " + share + "%, transparent " + share + "%)",
+                 text:fmt.format(r.b.companies) }),
+      ...[["gm", "%", 1], ["nm", "%"], ["roa", "%", 1], ["roe", "%"], ["lev", "%", 1], ["at", "×"], ["ocfm", "%", 1], ["conv", "×"]]
+        .map(([k, u, rule]) => el("td", { class:rule ? "rule" : null, title:r.b.n && r.b.n[k] != null ? "median of " + r.b.n[k] + " companies" : null },
+          f(r.b.med[k], u))),
+      el("td", { class:"rule" }, ps ? fmt.format(ps.active) : blank()),
+      el("td", {}, ps ? fmt.format(ps.now) : blank()),
+      el("td", { style:d == null ? null : "color:" + toneOf(d) }, d == null ? blank() : arrowPct(d)),
+      el("td", {}, gva ? "€" + fmt.format(Math.round(gva / 1e6)) + "m" : blank())));
+  }
+  table.append(tb);
+  return el("section", { class:"mcard mleaders", "aria-labelledby":"sLeague" },
+    el("div", { class:"mhead pad" },
+      el("div", {}, el("h2", { id:"sLeague", text:"Sector league table" }),
+        el("p", { class:"msub", text:"Medians across audited filers, each at its most complete year. The whole-economy columns "
+          + "come from the ARBK registry and ASK national accounts." })),
+      el("span", { class:"msub" }, el("span", { class:"mono", text:"– " }), "fewer than five companies with the figure")),
+    el("div", { class:"mtablebox" }, table));
+}
+
+function formationCard() {
+  if (!PULSE) return null;
+  const list = PULSE.sectors.filter(s => s.now || s.was).sort((a, b) => b.now - a.now).slice(0, 12);
+  const top = Math.max(1, ...list.map(s => Math.max(s.now, s.was)));
+  const box = el("div", { class:"hbars" });
+  for (const s of list) {
+    const d = change(s.now, s.was);
+    box.append(el("a", { class:"hbar", href:"#/sectors/" + s.code, "data-fk":"form:" + s.code,
+        onClick: openOnClick(() => set({ route:"sector", selected:s.code })),
+        title:s.en + ": " + fmt.format(s.now) + " registered, " + fmt.format(s.was) + " a year earlier" },
+      el("span", { class:"hn", text:s.en }),
+      el("span", { class:"htrack", "aria-hidden":"true" },
+        el("i", { style:"width:" + (s.now / top * 100).toFixed(1) + "%;background:" + GOLD }),
+        el("i", { style:"width:" + (s.was / top * 100).toFixed(1) + "%;background:#34465F" })),
+      el("span", { class:"hv", text:fmt.format(s.now) }),
+      el("span", { class:"hd", style:"color:" + toneOf(d), text:s.was < SMALL_BASE ? "few" : arrowPct(d) })));
+  }
+  return sCard("sForm", "Where new businesses are forming",
+    "Registrations, " + ytdSpanText() + ", against the same months of " + (PULSE.last[0] - 1) + " · ARBK registry", box,
+    eLegend([[GOLD, PULSE.last[0] + " to date"], ["#34465F", "Same months, " + (PULSE.last[0] - 1)]]));
+}
+
+function contractsCard() {
+  if (!PROC || !PROC.s) return null;
+  const y = String(Number(PROC.through.slice(0, 4)) - 1);
+  const list = Object.entries(PROC.s).map(([code, v]) => ({ code, v:v[y] })).filter(x => x.v && x.v[1] > 0)
+    .sort((a, b) => b.v[1] - a.v[1]).slice(0, 10);
+  if (!list.length) return null;
+  const top = list[0].v[1];
+  const box = el("div", { class:"hbars" });
+  for (const x of list) {
+    box.append(el("a", { class:"hbar", href:"#/sectors/" + x.code, "data-fk":"proc:" + x.code,
+        onClick: openOnClick(() => set({ route:"sector", selected:x.code })),
+        title:sectorName(x.code) + ", " + y + ": " + money(x.v[1]) + " in " + fmt.format(x.v[0]) + " awards to "
+          + fmt.format(x.v[2]) + " companies" },
+      el("span", { class:"hn", text:sectorName(x.code) }),
+      el("span", { class:"htrack", "aria-hidden":"true" },
+        el("i", { style:"width:" + Math.max(1, x.v[1] / top * 100).toFixed(1) + "%;background:#5C7FB8" })),
+      el("span", { class:"hv", text:money(x.v[1]) }),
+      el("span", { class:"hd", text:fmt.format(x.v[0]) + " awards" })));
+  }
+  const U = PROC.unattributed;
+  return sCard("sProc", "Public contracts won · " + y, "Award value by the winner's sector · KRPP open contracting data", box,
+    U ? el("p", { class:"pfine", text:"Only awards matched to a registered company are counted. Across all years, "
+      + Math.round(U.value / U.total * 100) + "% of award value (" + money(U.value) + " of " + money(U.total)
+      + ") cannot be attributed to a sector." }) : null);
+}
+
+function renderSectors(pool) {
+  const wrap = el("div", { class:"stack" });
+  wrap.append(el("p", { class:"lede", text:fmt.format(Object.keys(SECTORS).length) + " sectors have enough audited filers "
+    + "to carry a median. Growth compares the same companies year on year; medians are shown only where five or more "
+    + "companies have the figure proven. Select a sector to open its page." }));
+  const rot = sectorRotationCard();
+  if (rot) wrap.append(rot);
+  wrap.append(sectorLeagueCard());
+  const two = [formationCard(), contractsCard()].filter(Boolean);
+  if (two.length) wrap.append(el("div", { class:"mrow3" }, two));
+  return wrap;
+}
+
+/* --- economy --- */
 function renderEconomy() {
-  const wrap = el("div", { class:"econ" });
+  const wrap = el("div", { class:"stack econ2" });
   const E = ECONOMY;
   if (!E) {
     wrap.append(el("p", { class:"empty", text:"The economy figures were not part of this build. "
       + "Run build_economy.py, then rebuild the page." }));
     return wrap;
   }
-  const R = E.registry, A = E.audited;
-  const flow = R.flow, form = R.form, coh = R.cohorts;
-  const lastF = flow[flow.length - 1], prevF = flow[flow.length - 2];
-  const lastForm = form[form.length - 1], firstForm = form[0];
-  const ys = A.years;
-  const withLfl = ys.filter(a => a.lfl != null);
-  const lastA = withLfl[withLfl.length - 1];
-  const withM = ys.filter(a => a.margin != null), withL = ys.filter(a => a.loss != null),
-        withV = ys.filter(a => a.lev != null);
+  const R = E.registry, A = E.audited, X = SECTORCTX;
+  wrap.append(el("p", { class:"lede", text:"Two lenses on Kosovo. The whole economy, from the business registry and "
+    + "official statistics; and the large companies, from their audited statements." }));
 
-  wrap.append(el("div", { class:"esrc" },
-    el("div", {}, el("span", { class:"tag", text:"WHOLE ECONOMY" }),
-       el("span", { text:"The ARBK business registry: every business registered since 2001. "
-         + "Counts and status, no money figures." })),
-    el("div", {}, el("span", { class:"tag alt", text:"LARGE COMPANIES" }),
-       el("span", { text:"Audited statements of " + fmt.format(E.companies) + " of the largest "
-         + "companies. Growth compares only the companies that filed both years." }))));
-
-  const tile = (label, value, delta, color, note) => el("div", { class:"ptile" },
-    el("span", { class:"cap", text:label }), el("b", { text:value }),
-    el("span", { class:"pdelta", style:"color:" + color, text:delta }),
-    el("span", { class:"pnote", text:note }));
-  const peakOpen = Math.max(...flow.map(f => f[1]));
-  const firstM = withM[0], lastM = withM[withM.length - 1], lastL = withL[withL.length - 1];
-  wrap.append(el("section", { class:"pkpis", "aria-label":"Headline figures" },
-    tile("New businesses · " + lastF[0], fmt.format(lastF[1]),
-         signed(change(lastF[1], prevF[1])) + " on " + prevF[0],
-         lastF[1] < prevF[1] ? NEG : POS,
-         lastF[1] === peakOpen ? "The most since " + flow[0][0] : "Registered in the year"),
-    tile("Dissolved · " + lastF[0], fmt.format(lastF[2]),
-         (lastF[1] / Math.max(1, lastF[2])).toFixed(1) + " new per dissolution", SECOND,
-         "Formal dissolutions only"),
-    tile("Limited companies · " + lastForm[0], lastForm[1].toFixed(1) + "%",
-         "from " + firstForm[1].toFixed(1) + "% in " + firstForm[0], SECOND,
-         "Share of new registrations"),
-    lastA ? tile("Large-company revenue · FY " + lastA.y, pctTxt(lastA.lfl),
-         fmt.format(lastA.pairs) + " companies", lastA.lfl < 0 ? NEG : POS,
-         "Like for like, on FY " + (lastA.y - 1)) : null,
-    lastM ? tile("Median net margin · FY " + lastM.y, lastM.margin.toFixed(1) + "%",
-         "from " + firstM.margin.toFixed(1) + "% in " + firstM.y, SECOND,
-         "Large companies") : null,
-    lastL ? tile("Making a loss · FY " + lastL.y, lastL.loss.toFixed(1) + "%",
-         fmt.format(lastL.filers) + " filers", SECOND, "Share of large companies") : null));
-
-  /* Business demography. */
-  wrap.append(el("h2", { class:"eh" }, "Business demography ",
-    el("span", { text:"the whole economy, from the registry" })));
-  const maxO = Math.max(...flow.map(f => f[1]));
-  const cloRange = flow.slice(1).map(f => f[2]);
-  const flowCard = eCard("eFlow", "New businesses and dissolutions",
-    "Registrations and formal dissolutions in each complete year, " + flow[0][0] + "–" + lastF[0]
-    + ". " + fmt.format(lastF[1]) + " businesses were registered in " + lastF[0] + " and "
-    + fmt.format(lastF[2]) + " dissolved. Dissolutions have run between "
-    + fmt.format(Math.min(...cloRange)) + " and " + fmt.format(Math.max(...cloRange)) + " a year.",
-    eChart(flow.map(f => ({ label:yy(f[0]), t:f[0] + ": " + fmt.format(f[1]) + " registered, "
-        + fmt.format(f[2]) + " dissolved",
-      parts:[{ h:f[1] / maxO * 150, c:INK }, { h:f[2] / maxO * 150, c:NEG }] })), 156,
-      "Registrations rise from " + fmt.format(flow[0][1]) + " in " + flow[0][0] + " to "
-      + fmt.format(lastF[1]) + " in " + lastF[0] + "; dissolutions between "
-      + fmt.format(Math.min(...flow.map(f => f[2]))) + " and " + fmt.format(Math.max(...flow.map(f => f[2])))
-      + " a year.", { pair:true }),
-    eLegend([[INK, "Registered"], [NEG, "Dissolved"]]));
-
-  const cross = form.find(f => f[1] > f[2]);
-  const formCard = eCard("eForm", "How new businesses are set up",
-    "Limited companies (SH.P.K.) were " + firstForm[1].toFixed(0) + "% of new registrations in "
-    + firstForm[0] + " and " + lastForm[1].toFixed(0) + "% in " + lastForm[0]
-    + (cross ? "; they overtook sole traders in " + cross[0] : "") + ".",
-    eChart(form.map(f => ({ label:yy(f[0]), t:f[0] + ": limited companies " + f[1] + "%, sole traders "
-        + f[2] + "%",
-      parts:[{ h:f[1] * 1.5, c:INK }, { h:f[2] * 1.5, c:"#a6a6a6" },
-             { h:Math.max(0, 150 - f[1] * 1.5 - f[2] * 1.5), c:"#e3e3e3" }] })), 150,
-      "Limited companies' share of new registrations rises from " + firstForm[1] + "% in "
-      + firstForm[0] + " to " + lastForm[1] + "% in " + lastForm[0] + "; sole traders fall from "
-      + firstForm[2] + "% to " + lastForm[2] + "%."),
-    eLegend([[INK, "Limited company (SH.P.K.)"], ["#a6a6a6", "Sole trader (B.I.)"],
-             ["#e3e3e3", "Other forms"]]));
-
-  const ref = coh.find(c => c[0] === 2010) || coh[Math.floor(coh.length / 2)];
-  const cohCard = coh.length ? eCard("eCoh", "What became of each year’s new businesses",
-    "Status today, by year registered. Of the businesses registered in " + ref[0] + ", "
-    + ref[1].toFixed(0) + "% still operate, " + ref[2].toFixed(0) + "% are passive (registered, "
-    + "but not trading) and " + ref[3].toFixed(0) + "% were dissolved.",
-    eChart(coh.map(c => ({ label:yy(c[0]), t:"Registered " + c[0] + " (" + fmt.format(c[4]) + "): "
-        + c[1] + "% active, " + c[2] + "% passive, " + c[3] + "% dissolved",
-      parts:[{ h:c[1] * 1.5, c:INK }, { h:c[2] * 1.5, c:"#a6a6a6" },
-             { h:Math.max(0, 150 - c[1] * 1.5 - c[2] * 1.5), c:NEG }] })), 150,
-      "Share still active rises from " + coh[0][1] + "% of " + coh[0][0] + " registrations to "
-      + coh[coh.length - 1][1] + "% of " + coh[coh.length - 1][0] + " registrations."),
-    eLegend([[INK, "Active"], ["#a6a6a6", "Passive"], [NEG, "Dissolved"]]),
-    el("p", { class:"pfine", text:"Stops at " + coh[coh.length - 1][0] + ": the registry has not yet "
-      + "marked passive the businesses registered after it, so later years would look healthier "
-      + "than they are. Most closures in Kosovo happen this quiet way, not by dissolution." }))
-    : null;
-
-  const secs = R.sectors;
-  const secCard = secs.length ? eCard("eSecs", "Which sectors’ businesses last",
-    "Share of the businesses registered " + R.sectorSpan[0] + "–" + R.sectorSpan[1]
-    + " that are still active. Most: " + sectorName(secs[0][0]) + " and " + sectorName(secs[1][0])
-    + ". Fewest: " + sectorName(secs[secs.length - 1][0]) + " and "
-    + sectorName(secs[secs.length - 2][0]) + ".",
-    el("div", { class:"erows" }, ...secs.map(s => el("div", { class:"erow",
-        title:sectorName(s[0]) + ": " + s[1] + "% of " + fmt.format(s[4]) + " still active, "
-          + s[2] + "% passive, " + s[3] + "% dissolved" },
-      econSector(s[0]),
-      el("span", { class:"track", "aria-hidden":"true" },
-        el("span", { style:"width:" + s[1] + "%;background:" + INK })),
-      el("b", { text:s[1].toFixed(0) + "%" }))))) : null;
-  wrap.append(el("div", { class:"egrid" }, flowCard, formCard, cohCard, secCard));
-
-  /* Large companies. */
-  wrap.append(el("h2", { class:"eh" }, "Large companies ",
-    el("span", { text:"audited accounts, proven figures only" })));
-  const maxG = Math.max(1, ...withLfl.map(a => Math.abs(a.lfl)));
-  const falls = withLfl.filter(a => a.lfl < 0).map(a => a.y);
-  const lflCard = eCard("eLfl", "Revenue growth, like for like",
-    "The same companies' revenue against the year before. FY " + lastA.y + ": " + pctTxt(lastA.lfl)
-    + " across " + fmt.format(lastA.pairs) + " companies. "
-    + (falls.length ? "Revenue fell in " + falls.join(", ") + "." : "It has not fallen in any year shown."),
-    eChart(withLfl.map(a => ({ label:yy(a.y), year:a.y,
-        t:"FY " + a.y + ": " + pctTxt(a.lfl) + " across " + a.pairs + " companies",
-        parts:[{ h:Math.max(0, a.lfl) / maxG * 118, c:INK }],
-        down: a.lfl < 0 ? Math.max(2, -a.lfl / maxG * 118) : 0 })), 120,
-      "Like-for-like revenue growth by year: " + withLfl.map(a => a.y + " " + pctTxt(a.lfl)).join(", ") + ".",
-      { neg:18 }),
-    el("p", { class:"pfine", text:"Companies compared: " + withLfl[0].pairs + " for FY " + withLfl[0].y
-      + ", " + lastA.pairs + " for FY " + lastA.y + ". The latest year's filings are still arriving. "
-      + "Each year opens the companies that filed for it." }));
-
-  const maxM = Math.max(...withM.map(a => a.margin)), maxL = Math.max(...withL.map(a => a.loss));
-  const worst = withL.reduce((a, b) => b.loss > a.loss ? b : a, withL[0]);
-  const profCard = eCard("eProf", "Profitability",
-    "Median net margin: " + firstM.margin.toFixed(1) + "% in FY " + firstM.y + ", "
-    + lastM.margin.toFixed(1) + "% in FY " + lastM.y + ". Share making a loss: "
-    + lastL.loss.toFixed(1) + "% in FY " + lastL.y + ", highest at " + worst.loss.toFixed(1)
-    + "% in FY " + worst.y + ".",
-    el("span", { class:"ecap", text:"Median net margin" }),
-    eChart(withM.map(a => ({ label:yy(a.y), year:a.y, t:"FY " + a.y + ": median margin " + a.margin + "%",
-      parts:[{ h:a.margin / maxM * 62, c:INK }] })), 64,
-      "Median net margin by year: " + withM.map(a => a.y + " " + a.margin + "%").join(", ") + "."),
-    el("span", { class:"ecap", text:"Share making a loss" }),
-    eChart(withL.map(a => ({ label:yy(a.y), year:a.y, t:"FY " + a.y + ": " + a.loss + "% making a loss",
-      parts:[{ h:a.loss / maxL * 62, c:NEG }] })), 64,
-      "Share making a loss by year: " + withL.map(a => a.y + " " + a.loss + "%").join(", ") + "."));
-
-  const lastV = withV[withV.length - 1], maxV = Math.max(...withV.map(a => a.lev));
-  const levCard = eCard("eLev", "Leverage",
-    "Median liabilities as a share of assets: " + lastV.lev.toFixed(0) + "% in FY " + lastV.y
-    + ", between " + Math.min(...withV.map(a => a.lev)).toFixed(0) + "% and " + maxV.toFixed(0)
-    + "% since FY " + withV[0].y + ".",
-    el("span", { class:"ecap", text:"Median liabilities ÷ assets" }),
-    eChart(withV.map(a => ({ label:yy(a.y), year:a.y, t:"FY " + a.y + ": " + a.lev + "%, "
-        + a.filers + " filers", parts:[{ h:a.lev / maxV * 148, c:SECOND }] })), 150,
-      "Median liabilities to assets by year: " + withV.map(a => a.y + " " + a.lev + "%").join(", ") + "."),
-    el("p", { class:"pfine", text:"Audited filers per year: " + withV[0].filers + " (FY " + withV[0].y
-      + ") to " + Math.max(...withV.map(a => a.filers)) + "." }));
-  wrap.append(el("div", { class:"egrid three" }, lflCard, profCard, levCard));
-
-  /* Sectors. */
-  const rot = Object.entries(A.rotation);
-  if (rot.length || A.conc.length) {
-    wrap.append(el("h2", { class:"eh" }, "Sectors ",
-      el("span", { text:"where enough large companies file to compare" })));
-    const years = Array.from(new Set(rot.flatMap(([, v]) => Object.keys(v).map(Number)))).sort();
-    const shade = v => v < 0 ? ["#f6dccf", "#8a2c09"] : v < 10 ? ["#ececec", INK]
-                     : v < 20 ? ["#bdbdbd", INK] : v < 30 ? ["#5c5c5c", "#fff"] : [INK, "#fff"];
-    const heat = el("table", { class:"eheat" },
-      el("caption", { class:"sr", text:"Like-for-like revenue growth by sector and year, percent" }),
-      el("thead", {}, el("tr", {}, el("th", { scope:"col", text:"Sector" }),
-        ...years.map(y => el("th", { scope:"col", text:yy(y) })))),
-      el("tbody", {}, ...rot.map(([code, v]) => el("tr", {},
-        el("th", { scope:"row" }, econSector(code)),
-        ...years.map(y => {
-          const c = v[y];
-          if (!c) return el("td", {}, blank());
-          const [bg, fg] = shade(c[0]);
-          return el("td", { style:"background:" + bg + ";color:" + fg,
-                            title:sectorName(code) + ", FY " + y + ": " + pctTxt(c[0]) + " across "
-                              + c[1] + " companies", text:pctTxt(c[0]) });
-        })))));
-    const heatCard = rot.length ? eCard("eHeat", "Revenue growth by sector, like for like",
-      "The same companies' revenue against the year before, sector by sector.",
-      el("div", { style:"overflow-x:auto;position:relative" }, heat),
-      el("p", { class:"pfine", text:"A sector-year is shown where at least eight companies filed "
-        + "both years; a sector needs three such years for a row. The others are still too thin; "
-        + "each batch of newly read statements adds to them." })) : null;
-    const concCard = A.conc.length ? eCard("eConc", "How concentrated each sector is",
-      "Share of each sector's audited revenue held by its 3 and 10 largest filers, FY " + A.concYear + ".",
-      el("div", { class:"erows" }, ...A.conc.map(c => el("div", { class:"erow",
-          title:sectorName(c[0]) + ", FY " + A.concYear + ": top 3 hold " + c[2] + "%, top 10 hold "
-            + c[3] + "% of " + c[1] + " filers' revenue" },
-        econSector(c[0]),
-        el("span", { class:"track", "aria-hidden":"true" },
-          el("span", { style:"width:" + c[3] + "%;background:#a6a6a6" }),
-          el("span", { style:"width:" + c[2] + "%;background:" + INK })),
-        el("b", { text:c[2].toFixed(0) + "%" })))),
-      eLegend([[INK, "Top 3"], ["#a6a6a6", "Top 10"]]),
-      el("p", { class:"pfine", text:"Shares of audited revenue only, among sectors with at least 20 "
-        + "filers. More companies file every year, which by itself lowers concentration, so years "
-        + "are not compared." })) : null;
-    wrap.append(el("div", { class:"egrid" }, heatCard, concCard));
+  /* KPI strip */
+  const kp = el("div", { class:"coquotes" });
+  const kpi = (k, v, d, c, src) => kp.append(el("div", {}, el("div", { class:"mcap", text:k }),
+    el("div", { class:"qv" }, el("b", { text:v }), d ? el("span", { style:"color:" + c, text:d }) : null),
+    el("span", { class:"mnote", text:src })));
+  const gdpYears = X ? Object.keys(X.econ).filter(y => X.econ[y][0]).map(Number).sort((a, b) => a - b) : [];
+  if (gdpYears.length) {
+    const y = gdpYears[gdpYears.length - 1], g = X.econ[String(y)];
+    kpi("GDP · " + y, money(g[0]), g[1] != null ? arrowPct(g[1]) : "", toneOf(g[1]), "ASK national accounts");
   }
+  const expYears = X && X.exp_total ? Object.keys(X.exp_total).map(Number).sort((a, b) => a - b) : [];
+  if (expYears.length) {
+    const y = expYears[expYears.length - 1], d = change(X.exp_total[y], X.exp_total[y - 1]);
+    kpi("Goods exports · " + y, money(X.exp_total[y]), arrowPct(d), toneOf(d), "ASK external trade");
+  }
+  const fdiYears = CBK && CBK.fdi_by_sector ? Object.keys(CBK.fdi_by_sector).map(Number).sort((a, b) => a - b) : [];
+  if (fdiYears.length) {
+    const y = fdiYears[fdiYears.length - 1], v = CBK.fdi_by_sector[y].total, d = change(v, CBK.fdi_by_sector[y - 1].total);
+    kpi("FDI · " + y, "€" + fmt.format(Math.round(v * 10) / 10) + "m", arrowPct(d), toneOf(d), "Central Bank of Kosovo");
+  }
+  const wy = X && X.wage ? Object.keys(X.wage).map(Number).sort((a, b) => a - b) : [];
+  if (wy.length) {
+    const y = wy[wy.length - 1], d = change(X.wage[y], X.wage[y - 1]);
+    kpi("Average wage · " + y, "€" + fmt.format(X.wage[y]), arrowPct(d), toneOf(d), "Monthly, in enterprises · ASK");
+  }
+  const ey = X && X.emp ? Object.keys(X.emp).map(Number).sort((a, b) => a - b) : [];
+  if (ey.length) {
+    const y = ey[ey.length - 1], d = change(X.emp[y], X.emp[y - 1]);
+    kpi("Employees · " + y, fmt.format(X.emp[y]), arrowPct(d), toneOf(d),
+        X.ent && X.ent[y] ? "In " + fmt.format(X.ent[y]) + " active enterprises · ASK" : "ASK");
+  }
+  if (PULSE) kpi("Active businesses", fmt.format(PULSE.status.active || 0), "of " + fmt.format(PULSE.registry), MUTED,
+                 "Ever registered · ARBK, " + monthShort(PULSE.last[0], PULSE.last[1]));
+  if (kp.children.length) wrap.append(kp);
 
+  wrap.append(el("div", { class:"lens" }, el("span", { class:"lenstag", text:"WHOLE ECONOMY" }),
+    el("span", { text:"Every business registered since 2001, national accounts, trade and investment" })));
+  const grid = el("div", { class:"egrid2" });
+
+  if (gdpYears.length) {
+    const G = gdpYears.map(y => [y, X.econ[String(y)][0], X.econ[String(y)][1]]);
+    const neg = G.filter(g => g[2] != null && g[2] < 0);
+    grid.append(sCard("eGdp", "Gross domestic product", "€ billion, " + G[0][0] + "–" + G[G.length - 1][0]
+        + ", with annual growth above each bar · ASK national accounts",
+      vbars(G.map(([y, v, g], i) => ({ label:yy(y), v, title:y + ": " + money(v) + (g == null ? "" : ", growth " + g.toFixed(1) + "%"),
+          top: g == null ? "" : (g < 0 ? "−" : "") + Math.abs(g).toFixed(1), topColor: g != null && g < 0 ? NEG : SECOND,
+          color: g != null && g < 0 ? NEG : i === G.length - 1 ? GOLD : "#5C7FB8" })), 170,
+        "GDP rose from " + money(G[0][1]) + " in " + G[0][0] + " to " + money(G[G.length - 1][1]) + " in " + G[G.length - 1][0]
+        + (neg.length ? ". Growth was negative in " + neg.map(g => g[0] + " (" + g[2].toFixed(1) + "%)").join(", ") + "." : "."))));
+  }
+  if (expYears.length) {
+    const vals = expYears.map(y => X.exp_total[y] / 1e6);
+    const max = Math.ceil(Math.max(...vals) / 250) * 250;
+    const step = Math.max(1, Math.round((expYears.length - 1) / 4));
+    grid.append(el("section", { class:"mcard", "aria-labelledby":"eExp" },
+      el("div", { class:"mhead" },
+        el("div", {}, el("h2", { id:"eExp", text:"Goods exports" }),
+          el("p", { class:"msub", text:"€ million, " + expYears[0] + "–" + expYears[expYears.length - 1] + " · ASK external trade" })),
+        el("span", { class:"mono msub", text:"€" + vals[0].toFixed(1) + "m in " + expYears[0] + " → €"
+          + vals[vals.length - 1].toFixed(1) + "m in " + expYears[expYears.length - 1] })),
+      lineFig([{ pts:vals, color:"#8FB8FF", area:"rgba(143,184,255,0.1)" }], max,
+        "Goods exports by year, from €" + vals[0].toFixed(0) + "m in " + expYears[0] + " to €"
+          + vals[vals.length - 1].toFixed(0) + "m in " + expYears[expYears.length - 1] + ".",
+        expYears.filter((y, i) => i % step === 0 || i === expYears.length - 1).map(String),
+        { v:max / 2, label:"€" + fmt.format(max / 2) + "m" })));
+  }
+  {
+    const flow = R.flow, last = flow[flow.length - 1];
+    const maxO = Math.max(...flow.map(f => f[1]));
+    const peakC = flow.reduce((a, b) => b[2] > a[2] ? b : a);
+    grid.append(sCard("eFlow", "New businesses and dissolutions", "Per year, " + flow[0][0] + "–" + last[0] + " · "
+        + fmt.format(last[1]) + " registered and " + fmt.format(last[2]) + " dissolved in " + last[0] + " · ARBK",
+      eChart(flow.map((f, i) => ({ label:yy(f[0]), t:f[0] + ": " + fmt.format(f[1]) + " registered, " + fmt.format(f[2]) + " dissolved",
+          parts:[{ h:f[1] / maxO * 190, c:i === flow.length - 1 ? GOLD : "#5C7FB8" }, { h:f[2] / maxO * 190, c:NEG }] })), 196,
+        "Registrations and dissolutions per year. Registrations reached " + fmt.format(maxO) + "; dissolutions peaked at "
+          + fmt.format(peakC[2]) + " in " + peakC[0] + ".", { pair:true }),
+      eLegend([["#5C7FB8", "Registered"], [NEG, "Dissolved"]])));
+  }
+  {
+    const form = R.form, a = form[0], b = form[form.length - 1];
+    const cross = form.find(f => f[1] > f[2]);
+    const step = Math.max(1, Math.round((form.length - 1) / 3));
+    grid.append(sCard("eForm", "How new businesses are set up", "Share of each year's registrations, " + a[0] + "–" + b[0]
+        + (cross ? " · the two lines crossed in " + cross[0] : ""),
+      lineFig([{ pts:form.map(f => f[2]), color:MUTED, startLabel:"Sole proprietorships " + a[2].toFixed(1) + "%",
+                 endLabel:b[2].toFixed(1) + "%", startBelow:true },
+               { pts:form.map(f => f[1]), color:GOLD, width:2.5, startLabel:"Limited liability companies " + a[1].toFixed(1) + "%",
+                 endLabel:b[1].toFixed(1) + "%" }], 100,
+        "Limited liability companies rose from " + a[1] + " percent of new registrations in " + a[0] + " to " + b[1]
+          + " percent in " + b[0] + ". Sole proprietorships fell from " + a[2] + " to " + b[2] + " percent.",
+        form.filter((f, i) => i % step === 0 || i === form.length - 1).map(f => String(f[0])), { v:50, label:"50%" })));
+  }
+  if (R.cohorts.length) {
+    const coh = R.cohorts;
+    grid.append(sCard("eCoh", "What became of each year's new businesses", "Status today of businesses registered in "
+        + coh[0][0] + "–" + coh[coh.length - 1][0] + " · ARBK",
+      eChart(coh.map(c => ({ label:yy(c[0]), t:"Registered " + c[0] + " (" + fmt.format(c[4]) + "): " + c[1] + "% active, "
+          + c[2] + "% dormant, " + c[3] + "% dissolved",
+        parts:[{ h:c[1] * 1.7, c:POS }, { h:c[2] * 1.7, c:"#34465F" }, { h:Math.max(0, 170 - c[1] * 1.7 - c[2] * 1.7), c:NEG }] })), 170,
+        "Share of each registration year's businesses active, dormant or dissolved today. " + coh[0][1] + " percent of the "
+          + coh[0][0] + " cohort is still active; " + coh[coh.length - 1][1] + " percent of the " + coh[coh.length - 1][0] + " cohort."),
+      eLegend([[POS, "Active"], ["#34465F", "Dormant"], [NEG, "Dissolved"]]),
+      el("p", { class:"pfine", text:"Stops at " + coh[coh.length - 1][0] + ": the registry has not yet marked dormant the "
+        + "businesses registered after it, so later years would look healthier than they are." })));
+  }
+  if (fdiYears.length) {
+    const F = fdiYears.map(y => [y, CBK.fdi_by_sector[y].total]);
+    const low = F.reduce((a, b) => b[1] < a[1] ? b : a);
+    grid.append(sCard("eFdi", "Foreign direct investment", "€ million, " + F[0][0] + "–" + F[F.length - 1][0] + " · Central Bank of Kosovo",
+      vbars(F.map(([y, v], i) => ({ label:yy(y), v, title:y + ": €" + v.toFixed(1) + "m",
+          top: i >= F.length - 4 || i === 0 || y === low[0] ? v.toFixed(0) : "",
+          color: i === F.length - 1 ? GOLD : "#5C7FB8" })), 170,
+        "Foreign direct investment by year. It fell to €" + low[1].toFixed(0) + "m in " + low[0] + " and reached €"
+          + F[F.length - 1][1].toFixed(0) + "m in " + F[F.length - 1][0] + ".")));
+  }
+  wrap.append(grid);
+
+  /* Municipalities beside the large-company lens. */
+  const row = el("div", { class:"erow2" });
+  if (PULSE) {
+    const pl = PULSE.places.slice().sort((a, b) => b.active - a.active).slice(0, 12);
+    const top = pl[0].active;
+    const t = el("table", { class:"mtable" },
+      el("caption", { class:"sr", text:"The twelve municipalities with the most active businesses" }),
+      el("thead", {}, el("tr", {}, ...["Municipality", "Active businesses", "Share of the 12", "New in " + PULSE.last[0],
+        "On " + (PULSE.last[0] - 1)].map((h, i) => el("th", { scope:"col", class:i === 0 || i === 2 ? "l" : "r", text:h })))));
+    const tb = el("tbody");
+    for (const p of pl) {
+      const d = change(p.now, p.was);
+      tb.append(el("tr", {}, el("th", { scope:"row", class:"l" }, placeLink(p.name)),
+        el("td", { class:"r", text:fmt.format(p.active) }),
+        el("td", { class:"l" }, el("span", { class:"sharebar", "aria-hidden":"true",
+          style:"width:" + (p.active / top * 100).toFixed(1) + "%" })),
+        el("td", { class:"r", text:fmt.format(p.now) }),
+        el("td", { class:"r", style:"color:" + toneOf(d), text:arrowPct(d) })));
+    }
+    t.append(tb);
+    row.append(el("section", { class:"mcard mleaders", "aria-labelledby":"ePl" },
+      el("div", { class:"mhead pad" }, el("div", {}, el("h2", { id:"ePl", text:"Municipalities" }),
+        el("p", { class:"msub", text:"Twelve largest of " + PULSE.places.length + " by active businesses · registrations "
+          + ytdSpanText() + " against the same months of " + (PULSE.last[0] - 1) })),
+        el("a", { href:"#/places", onClick: openOnClick(() => set({ route:"places", selected:null })), text:"All municipalities" })),
+      el("div", { class:"mtablebox" }, t)));
+  }
+  const lens2 = el("div", { class:"lenscol" }, el("div", { class:"lens" }, el("span", { class:"lenstag alt", text:"LARGE COMPANIES" }),
+    el("span", { text:"Audited accounts, proven figures only" })));
+  const mini = (id, title, key, color, note) => {
+    const ys = A.years.filter(a => a[key] != null);
+    if (!ys.length) return null;
+    const last = ys[ys.length - 1];
+    const max = Math.max(...ys.map(a => a[key]));
+    return el("section", { class:"mcard mini", "aria-labelledby":id },
+      el("div", { class:"mhead" }, el("h2", { id, text:title }),
+        el("span", { class:"mono" }, el("b", { text:last[key].toFixed(1) + "%" }), el("span", { class:"msub", text:" FY" + String(last.y).slice(2) }))),
+      el("p", { class:"msub", text:note(ys, last) }),
+      el("div", { class:"minibars", role:"img", "aria-label":title + " by fiscal year: " + ys.map(a => "FY " + a.y + " " + a[key] + "%").join(", ") },
+        ys.map((a, i) => el("a", { href:"#/year/" + a.y, title:"FY " + a.y + ": " + a[key] + "%", tabindex:"-1",
+          onClick: openOnClick(() => set({ route:"latest", year:a.y, selected:null })),
+          style:"height:" + Math.max(2, a[key] / max * 60).toFixed(0) + "px;background:" + (i === ys.length - 1 ? GOLD : color) }))),
+      el("div", { class:"mxaxis", "aria-hidden":"true" }, el("span", { text:"FY" + String(ys[0].y).slice(2) }),
+        el("span", { text:"FY" + String(last.y).slice(2) })));
+  };
+  lens2.append(...[
+    mini("eM", "Median net margin", "margin", "#5C7FB8", (ys, l) => {
+      const p = ys[ys.length - 2];
+      return "From " + ys[0].margin.toFixed(1) + "% in FY " + ys[0].y + (p ? "; " + p.margin.toFixed(1) + "% in FY " + p.y : "");
+    }),
+    mini("eL", "Loss-making companies", "loss", "#B4533F", ys => "Share of filers with a net loss; "
+      + ys[0].loss.toFixed(1) + "% in FY " + ys[0].y),
+    mini("eV", "Liabilities / assets", "lev", "#56637A", ys => "Median; between "
+      + Math.min(...ys.map(a => a.lev)).toFixed(1) + "% and " + Math.max(...ys.map(a => a.lev)).toFixed(1) + "% since FY " + ys[0].y),
+  ].filter(Boolean));
+  row.append(lens2);
+  wrap.append(row);
+
+  /* Kept from the earlier page: survival by sector, concentration, who starts businesses. */
+  const extra = el("div", { class:"egrid2" });
+  const secs = R.sectors;
+  if (secs.length) extra.append(sCard("eSecs", "Which sectors' businesses last",
+    "Share of the businesses registered " + R.sectorSpan[0] + "–" + R.sectorSpan[1] + " that are still active",
+    el("div", { class:"erows" }, ...secs.map(s => el("div", { class:"erow",
+        title:sectorName(s[0]) + ": " + s[1] + "% of " + fmt.format(s[4]) + " still active, " + s[2] + "% dormant, " + s[3] + "% dissolved" },
+      econSector(s[0]),
+      el("span", { class:"track", "aria-hidden":"true" }, el("span", { style:"width:" + s[1] + "%;background:" + POS })),
+      el("b", { text:s[1].toFixed(0) + "%" }))))));
+  if (A.conc.length) extra.append(sCard("eConc", "How concentrated each sector is",
+    "Share of each sector's audited revenue held by its 3 and 10 largest filers, FY " + A.concYear,
+    el("div", { class:"erows" }, ...A.conc.map(c => el("div", { class:"erow",
+        title:sectorName(c[0]) + ", FY " + A.concYear + ": top 3 hold " + c[2] + "%, top 10 hold " + c[3] + "% of " + c[1] + " filers' revenue" },
+      econSector(c[0]),
+      el("span", { class:"track", "aria-hidden":"true" },
+        el("span", { style:"width:" + c[3] + "%;background:#5C7FB8" }), el("span", { style:"width:" + c[2] + "%;background:" + GOLD })),
+      el("b", { text:c[2].toFixed(0) + "%" })))),
+    eLegend([[GOLD, "Top 3"], ["#5C7FB8", "Top 10"]])));
+  if (extra.children.length) wrap.append(extra);
+  if (PULSE && PULSE.mix && PULSE.mix.length) wrap.append(mixCard(PULSE));
   wrap.append(el("section", { class:"eread", "aria-labelledby":"eRead" },
     el("h2", { id:"eRead", text:"How to read this page" }),
     el("ul", {},
-      el("li", { text:"Registry figures count every business but say nothing about size. Audited "
-        + "figures describe the largest companies only; a sole trader never appears there." }),
-      el("li", { text:"Like for like means the same companies in both years. Growth is never this "
-        + "year's total against last year's, which would count new filers as growth." }),
-      el("li", { text:"Where a company files group accounts they are used, and a year that switches "
-        + "between group and company accounts is left out of growth." }),
-      el("li", { text:"Years open the companies that filed for them, sectors open their pages. Every "
-        + "audited figure is proven against its own statement, or left out." }))));
+      el("li", { text:"Registry figures count every business but say nothing about size. Audited figures describe the "
+        + "largest companies only; a sole trader never appears there." }),
+      el("li", { text:"Like for like means the same companies in both years. Growth is never this year's total against "
+        + "last year's, which would count new filers as growth." }),
+      el("li", { text:"The large-company bars open the companies that filed for each year; sectors open their pages." }))));
   return wrap;
 }
 
-function renderPulse() {
-  const wrap = el("div", { class:"pulse" });
-  const P = PULSE;
-  if (!P) {
-    wrap.append(el("p", { class:"empty", text:"The registry figures were not part of this build. "
-      + "Run build_pulse.py, then rebuild the page." }));
-    return wrap;
-  }
-  const idx = revenueIndex();
-  const st = P.story, y = P.ytd, span = "Jan–" + MONTHS[P.last[1] - 1].slice(0, 3);
-  const gap = st.since ? (st.y - st.since[0]) * 12 + (st.m - st.since[1]) : null;
-  const tile = (label, value, delta, color, note) => el("div", { class:"ptile" },
-    el("span", { class:"cap", text:label }), el("b", { text:value }),
-    el("span", { class:"pdelta", style:"color:" + color, text:delta }),
-    el("span", { class:"pnote", text:note }));
-  const yoyNew = change(y.now, y.was), yoyMonth = change(st.now, st.was);
-  const tiles = el("section", { class:"pkpis", "aria-label":"Headline figures" },
-    tile("New businesses · " + span, fmt.format(y.now), signed(yoyNew) + " on " + (P.last[0] - 1),
-         yoyNew < 0 ? NEG : POS, fmt.format(y.was) + " in the same months of " + (P.last[0] - 1)),
-    tile(monthName(st.y, st.m), fmt.format(st.now),
-         signed(yoyMonth) + " on " + MONTHS[st.m - 1].slice(0, 3) + " " + (st.y - 1),
-         yoyMonth < 0 ? NEG : POS,
-         !st.since ? "Busiest month since 2001"
-           : gap >= 12 ? "Busiest month since " + monthName(st.since[0], st.since[1])
-           : "New registrations in the month"),
-    tile("Closures · " + span, fmt.format(y.cloNow),
-         signed(change(y.cloNow, y.cloWas)) + " on " + (P.last[0] - 1), SECOND,
-         fmt.format(y.cloWas) + " in the same months of " + (P.last[0] - 1)),
-    tile("Active businesses", fmt.format(P.status.active || 0),
-         fmt.format(P.status.dormant || 0) + " dormant", SECOND,
-         fmt.format(P.registry) + " ever registered"),
-    idx ? tile("Tregu Index · FY " + idx.last.y, idx.points[idx.points.length - 1].level.toFixed(1),
-               signed(idx.last.g) + " like-for-like", idx.last.g < 0 ? NEG : POS,
-               fmt.format(idx.last.n) + " audited companies, FY " + idx.base + " = 100") : null);
-  wrap.append(tiles);
+/* --- markets ---
+   The home page as the Tregu canvas draws it (2026-11-16): a tape, the index
+   with its yearly links, the latest fiscal year's session, a market map, the
+   movers, the latest filings, the largest filers and the registry's month.
+   Every figure is computed here from the payload; the canvas's numbers were a
+   sketch of the same data and are not copied. Sectors whose rates rest on a
+   handful of companies are drawn small and said to be. */
+let IDX_ALL;
+const marketIndex = () => IDX_ALL === undefined ? (IDX_ALL = revenueIndex()) : IDX_ALL;
+const arrowPct = v => v == null ? "–" : (v < 0 ? "▼ " : "▲ ") + Math.abs(v).toFixed(1) + "%";
+const arrowPt = v => v == null ? "" : (v < 0 ? "▼ " : "▲ ") + Math.abs(v).toFixed(1) + " pt";
+const toneOf = v => v == null || v === 0 ? MUTED : v < 0 ? NEG : POS;
+const money = v => {
+  const a = Math.abs(v);
+  return (v < 0 ? "−€" : "€") + (a >= 1e9 ? (a / 1e9).toFixed(2) + "bn"
+    : a >= 1e6 ? (a / 1e6).toFixed(1) + "m" : a >= 1e3 ? Math.round(a / 1e3) + "k" : String(Math.round(a)));
+};
+const auditedYears = () => (ECONOMY && ECONOMY.audited && ECONOMY.audited.years) || [];
+const sqName = sq => (SECTOR_BY_SQ[sq] && SECTOR_BY_SQ[sq].en) || sq || "Unclassified";
+const sectorTarget = sq => SECTOR_BY_SQ[sq]
+  ? { route:"sector", selected:SECTOR_BY_SQ[sq].code }
+  : { route:"screener", sector:sq, selected:null, cursor:0, rowLimit:100 };
+const companyLink = (r, cls, kids) => el("a", { class:cls, href:"#/company/" + enc(r.id),
+  "data-fk":cls + ":" + r.id, onClick: openOnClick(() => set({ route:"company", selected:r.id })) }, kids);
+const mcard = (title, sub, id, cls) => {
+  const card = el("section", { class:"mcard" + (cls ? " " + cls : ""), "aria-labelledby":id });
+  card.append(el("div", { class:"mhead" }, el("h2", { id, text:title }),
+                 sub ? el("span", { class:"msub", text:sub }) : null));
+  return card;
+};
 
-  const main = el("div", { class:"pmain" },
-    pulseStory(P), formationChart(P), sectorHeat(P),
-    idx ? el("div", { class:"prow" }, indexCard(idx), sectorRevenueCard(idx, P)) : null,
-    mixCard(P));
-  const side = el("div", { class:"pside" }, watchCard(), placesCard(P), filingsCard(P));
-  wrap.append(el("div", { class:"pcols" }, main, side));
+function renderSiteFoot() {
+  if (!AUDIT || !AUDIT.checked) return;
+  const errs = AUDIT.checked - AUDIT.matched;
+  byId("footAudit").textContent = "Audit of " + longDate(AUDIT.date) + ": " + AUDIT.matched + " of "
+    + AUDIT.checked + " randomly sampled figures matched their source statement"
+    + (errs ? "; the " + (errs === 1 ? "error is" : errs + " errors are") + " published in the audit list" : "")
+    + ". Tregu covers large companies that file audited statements, not every business in Kosovo.";
+}
+
+function renderTape() {
+  const tape = byId("tape");
+  tape.replaceChildren();
+  const items = [];
+  const idx = marketIndex();
+  if (idx) {
+    const L = idx.points[idx.points.length - 1];
+    items.push(["Tregu index", L.level.toFixed(1), arrowPct(L.g), toneOf(L.g)]);
+  }
+  const ay = auditedYears(), a = ay[ay.length - 1], b = ay[ay.length - 2];
+  if (a) items.push(["FY" + String(a.y).slice(2) + " filers", fmt.format(a.filers),
+                     ECONOMY.companies ? "of " + fmt.format(ECONOMY.companies) + " covered" : "", MUTED]);
+  if (a && b && a.margin != null && b.margin != null) {
+    const d = a.margin - b.margin;
+    items.push(["Net margin, median", a.margin.toFixed(1) + "%", arrowPt(d), toneOf(d)]);
+  }
+  if (PULSE) {
+    const st = PULSE.story, y = PULSE.ytd;
+    const m = change(st.now, st.was), yd = change(y.now, y.was);
+    items.push(["New businesses " + MONTHS[st.m - 1].slice(0, 3), fmt.format(st.now), arrowPct(m), toneOf(m)]);
+    items.push(["YTD", fmt.format(y.now), arrowPct(yd), toneOf(yd)]);
+    items.push(["Active businesses", fmt.format(PULSE.status.active || 0), "", MUTED]);
+    items.push(["Latest filing", longDate(PULSE.latestFiling).toUpperCase(), "", MUTED]);
+  }
+  if (SECTORCTX && SECTORCTX.econ) {
+    const gy = Object.keys(SECTORCTX.econ).filter(y => SECTORCTX.econ[y][0]).map(Number).sort((a, b) => a - b).pop();
+    if (gy) { const g = SECTORCTX.econ[String(gy)];
+      items.splice(Math.min(items.length, 6), 0, ["GDP " + gy, money(g[0]), arrowPct(g[1]), toneOf(g[1])]); }
+  }
+  if (SECTORCTX && SECTORCTX.exp_total) {
+    const xy = Object.keys(SECTORCTX.exp_total).map(Number).sort((a, b) => a - b).pop();
+    const d = change(SECTORCTX.exp_total[xy], SECTORCTX.exp_total[xy - 1]);
+    items.splice(Math.min(items.length, 7), 0, ["Exports " + xy, money(SECTORCTX.exp_total[xy]), arrowPct(d), toneOf(d)]);
+  }
+  if (CBK && CBK.fdi_by_sector) {
+    const fy = Object.keys(CBK.fdi_by_sector).map(Number).sort((a, b) => a - b);
+    const ly = fy[fy.length - 1], now = CBK.fdi_by_sector[ly].total,
+          was = CBK.fdi_by_sector[ly - 1] && CBK.fdi_by_sector[ly - 1].total;
+    const d = change(now, was);
+    if (now != null) items.splice(Math.min(items.length, 8), 0,
+      ["FDI " + ly, "€" + fmt.format(Math.round(now)) + "m", arrowPct(d), toneOf(d)]);
+  }
+  for (const [k, v, d, c] of items) {
+    tape.append(el("div", { class:"tick" }, el("span", { class:"tk", text:k.toUpperCase() }),
+      el("span", { class:"tv", text:v }),
+      d ? el("span", { class:"td", style:"color:" + c, text:d }) : null));
+  }
+}
+
+/* The index as a line, with its yearly links as bars underneath. */
+function indexPanel(idx) {
+  const pts = idx.points, L = pts[pts.length - 1];
+  const card = el("section", { class:"mcard mindex", "aria-labelledby":"mIdx" });
+  const how = el("details", { class:"mhow" }, el("summary", { text:"How the index is built" }));
+  const worst = idx.chain.filter(s => s.naive != null)
+    .sort((a, b) => Math.abs(b.naive - b.g) - Math.abs(a.naive - a.g)).slice(0, 3)
+    .sort((a, b) => a.y - b.y);
+  const tb = el("tbody");
+  for (const s of worst) {
+    tb.append(el("tr", {},
+      el("th", { class:"l", scope:"row", text:"FY " + s.y }),
+      el("td", { class:"strike" }, el("span", { class:"sr", text:"misleading: " }), signed(s.naive)),
+      el("td", { style:"font-weight:600;color:" + toneOf(s.g), text:signed(s.g) })));
+  }
+  how.append(el("div", { class:"mhowbody" },
+    el("p", { text:"Revenue growth of the same companies, year on year, chained from FY " + idx.base
+      + " = 100 in nominal euros. Which companies file changes every year, so adding up whoever "
+      + "filed measures the filing, not the economy. A year joins the chain only when "
+      + INDEX_MIN_PAIRS_ALL + " or more companies filed both it and the year before." }),
+    el("table", { class:"flat" },
+      el("caption", { class:"sr", text:"Revenue growth: summing every filer against comparing the same companies" }),
+      el("thead", {}, el("tr", {}, el("th", { class:"l", scope:"col", text:"Year" }),
+        el("th", { scope:"col", text:"Sum of filers" }), el("th", { scope:"col", text:"Same companies" }))),
+      tb)));
+  card.append(el("div", { class:"mtop" },
+    el("div", {},
+      el("h2", { id:"mIdx", class:"mcap", text:"Tregu Index · like-for-like audited revenue" }),
+      el("div", { class:"mbig" }, el("b", { text:L.level.toFixed(1) }),
+        el("span", { class:"mdelta", style:"color:" + toneOf(L.g), text:arrowPct(L.g) }),
+        el("span", { class:"mvs", text:"FY " + L.y + " on FY " + (L.y - 1) })),
+      el("div", { class:"mnote", text:fmt.format(L.n) + " companies filed both years · FY "
+        + idx.base + " = 100" })),
+    how));
+
+  /* The line: SVG stretched to the card, labels in HTML so they do not stretch. */
+  const W = 1000, H = 240;
+  const lvls = pts.map(p => p.level);
+  const rawStep = (Math.max(...lvls) - Math.min(...lvls)) / 3 || 50;
+  const step = [10, 20, 25, 50, 100, 200, 250, 500].find(s => s >= rawStep) || 1000;
+  const lo = Math.floor(Math.min(...lvls) * 0.8 / step) * step;
+  const hi = Math.max(...lvls) * 1.06;
+  const X = i => i / (pts.length - 1) * W, Y = v => H - (v - lo) / (hi - lo) * H;
+  const line = pts.map((p, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(p.level).toFixed(1)).join(" ");
+  const svg = svgEl("svg", { viewBox:"0 0 " + W + " " + H, preserveAspectRatio:"none",
+                             "aria-hidden":"true", focusable:"false" });
+  const labels = [];
+  for (let v = Math.ceil(lo / step) * step; v < hi; v += step) {
+    if (v <= lo) continue;
+    svg.append(svgEl("line", { x1:0, x2:W, y1:Y(v), y2:Y(v), stroke:GRID, "vector-effect":"non-scaling-stroke" }));
+    labels.push(el("span", { class:"glbl", style:"top:" + (Y(v) - 17).toFixed(0) + "px", text:String(v) }));
+  }
+  svg.append(svgEl("path", { d:line + " L" + W + " " + H + " L0 " + H + " Z", fill:"rgba(227,179,65,0.09)" }));
+  svg.append(svgEl("path", { d:line, fill:"none", stroke:GOLD, "stroke-width":2, "stroke-linejoin":"round",
+                             "stroke-linecap":"round", "vector-effect":"non-scaling-stroke" }));
+  pts.forEach((p, i) => {
+    if (p.g != null && p.g < 0) labels.push(el("span", { class:"gflag", style:"left:"
+      + (X(i) / W * 100).toFixed(1) + "%;top:" + (Y(p.level) + 10).toFixed(0) + "px;color:" + NEG,
+      text:"FY" + String(p.y).slice(2) + " " + arrowPct(p.g) }));
+  });
+  labels.push(el("span", { class:"gdot", style:"top:" + (Y(L.level) - 4.5).toFixed(0) + "px" }));
+  const fell = pts.filter(p => p.g != null && p.g < 0).map(p => "FY " + p.y);
+  card.append(el("div", { class:"mline", role:"img", "aria-label":"Tregu Index from FY " + idx.base
+      + " to FY " + L.y + ". It rose from 100 to " + L.level.toFixed(1)
+      + (fell.length ? " and fell in " + fell.join(", ") : " without a falling year") + "." },
+    svg, labels));
+  card.append(el("div", { class:"mxaxis", "aria-hidden":"true" },
+    pts.map((p, i) => el("span", { text: i === 0 || i === pts.length - 1 ? "FY" + String(p.y).slice(2)
+                                                                       : String(p.y).slice(2) }))));
+
+  const links = pts.filter(p => p.g != null);
+  const top = Math.max(1, ...links.map(p => Math.abs(p.g)));
+  const grid = el("div", { class:"mgrowth", role:"img", style:"grid-template-columns:repeat("
+      + links.length + ",minmax(0,1fr))",
+    "aria-label":"Like-for-like revenue growth by year, FY " + links[0].y + " to FY " + L.y + ". "
+      + (fell.length ? "Negative in " + fell.join(", ") + "." : "No year was negative.") });
+  for (const p of links) {
+    grid.append(el("div", { title:"FY " + p.y + ": " + signed(p.g) + " across " + p.n + " companies" },
+      el("div", { class:"gup" },
+        el("span", { style:"color:" + (p.g < 0 ? NEG : INK), text:(p.g < 0 ? "−" : "+") + Math.abs(p.g).toFixed(1) }),
+        el("i", { style:"height:" + (p.g > 0 ? Math.max(2, p.g / top * 56) : 0).toFixed(0) + "px" })),
+      el("div", { class:"gaxis" }),
+      el("div", { class:"gdown" }, el("i", { style:"height:" + (p.g < 0 ? Math.max(4, -p.g / top * 56) : 0).toFixed(0) + "px" })),
+      el("span", { class:"gy", text:"’" + String(p.y).slice(2) }),
+      el("span", { class:"gn", text:String(p.n) })));
+  }
+  card.append(el("div", { class:"mgrowwrap" },
+    el("div", { class:"mcapline" }, el("h3", { class:"mcap", text:"Annual growth, same companies" }),
+      el("span", { text:"companies compared under each year" })), grid));
+  return card;
+}
+
+/* The latest fiscal year, as far as it has been filed. */
+function sessionPanel(idx) {
+  const ay = auditedYears(), a = ay[ay.length - 1], b = ay[ay.length - 2];
+  const L = idx ? idx.last : null;
+  const y = a ? a.y : L ? L.y : YEARS[0];
+  const card = mcard("FY " + y + " session", a && b && a.filers < b.filers ? "filings still arriving" : "",
+                     "mSess", "msession");
+  const rows = el("div", { class:"mrows" });
+  const row = (k, note, v, d, c) => rows.append(el("div", { class:"mrowi" },
+    el("div", {}, el("div", { text:k }), el("div", { class:"mnote", text:note })),
+    el("div", { class:"mfig" }, el("b", { text:v }), el("span", { style:"color:" + c, text:d }))));
+  if (L && L.y === y) {
+    const now = L.pairs.reduce((s, p) => s + p[2], 0);
+    row("Revenue, like-for-like", fmt.format(L.n) + " companies, both years", money(now), arrowPct(L.g), toneOf(L.g));
+  }
+  if (a && a.margin != null) row("Median net margin", b && b.margin != null ? "FY " + b.y + ": " + b.margin.toFixed(1) + "%" : "",
+    a.margin.toFixed(1) + "%", b && b.margin != null ? arrowPt(a.margin - b.margin) : "",
+    b && b.margin != null ? toneOf(a.margin - b.margin) : MUTED);
+  /* Fewer companies making a loss is the good direction, so its colour flips. */
+  if (a && a.loss != null) row("Loss-making companies", b && b.loss != null ? "FY " + b.y + ": " + b.loss.toFixed(1) + "%" : "",
+    a.loss.toFixed(1) + "%", b && b.loss != null ? arrowPt(a.loss - b.loss) : "",
+    b && b.loss != null ? toneOf(b.loss - a.loss) : MUTED);
+  if (a && a.lev != null) row("Liabilities / assets", "median" + (b && b.lev != null ? " · FY " + b.y + ": " + b.lev.toFixed(1) + "%" : ""),
+    a.lev.toFixed(1) + "%", b && b.lev != null ? arrowPt(a.lev - b.lev) : "", MUTED);
+  if (a) row("Companies filed", b ? "FY " + b.y + " closed at " + fmt.format(b.filers) : "",
+    fmt.format(a.filers), b && a.filers < b.filers ? "so far" : "", MUTED);
+  card.append(rows);
+  if (L) {
+    const up = L.pairs.filter(p => p[2] > p[1]).length, down = L.pairs.length - up;
+    card.append(el("div", { class:"mbreadth" },
+      el("div", { class:"mcapline" }, el("h3", { class:"mcap", text:"Breadth" }),
+        el("span", { class:"mono", text:fmt.format(L.pairs.length) + " companies with a growth figure" })),
+      el("div", { class:"mbar", role:"img", "aria-label":up + " of " + L.pairs.length
+          + " companies grew revenue in FY " + L.y + "; " + down + " did not." },
+        el("div", { style:"flex:" + up + " 1 0;background:" + POS }),
+        el("div", { style:"flex:" + down + " 1 0;background:" + NEG })),
+      el("div", { class:"mbarkey" }, el("span", { style:"color:" + POS, text:"▲ " + up + " grew revenue" }),
+        el("span", { style:"color:" + NEG, text:down + " flat or lower ▼" }))));
+  }
+  return card;
+}
+
+/* Area is revenue, colour is growth. Laid out by halving the sectors into two
+   groups of near-equal revenue and splitting the box along its longer side,
+   again and again — a treemap that stays readable without a library. */
+function marketMap(idx) {
+  const L = idx.last;
+  const by = {};
+  for (const [r, p, c] of L.pairs) {
+    const k = r.s || "";
+    const b = by[k] || (by[k] = { sq:k, a:0, b:0, n:0, cos:[] });
+    b.a += p; b.b += c; b.n++; b.cos.push([r, c]);
+  }
+  const secs = Object.values(by).map(s => Object.assign(s, { g:(s.b / s.a - 1) * 100,
+      name:sqName(s.sq), code:SECTOR_BY_SQ[s.sq] ? SECTOR_BY_SQ[s.sq].code : "" }))
+    .sort((x, y) => y.b - x.b);
+  const total = secs.reduce((s, x) => s + x.b, 0);
+  const card = el("section", { class:"mcard mmap", "aria-labelledby":"mMap" });
+  const tone = v => v < 0
+    ? "rgba(255,107,87," + (0.2 + Math.min(-v, 50) / 50 * 0.3).toFixed(2) + ")"
+    : "rgba(47,211,160," + (0.12 + Math.min(v, 50) / 50 * 0.36).toFixed(2) + ")";
+  const key = el("div", { class:"mkey", "aria-hidden":"true" }, el("span", { text:"−50%" }));
+  for (const v of [-50, -20, 5, 20, 45]) key.append(el("i", { style:"background:" + tone(v) }));
+  key.append(el("span", { text:"+50%" }));
+  card.append(el("div", { class:"mhead" },
+    el("div", {}, el("h2", { id:"mMap", text:"Market map" }),
+      el("p", { class:"msub", text:"Area is FY " + L.y + " revenue of companies that filed both years ("
+        + money(total) + " in all). Colour is growth on FY " + (L.y - 1) + "." })), key));
+
+  const W = 1000, H = 360, boxes = [];
+  const split = (items, x, y, w, h) => {
+    if (items.length === 1) { boxes.push([items[0], x, y, w, h]); return; }
+    const sum = items.reduce((s, i) => s + i.b, 0);
+    let acc = 0, cut = 1;
+    for (let i = 0; i < items.length - 1; i++) {
+      acc += items[i].b;
+      cut = i + 1;
+      if (acc >= sum / 2) break;
+    }
+    const A = items.slice(0, cut), B = items.slice(cut);
+    const fa = A.reduce((s, i) => s + i.b, 0) / sum;
+    if (w >= h) { split(A, x, y, w * fa, h); split(B, x + w * fa, y, w * (1 - fa), h); }
+    else { split(A, x, y, w, h * fa); split(B, x, y + h * fa, w, h * (1 - fa)); }
+  };
+  if (secs.length) split(secs, 0, 0, W, H);
+  const map = el("div", { class:"tmap" });
+  for (const [s, x, y, w, h] of boxes) {
+    const area = w * h, size = area > 60000 ? "xl" : area > 14000 ? "l" : area > 5000 ? "m" : "s";
+    const label = s.name + ": " + (s.g < 0 ? "down " : "up ") + Math.abs(s.g).toFixed(1) + "%, "
+      + s.n + (s.n === 1 ? " company" : " companies") + ", " + money(s.b);
+    const lead = s.cos.sort((p, q) => q[1] - p[1]).slice(0, 3)
+      .map(([r, c]) => r.n + " " + money(c)).join(" · ");
+    const target = sectorTarget(s.sq);
+    map.append(el("a", { class:"tile t" + size, href:hrefFor(target), "data-fk":"map:" + s.sq,
+        "aria-label":label, title:label,
+        style:"left:" + (x / W * 100).toFixed(3) + "%;top:" + (y / H * 100).toFixed(3) + "%;width:"
+          + (w / W * 100).toFixed(3) + "%;height:" + (h / H * 100).toFixed(3) + "%;background:" + tone(s.g),
+        onClick: openOnClick(() => set(target)) },
+      size === "s" ? el("span", { class:"tcode", text:s.code || "·" })
+      : [el("span", { class:"tn" }, el("b", { text:s.name }),
+           el("span", { text:(size === "m" ? s.n : s.n + (s.n === 1 ? " company" : " companies")) + " · " + money(s.b) })),
+         el("span", { class:"tf" }, el("b", { text:arrowPct(s.g) }),
+           size === "xl" ? el("span", { text:lead }) : null)]));
+  }
+  card.append(map);
+  const firm = secs.filter(s => s.n >= SECTOR_MIN_PAIRS).map(s => s.name.toLowerCase());
+  card.append(el("p", { class:"pfine", text:"Sector growth is firm only where " + SECTOR_MIN_PAIRS
+    + " or more companies filed both years" + (firm.length ? ": " + firm.join(", ") : "") + ". "
+    + "Smaller tiles are a handful of filers each. Each tile opens its sector." }));
+  return card;
+}
+
+function moverPanel(idx, up) {
+  const L = idx.last;
+  const card = mcard(up ? "Top gainers" : "Top decliners",
+                     "FY " + L.y + " revenue · prior year ≥ €5m", up ? "mUp" : "mDown");
+  const list = L.pairs.filter(p => p[1] >= 5e6).map(([r, p, c]) => ({ r, p, c, g:(c / p - 1) * 100 }))
+    .sort((a, b) => up ? b.g - a.g : a.g - b.g).filter(x => up ? x.g > 0 : x.g < 0).slice(0, 6);
+  const box = el("div", { class:"mlist" });
+  for (const m of list) {
+    box.append(companyLink(m.r, "mitem", [
+      el("span", { class:"mi" }, el("b", { text:m.r.n }),
+        el("span", { text:sqName(m.r.s) + (m.r.c ? " · " + m.r.c : "") })),
+      el("span", { class:"mv" },
+        el("b", { class:up ? "chip-up" : "chip-down", text:arrowPct(m.g) }),
+        el("span", { text:money(m.p) + " → " + money(m.c) }))]));
+  }
+  if (!list.length) box.append(el("p", { class:"pfine", text:"None this year." }));
+  card.append(box);
+  return card;
+}
+
+function latestFilingsPanel(P) {
+  const card = mcard("Latest filings", "Ministry of Finance archive", "mFeed");
+  const box = el("div", { class:"mlist" });
+  for (const f of P.filings.slice(0, 8)) {
+    const co = DATA.find(r => f.id && r.id === f.id)
+            || DATA.find(r => foldName(r.n) === foldName(f.name) || foldName(r.ln) === foldName(f.name));
+    const onPage = co && co.fy[String(f.fy)];
+    const kids = [el("span", { class:"fdate", text:longDate(f.date) }),
+                  el("span", { class:"fname", text: co ? co.n : f.name }),
+                  el("span", { class:"fbadge", text:"FY" + String(f.fy).slice(2),
+                               title: onPage ? "On Tregu" : "Not yet read" })];
+    box.append(onPage ? companyLink(co, "mfile", kids) : el("div", { class:"mfile" }, kids));
+  }
+  card.append(box);
+  card.append(el("p", { class:"pfine", text:"A filing marked here but not linked has not been read yet; "
+    + "it is read within the next refresh." }));
+  return card;
+}
+
+/* Gaps stay gaps: a year whose revenue could not be proven breaks the line. */
+function gapSpark(vals, w, h, color, label) {
+  const known = vals.filter(v => v != null);
+  const svg = svgEl("svg", { viewBox:"0 0 " + w + " " + h, role:"img", "aria-label":label, class:"gspark" });
+  if (known.length < 2) return svg;
+  const mn = Math.min(...known), mx = Math.max(...known);
+  let d = "", pen = false;
+  vals.forEach((v, i) => {
+    if (v == null) { pen = false; return; }
+    const x = (i / (vals.length - 1) * w).toFixed(1);
+    const y = (h - 2 - (mx === mn ? 0.5 : (v - mn) / (mx - mn)) * (h - 4)).toFixed(1);
+    d += pen ? "L" + x + " " + y + " " : "M" + x + " " + y + " l0.01 0 ";
+    pen = true;
+  });
+  svg.append(svgEl("path", { d, fill:"none", stroke:color, "stroke-width":1.6,
+                             "stroke-linecap":"round", "stroke-linejoin":"round" }));
+  return svg;
+}
+
+function leadersPanel(idx) {
+  const y = idx.last.y;
+  const years = YEARS.slice().sort((a, b) => a - b).filter(v => v <= y).slice(-12);
+  const rows = DATA.filter(r => !r.u && r.fy[String(y)] && r.fy[String(y)].rev != null)
+    .sort((a, b) => b.fy[String(y)].rev - a.fy[String(y)].rev).slice(0, 10);
+  const top = rows.length ? rows[0].fy[String(y)].rev : 1;
+  const card = el("section", { class:"mcard mleaders", "aria-labelledby":"mLead" });
+  card.append(el("div", { class:"mhead pad" },
+    el("div", {}, el("h2", { id:"mLead", text:"Largest filers · FY " + y }),
+      el("p", { class:"msub", text:"By proven revenue. A dash means the figure could not be proven "
+        + "from the statement, so it is not shown." })),
+    el("a", { href:"#/screener", "data-fk":"lead:screener",
+              onClick: openOnClick(() => set({ route:"screener", selected:null })),
+              text:"Open the screener · " + fmt.format(DATA.filter(r => !r.u).length) + " companies" })));
+  const table = el("table", { class:"mtable" },
+    el("caption", { class:"sr", text:"The ten largest companies by proven revenue in FY " + y }));
+  const head = el("tr");
+  [["#", "r"], ["Company", "l"], ["Sector", "l"], ["Revenue", "r"], ["Growth", "r"],
+   ["Gross margin", "r"], ["CAGR", "r"], ["Revenue, FY" + String(years[0]).slice(2) + "–" + String(y).slice(2), "l"],
+   ["Filings", "r"]].forEach(([t, a]) => head.append(el("th", { scope:"col", class:a, text:t })));
+  table.append(el("thead", {}, head));
+  const tb = el("tbody");
+  rows.forEach((r, i) => {
+    const e = r.fy[String(y)], prev = r.fy[String(y - 1)];
+    const g = prev && prev.rev ? (e.rev / prev.rev - 1) * 100 : null;
+    const yr = yearRow(r, y);
+    const cagr = yr ? yr.cagr : null;
+    const dash = () => [el("span", { class:"nil", "aria-hidden":"true", text:"—" }), el("span", { class:"sr", text:"not proven" })];
+    const share = (e.rev / top * 100).toFixed(0);
+    tb.append(el("tr", {},
+      el("td", { class:"r rank", text:String(i + 1) }),
+      el("th", { scope:"row", class:"l" }, companyLink(r, "lname", r.n),
+        el("span", { class:"lmeta", text:r.id + (r.c ? " · " + r.c : "") })),
+      el("td", { class:"l sec", text:sqName(r.s) }),
+      el("td", { class:"r", style:"background:linear-gradient(270deg, rgba(143,184,255,0.14) " + share
+                 + "%, transparent " + share + "%)" }, figLink(r, y, "rev", money(e.rev), INK)),
+      el("td", { class:"r", style:"color:" + toneOf(g) }, g == null ? dash() : arrowPct(g)),
+      el("td", { class:"r" }, e.gm == null ? dash() : e.gm.toFixed(1) + "%"),
+      el("td", { class:"r" }, cagr == null ? dash() : (cagr < 0 ? "−" : "+") + Math.abs(cagr).toFixed(1) + "%"),
+      el("td", { class:"l" }, gapSpark(years.map(v => r.fy[String(v)] && r.fy[String(v)].rev != null
+          ? r.fy[String(v)].rev : null), 120, 26, g != null && g < 0 ? NEG : POS,
+          "Revenue trend for " + r.n + ", FY " + years[0] + " to FY " + y)),
+      el("td", { class:"r muted", text:String(r.ny) })));
+  });
+  table.append(tb);
+  card.append(el("div", { class:"mtablebox" }, table));
+  return card;
+}
+
+/* The registry's latest month beside its monthly chart. */
+function registryPanel(P) {
+  const st = P.story, y = P.ytd;
+  const gap = st.since ? (st.y - st.since[0]) * 12 + (st.m - st.since[1]) : null;
+  const yoy = change(st.now, st.was);
+  const card = el("section", { class:"mcard mreg", "aria-labelledby":"mReg" });
+  const lede = !st.since ? "New businesses registered in a single month — the most since the series began in 2001."
+    : gap >= 12 ? "New businesses registered in a single month — the most since "
+                  + monthName(st.since[0], st.since[1]) + "."
+    : "New businesses registered in the month.";
+  const form = st.forms.find(f => f.now > f.was);
+  const act = st.activities.find(a => a.now > a.was);
+  const more = [form ? form.label + " rose from " + fmt.format(form.was) + " to " + fmt.format(form.now) : null,
+                act ? (act.translated ? act.label.charAt(0).toLowerCase() + act.label.slice(1) : act.label)
+                      + " from " + fmt.format(act.was) + " to " + fmt.format(act.now) : null]
+    .filter(Boolean).join("; ");
+  const yd = change(y.now, y.was);
+  card.append(el("div", { class:"mregtext" },
+    el("h2", { id:"mReg", class:"mcap", text:"Registry pulse · " + monthName(st.y, st.m) }),
+    el("div", { class:"mbig" }, el("b", { text:fmt.format(st.now) }),
+      el("span", { class:"mdelta", style:"color:" + toneOf(yoy), text:arrowPct(yoy) }),
+      el("span", { class:"mvs", text:"on " + monthName(st.y - 1, st.m) })),
+    el("p", { text:lede + (more ? " " + more + "." : "") }),
+    el("div", { class:"mstats" },
+      el("div", {}, el("b", { text:fmt.format(y.now) }),
+        el("span", {}, "registered this year · ", el("span", { style:"color:" + toneOf(yd), text:arrowPct(yd) }))),
+      el("div", {}, el("b", { text:fmt.format(y.cloNow) }),
+        el("span", { text:"closed this year · " + fmt.format(y.cloWas) + " a year ago" })),
+      el("div", {}, el("b", { text:fmt.format(P.status.active || 0) }),
+        el("span", { text:"active · " + fmt.format(P.registry) + " ever registered" }))),
+    el("a", { href:"#/economy", "data-fk":"reg:economy",
+              onClick: openOnClick(() => set({ route:"economy", selected:null })),
+              text:"Economy and registry statistics" })));
+  const chart = formationChart(P);
+  chart.classList.add("membed");
+  card.append(chart);
+  return card;
+}
+
+function renderPulse() {
+  const wrap = el("div", { class:"markets" });
+  const P = PULSE, idx = marketIndex();
+  wrap.append(el("div", { class:"mrow1" }, idx ? indexPanel(idx) : null, sessionPanel(idx)));
+  if (idx) wrap.append(marketMap(idx));
+  const three = el("div", { class:"mrow3" });
+  if (idx) three.append(moverPanel(idx, true), moverPanel(idx, false));
+  if (P) three.append(latestFilingsPanel(P));
+  if (WATCH.length) three.append(watchCard());
+  wrap.append(three);
+  if (idx) wrap.append(leadersPanel(idx));
+  if (P) wrap.append(registryPanel(P));
+  else wrap.append(el("p", { class:"empty", text:"The registry figures were not part of this build. "
+      + "Run build_pulse.py, then rebuild the page." }));
   wrap.append(el("p", { class:"pfoot" },
-    el("span", { text:"Registry: ARBK, every registered business, fetched "
-      + longDate(P.snapshot) + "; the month in progress is left out until it ends." }),
+    el("span", { text: P ? "Registry: ARBK, every registered business, fetched "
+      + longDate(P.snapshot) + "; the month in progress is left out until it ends." : "" }),
     el("span", { text:"Financials: audited statements published by MFPT, shown only where the "
       + "statement's own arithmetic proves them." }),
     el("a", { href:"#/quality", "data-fk":"pfoot:quality",
@@ -3631,7 +4902,7 @@ function watchRow(w, removable) {
       "data-fk":"unwatch:" + w.kind + ":" + w.id,
       "aria-label":"Stop following " + watchName(w.kind, w.id),
       onClick: () => {
-        pendingFocus = "#scroll .wrow a, #scroll .pbtn";
+        pendingFocus = "#view .wrow a, #view .pbtn";
         toggleWatch(w.kind, w.id);
       } }) : null);
 }
@@ -3845,7 +5116,7 @@ function sectorIndexCard(idx, name) {
       el("span", { class:"g", style:"color:" + (p.g == null ? MUTED : p.g < 0 ? NEG : POS),
                    text: p.g == null ? "" : (p.g > 0 ? "+" : "") + p.g.toFixed(0) + "%" }),
       el("span", { class:"b", style:"height:" + (p.level / top * 100).toFixed(1) + "px;background:"
-                   + (i === pts.length - 1 ? INK : p.g != null && p.g < 0 ? NEG : "#8c8c8c") })));
+                   + (i === pts.length - 1 ? GOLD : p.g != null && p.g < 0 ? NEG : DIMBAR) })));
     years.append(el("span", { text:"’" + String(p.y).slice(2) }));
   });
   const L = pts[pts.length - 1];
@@ -3888,7 +5159,7 @@ function sectorMedians(sq) {
    industry is, how many people it employs and at what pay, what it invests
    and what it produces. Kosovo Agency of Statistics (ASKdata): business survey
    (2008-), national accounts (2008-), investment survey (2018-), PRODCOM. */
-const ACCENT = "#c2410c";
+const ACCENT = "#E3B341";
 const lastKey = o => { const k = Object.keys(o || {}).sort(); return k.length ? k[k.length - 1] : null; };
 const sharePct = (a, b) => a != null && b ? (100 * a / b).toFixed(1) + "%" : "–";
 
@@ -3992,12 +5263,12 @@ function industryBlock(code, s) {
     const cols = iyears.map(y => ({ label:y, t:y + ": €" + compact(tot(y)) + " (buildings €"
         + compact(X.inv[y][0]) + ", machinery €" + compact(X.inv[y][1]) + ", other €" + compact(X.inv[y][2]) + ")",
       parts:[{ h:X.inv[y][0] / top * H, c:ACCENT }, { h:X.inv[y][1] / top * H, c:INK },
-             { h:X.inv[y][2] / top * H, c:"#bdbdbd" }] }));
+             { h:X.inv[y][2] / top * H, c:"#4A5A78" }] }));
     grid.append(eCard("iInv", "Investment by type, " + iyears[0] + "–" + iyears[iyears.length - 1],
       "€. ASK publishes each type's total and this sector's percentage of it; the euro split is the product.",
       eChart(cols, H, s.en + " investment by type, " + iyears[0] + " to " + iyears[iyears.length - 1] + "."),
       eLegend([[ACCENT, "Buildings and structures"], [INK, "Machinery and equipment"],
-               ["#bdbdbd", "Intangibles, land, other"]]),
+               ["#4A5A78", "Intangibles, land, other"]]),
       (() => {
         /* Say so where ASK's two tables disagree for a year, rather than pick silently. */
         const ly = iyears[iyears.length - 1], t = X.invt && X.invt[ly], v = tot(ly);
@@ -4015,11 +5286,11 @@ function industryBlock(code, s) {
       parts:[{ h:X.emp[y] / top * H, c:INK }] })), H, "Employees" + grp + ", " + eyears[0] + " to " + ey + ".");
     const pay = eChart(eyears.map(y => ({ label:yy(y), t:y + ": €" + fmt.format(X.wage && X.wage[y] || 0)
         + " a month, all businesses €" + fmt.format(SECTORCTX.wage[y] || 0),
-      parts:[{ h:(X.wage && X.wage[y] || 0) / wtop * 80, c:ACCENT }, { h:(SECTORCTX.wage[y] || 0) / wtop * 80, c:"#bdbdbd" }] })),
+      parts:[{ h:(X.wage && X.wage[y] || 0) / wtop * 80, c:ACCENT }, { h:(SECTORCTX.wage[y] || 0) / wtop * 80, c:"#4A5A78" }] })),
       80, "Average monthly wage against the business average.", { pair:true });
     grid.append(eCard("iJobs", "Jobs and wages, " + eyears[0] + "–" + ey,
       "Employees, then the average monthly wage beside the average for all businesses" + grp + ".",
-      jobs, pay, eLegend([[ACCENT, "This sector's wage"], ["#bdbdbd", "All businesses"]])));
+      jobs, pay, eLegend([[ACCENT, "This sector's wage"], ["#4A5A78", "All businesses"]])));
   }
   /* What it produces. */
   const P = SECTORCTX.prod[code];
@@ -4300,7 +5571,10 @@ function render() {
       && state.selected) markSeen(state.route, state.selected);
   renderChrome(rows);
   renderPagebar(rows, sc, shown, cols);
-  document.querySelector(".split").dataset.rail = LIST_ROUTES.has(state.route) ? "on" : "off";
+  const split = document.querySelector(".split");
+  split.dataset.rail = LIST_ROUTES.has(state.route) && state.route !== "company" && state.route !== "sectors" ? "on" : "off";
+  document.querySelector(".page").dataset.route = state.route;
+  split.dataset.route = state.route;
   const next = state.route === "pulse" ? renderPulse()
              : state.route === "economy" ? renderEconomy()
              : state.route === "sector" ? renderSector(state.selected)
@@ -4312,7 +5586,7 @@ function render() {
              : state.route === "movers" ? renderMovers(rows)
              : state.route === "quality" ? renderQuality(rows)
              : renderScreener(sc, shown, cols, rows);
-  byId("scroll").replaceChildren(next);
+  byId("view").replaceChildren(next);
   pinRankColumn();
   /* The rank column is laid out before the mono face arrives and widens when it
      does, so the offset is taken again once the fonts have settled. */
@@ -4360,7 +5634,7 @@ window.addEventListener("resize", pinRankColumn);
 byId("skip").addEventListener("click", () => {
   const target = document.querySelector("#gridBody tr.cur a.rowlink")
               || document.querySelector("#gridBody a.rowlink, table.sectors a.rowlink, .moveritem, "
-                                        + ".pulse a, .pulse button")
+                                        + ".markets a, .pulse a, .pulse button")
               || byId("coHeading") || byId("pageTitle");
   if (target) target.focus();
 });
